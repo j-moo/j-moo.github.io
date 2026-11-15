@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://j-moo.github.io/sitemap.xml
