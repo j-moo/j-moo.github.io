@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {projects, archive} from './content.mjs';
+import {projects} from './content.mjs';
 import {notes} from './portfolio-data.mjs';
 
 const out = path.resolve('docs');
@@ -103,9 +103,13 @@ ${related.length ? `<section><h2>관련 개발 기록</h2>${related.map(noteRow)
   page(projectUrl(p), p.name + ' · ' + p.role, p.brief, body, 'projects');
 }
 
-const archiveItem = item => `<article class="archive-item" id="${item.id}"><div><p class="meta">${item.field}</p><h3>${item.name}</h3><time>${item.date}</time></div><div><h4>${item.title}</h4><p>${item.text}</p>${item.link ? link(item.link,'text-link') : ''}</div></article>`;
-page('/archive/', '작업 모음', '팀 프로젝트와 해커톤, 웹서비스 실습, 직접 사용한 개인 도구의 작업 범위.', `<div class="container"><header class="index-top"><p class="kicker">Project archive</p><h1>작업 모음</h1><p class="lead">팀에서 맡은 역할과 직접 사용하며 바꾼 도구를 모았습니다.</p></header>
-<section><h2>팀 프로젝트</h2><div class="archive-team">${projects.map(p=>link([p.name+' · '+p.field,projectUrl(p)],'document-link')).join('')}</div></section><section class="block"><h2>해커톤 · 실습 · 개인 작업</h2>${archive.map(archiveItem).join('')}</section></div>`,'archive');
+const projectList = projects.map(p => `<article class="archive-item">
+  <div><p class="meta">${p.field}</p><h2>${link([p.name,projectUrl(p)])}</h2><span>${p.period}</span></div>
+  <div><h3>${p.role}</h3><p>${p.brief}</p>${link([p.name+' 사례 읽기',projectUrl(p)],'text-link')}</div>
+</article>`).join('');
+page('/archive/', '작업 모음', 'Flex_Log, Melly, DDUBI, Tingle에서 맡은 역할과 검증 결과',
+  `<div class="container"><header class="index-top"><p class="kicker">Project archive</p><h1>작업 모음</h1></header>
+  ${projectList}</div>`, 'archive');
 
 const filters = ['전체',...new Set(notes.map(n=>n.tag))];
 page('/notes/','개발 기록','문제를 좁히고 다시 확인한 과정',`<div class="container narrow"><header class="index-top"><p class="kicker">Engineering notes</p><h1>개발 기록</h1><p class="lead">실험 조건과 설계 판단을 한 가지 질문씩 풀어 썼습니다.</p></header>
@@ -129,7 +133,6 @@ page('/404.html', '페이지를 찾을 수 없습니다', '포트폴리오 홈�
 
 const index = [
   ...projects.map(p=>({title:p.name+' · '+p.title,summary:p.brief,tag:[p.field,p.role,...p.skills].join(' · '),url:projectUrl(p)})),
-  ...archive.map(p=>({title:p.name+' · '+p.title,summary:p.text,tag:p.field,url:'/archive/#'+p.id})),
   ...notes.map(n=>({title:n.title,summary:n.summary,tag:n.project+' · '+n.tag,url:noteUrl(n)}))
 ];
 write('search-index.json',JSON.stringify(index));

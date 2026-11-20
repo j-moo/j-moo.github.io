@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flex_log · 공동 기획 · 사용자 흐름 및 기능 검토 · 김종무</title><meta name="description" content="가입 실패와 빈 카테고리 목록을 따로 추적했습니다. 팀의 ERD와 구현을 대조해 계정·프로필 저장, 기본 카테고리 초기화 조건을 정리했습니다.">
+<title>Flex_Log · 공동 기획 · 사용자 흐름 및 기능 검토 · 김종무</title><meta name="description" content="가입 실패와 빈 카테고리 목록을 따로 추적했습니다. 팀의 ERD와 구현을 대조해 계정·프로필 저장, 기본 카테고리 초기화 조건을 정리했습니다.">
 <meta name="theme-color" content="#f9fafb"><meta property="og:type" content="website">
-<meta property="og:title" content="Flex_log · 공동 기획 · 사용자 흐름 및 기능 검토 · 김종무"><meta property="og:description" content="가입 실패와 빈 카테고리 목록을 따로 추적했습니다. 팀의 ERD와 구현을 대조해 계정·프로필 저장, 기본 카테고리 초기화 조건을 정리했습니다.">
+<meta property="og:title" content="Flex_Log · 공동 기획 · 사용자 흐름 및 기능 검토 · 김종무"><meta property="og:description" content="가입 실패와 빈 카테고리 목록을 따로 추적했습니다. 팀의 ERD와 구현을 대조해 계정·프로필 저장, 기본 카테고리 초기화 조건을 정리했습니다.">
 <meta property="og:url" content="https://j-moo.github.io/projects/flex/"><link rel="canonical" href="https://j-moo.github.io/projects/flex/">
 <link rel="icon" href="/assets/favicon.svg"><link rel="alternate" type="application/rss+xml" href="/feed.xml" title="김종무 개발 기록">
 <link rel="preload" href="/assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
@@ -12,7 +12,7 @@
 <a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span aria-hidden="true">jm<span class="brand-dot">.</span></span>김종무</a>
 <nav aria-label="주 메뉴"><a href="/#projects" aria-current="page">프로젝트</a><a href="/archive/" >작업 모음</a><a href="/notes/" >개발 기록</a><a href="/about/" >소개</a></nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
 </div></header><main id="main"><header class="container article-top"><a class="back" href="/#projects">대표 프로젝트</a>
-<div class="kicker">Flex_log <span>/</span> 웹·서비스 기획</div><h1>가입 폼을 채웠는데 왜 소비 기록을 시작할 수 없을까?</h1><p class="lead">사진이나 영상에 금액과 카테고리를 붙여 소비를 기록하고, 월별 집계와 분석을 다시 읽는 웹 서비스입니다.</p>
+<div class="kicker">Flex_Log <span>/</span> 웹·서비스 기획</div><h1>가입 폼을 채웠는데 왜 소비 기록을 시작할 수 없을까?</h1><p class="lead">사진이나 영상에 금액과 카테고리를 붙여 소비를 기록하고, 월별 집계와 분석을 다시 읽는 웹 서비스입니다.</p>
 <dl class="facts"><div><dt>담당</dt><dd>공동 기획 · 사용자 흐름 및 기능 검토</dd></div><div><dt>구성</dt><dd>2인 팀</dd></div><div><dt>작업 기간</dt><dd>2026.05 기획 · 06 개발</dd></div></dl></header>
 <div class="container article-grid"><aside class="contents"><nav aria-label="사례 목차"><a class="" href="#overview">맡은 일</a><a class="" href="#process">판단과 변경</a><a class="" href="#result">검증 결과</a><a class="" href="#evidence">확인 자료</a></nav><button data-print>인쇄 / PDF 저장</button></aside>
 <article class="prose"><section id="overview"><h2 id="problem">제가 맡은 일</h2><p>초기 서비스는 팀원과 함께 기획했습니다. 저는 가입과 기록 화면에서 누락을 발견해 전체 흐름의 재검토를 요청하고 월별 분석의 입력·저장·예외 조건을 확인했습니다. 구현과 테스트 실행은 AI가 도왔습니다.</p><ul class="tags"><li>Django REST</li><li>Vue</li><li>데이터 모델</li></ul></section>
