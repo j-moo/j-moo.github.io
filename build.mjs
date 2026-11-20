@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {projects} from './content.mjs';
 import {notes} from './portfolio-data.mjs';
+import {criteria, skillGroups} from './skills.mjs';
 
 const out = path.resolve('docs');
 const domain = 'https://j-moo.github.io';
@@ -54,6 +55,26 @@ function tags(values) {
   return `<ul class="tags">${values.map(value => `<li>${html(value)}</li>`).join('')}</ul>`;
 }
 
+function skillRow(skill) {
+  const percent = criteria.reduce((total, [, weight], index) => total + weight * skill.levels[index], 0);
+  return `<li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/${skill.icon}" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>${html(skill.name)}</strong><span aria-hidden="true">${percent}%</span></div>
+<div class="skill-meter" role="meter" aria-label="${html(skill.name)} 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}" aria-valuetext="${percent}%" style="--level:${percent}%"></div>
+${link([skill.example, skill.url], 'skill-example')}</div></li>`;
+}
+
+function skillsSection() {
+  const labels = {0: '미확인', 0.5: '부분 확인', 1: '직접 확인'};
+  const auditRows = skillGroups.flatMap(group => group.skills).map(skill =>
+    `<tr><th scope="row">${html(skill.name)}</th>${skill.levels.map(level=>`<td>${labels[level]}</td>`).join('')}</tr>`
+  ).join('');
+  return `<section class="portfolio-band" id="stack" aria-labelledby="stack-title"><div class="container skill-section">
+<header class="skill-heading"><h2 id="stack-title">기술 스택</h2><p>프로젝트 기록 기준 활용도</p></header>
+<div class="personal-skills">${skillGroups.map(group=>`<section class="skill-group"><h3>${html(group.title)}</h3><ul>${group.skills.map(skillRow).join('')}</ul></section>`).join('')}</div>
+<details class="skill-criteria"><summary>활용도 산정 기준</summary><p>${criteria.map(([name, weight])=>name+' '+weight+'%').join(', ')}를 합산했습니다. 각 항목에서 직접 수행하거나 판단한 근거가 있으면 해당 비중 전체를, 팀·AI와 함께 작업한 범위만 확인되면 절반을 반영했습니다. 기록에서 확인되지 않는 항목은 0%로 계산했습니다.</p>
+<div class="table-wrap"><table><caption>기술별 평가 근거</caption><thead><tr><th scope="col">기술</th>${criteria.map(([name])=>`<th scope="col">${name}</th>`).join('')}</tr></thead><tbody>${auditRows}</tbody></table></div></details></div></section>`;
+}
 
 const education = '삼성청년SW·AI아카데미(SSAFY) 15기 수료';
 
@@ -95,14 +116,10 @@ for (const file of ['styles.css','app.js']) fs.copyFileSync(file, path.join(out,
 write('.nojekyll','');
 const home = `<section class="container profile-hero" aria-labelledby="slogan"><div class="profile-copy"><p class="kicker"><span class="rule"></span>김종무 · 소프트웨어 개발자</p>
 <h1 id="slogan">직접 써 보고,<br><em>끝까지 확인합니다.</em></h1>
-<p class="lead">안녕하세요, 개발자 김종무입니다. 기계공학을 전공하고 웹 서비스와 데이터, 임베디드 소프트웨어를 경험했습니다. 버스 번호 하나에 노선이 둘 나오면 지도를 열어 보고, 키링이 반응하지 않으면 보드에 남은 기록을 읽습니다.</p>
+<p class="lead">안녕하세요, 개발자 김종무입니다. 기계공학을 전공하고 웹 서비스와 데이터, 임베디드 소프트웨어를 경험했습니다.</p>
 <div class="actions">${link(['프로젝트 보기','#projects'],'button primary')}${link(['GitHub 프로필',github],'button')}</div></div>
 <figure class="profile-photo"><img src="/assets/portrait.webp" width="467" height="600" fetchpriority="high" alt="개발자 김종무의 증명사진"><figcaption><b>김종무</b><span lang="en">Jongmu Kim</span></figcaption></figure></section>
-<section class="portfolio-band" id="stack"><div class="container band-content"><h2>기술 스택</h2><div class="personal-skills">
-<div><h3>사용 언어</h3>${tags(['Python','JavaScript','TypeScript','C'])}</div>
-<div><h3>프레임워크·라이브러리</h3>${tags(['Django REST Framework','Vue 3','React','FastAPI'])}</div>
-<div><h3>데이터·임베디드</h3>${tags(['Apache Spark','LightGBM','Zephyr RTOS','BLE'])}</div>
-</div></div></section>
+${skillsSection()}
 <section class="container band-content education-band" id="education"><h2>교육</h2><div><h3>${education}</h3><p>소비 기록 서비스부터 BLE 키링까지, 네 팀 프로젝트에서 기획·개발·기기 연동을 경험했습니다.</p></div></section>
 <section class="container projects-block" id="projects"><div class="section-head"><h2>프로젝트</h2></div>
 <nav class="project-jumps" aria-label="프로젝트 바로가기">${projects.map(p=>link([p.name,'#project-'+p.id])).join('')}</nav>
@@ -115,7 +132,8 @@ for (const p of projects) {
 <div class="kicker">${p.name} <span>/</span> ${p.field}</div><h1>${p.title}</h1><p class="lead"><strong>${p.tagline}</strong><br>${p.service}</p>
 <dl class="facts">${[['담당',p.role],['구성',p.team],['작업 기간',p.period]].map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></header>
 <div class="container article-grid"><aside class="contents"><nav aria-label="사례 목차">${[['서비스 화면','#service'],['맡은 일','#overview'],['판단과 변경','#process'],['검증 결과','#result'],['확인 자료','#evidence'],['개발 기록','#journal']].map(item=>link(item)).join('')}</nav><button data-print>인쇄 / PDF 저장</button></aside>
-<article class="prose"><section id="service"><h2>서비스 화면과 기술 스택</h2>${serviceScreen(p)}${projectStack(p)}</section><section id="overview"><h2 id="problem">제가 맡은 일</h2><p>${p.contribution}</p>${tags(p.skills)}</section>
+<article class="prose"><section id="service"><h2>서비스 화면과 기술 스택</h2>${serviceScreen(p)}${projectStack(p)}
+${(p.stackExamples || []).map(([id,title,body])=>`<h3 id="${id}">${html(title)}</h3><p>${html(body)}</p>`).join('')}</section><section id="overview"><h2 id="problem">제가 맡은 일</h2><p>${p.contribution}</p>${tags(p.skills)}</section>
 <section id="process"><h2>판단하고 바꾼 과정</h2>${p.steps.map(([title,body])=>`<h3>${title}</h3><p>${body}</p>`).join('')}</section>
 <section id="result"><h2>${p.evidence}</h2><div class="table-wrap"><table><thead><tr>${p.columns.map(t=>`<th scope="col">${t}</th>`).join('')}</tr></thead><tbody>${p.rows.map(row=>`<tr>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="scope" id="learning">${p.scope}</p></section>
 <section id="evidence"><h2>확인 자료</h2>${p.photo && p.photo[0] !== p.screen[0] ? `<figure class="proof proof-${p.id}"><a href="/assets/${p.photo[0]}"><img src="/assets/${p.photo[0]}" alt="${p.photo[1]}" loading="lazy"></a><figcaption>${p.photo[1]}</figcaption></figure>` : ''}<div class="links">${p.links.map(item=>link(item,'document-link')).join('')}</div></section>

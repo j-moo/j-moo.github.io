@@ -13,14 +13,62 @@
 <nav aria-label="주 메뉴"><a href="/#projects" >프로젝트</a><a href="/archive/" >작업 모음</a><a href="/notes/" >개발 기록</a><a href="/about/" >소개</a></nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
 </div></header><main id="main"><section class="container profile-hero" aria-labelledby="slogan"><div class="profile-copy"><p class="kicker"><span class="rule"></span>김종무 · 소프트웨어 개발자</p>
 <h1 id="slogan">직접 써 보고,<br><em>끝까지 확인합니다.</em></h1>
-<p class="lead">안녕하세요, 개발자 김종무입니다. 기계공학을 전공하고 웹 서비스와 데이터, 임베디드 소프트웨어를 경험했습니다. 버스 번호 하나에 노선이 둘 나오면 지도를 열어 보고, 키링이 반응하지 않으면 보드에 남은 기록을 읽습니다.</p>
+<p class="lead">안녕하세요, 개발자 김종무입니다. 기계공학을 전공하고 웹 서비스와 데이터, 임베디드 소프트웨어를 경험했습니다.</p>
 <div class="actions"><a class="button primary" href="#projects">프로젝트 보기</a><a class="button" href="https://github.com/j-moo">GitHub 프로필</a></div></div>
 <figure class="profile-photo"><img src="/assets/portrait.webp" width="467" height="600" fetchpriority="high" alt="개발자 김종무의 증명사진"><figcaption><b>김종무</b><span lang="en">Jongmu Kim</span></figcaption></figure></section>
-<section class="portfolio-band" id="stack"><div class="container band-content"><h2>기술 스택</h2><div class="personal-skills">
-<div><h3>사용 언어</h3><ul class="tags"><li>Python</li><li>JavaScript</li><li>TypeScript</li><li>C</li></ul></div>
-<div><h3>프레임워크·라이브러리</h3><ul class="tags"><li>Django REST Framework</li><li>Vue 3</li><li>React</li><li>FastAPI</li></ul></div>
-<div><h3>데이터·임베디드</h3><ul class="tags"><li>Apache Spark</li><li>LightGBM</li><li>Zephyr RTOS</li><li>BLE</li></ul></div>
-</div></div></section>
+<section class="portfolio-band" id="stack" aria-labelledby="stack-title"><div class="container skill-section">
+<header class="skill-heading"><h2 id="stack-title">기술 스택</h2><p>프로젝트 기록 기준 활용도</p></header>
+<div class="personal-skills"><section class="skill-group"><h3>사용 언어</h3><ul><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/python.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>Python</strong><span aria-hidden="true">90%</span></div>
+<div class="skill-meter" role="meter" aria-label="Python 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90" aria-valuetext="90%" style="--level:90%"></div>
+<a class="skill-example" href="/notes/ddubi-reader-cache/">DDUBI · 참조 표 캐시 전후 비교</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/javascript.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>JavaScript</strong><span aria-hidden="true">65%</span></div>
+<div class="skill-meter" role="meter" aria-label="JavaScript 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65" aria-valuetext="65%" style="--level:65%"></div>
+<a class="skill-example" href="/projects/flex/#vue-api">Flex_Log · 소비 기록 화면 연동</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/typescript.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>TypeScript</strong><span aria-hidden="true">75%</span></div>
+<div class="skill-meter" role="meter" aria-label="TypeScript 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-valuetext="75%" style="--level:75%"></div>
+<a class="skill-example" href="/notes/melly-disabled-application/">Melly · 응모 정원 요청 오류 추적</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/c.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>C</strong><span aria-hidden="true">75%</span></div>
+<div class="skill-meter" role="meter" aria-label="C 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-valuetext="75%" style="--level:75%"></div>
+<a class="skill-example" href="/notes/tingle-usb-diagnostics/">Tingle · 보드 진단 출력 검증</a></div></li></ul></section><section class="skill-group"><h3>프레임워크·라이브러리</h3><ul><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/djangorest.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>Django REST Framework</strong><span aria-hidden="true">75%</span></div>
+<div class="skill-meter" role="meter" aria-label="Django REST Framework 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-valuetext="75%" style="--level:75%"></div>
+<a class="skill-example" href="/notes/flex-signup/">Flex_Log · 가입과 프로필 저장</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/vuejs.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>Vue 3</strong><span aria-hidden="true">60%</span></div>
+<div class="skill-meter" role="meter" aria-label="Vue 3 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" aria-valuetext="60%" style="--level:60%"></div>
+<a class="skill-example" href="/projects/flex/#vue-api">Flex_Log · 가입과 첫 소비 기록</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/react.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>React</strong><span aria-hidden="true">90%</span></div>
+<div class="skill-meter" role="meter" aria-label="React 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90" aria-valuetext="90%" style="--level:90%"></div>
+<a class="skill-example" href="/notes/call-entry/">Melly · 영상 입장 오류 처리</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/fastapi.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>FastAPI</strong><span aria-hidden="true">70%</span></div>
+<div class="skill-meter" role="meter" aria-label="FastAPI 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70%" style="--level:70%"></div>
+<a class="skill-example" href="/projects/ddubi/#fastapi-runtime">DDUBI · 구간 예측 요청 검증</a></div></li></ul></section><section class="skill-group"><h3>데이터·임베디드</h3><ul><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/apachespark.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>Apache Spark</strong><span aria-hidden="true">60%</span></div>
+<div class="skill-meter" role="meter" aria-label="Apache Spark 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" aria-valuetext="60%" style="--level:60%"></div>
+<a class="skill-example" href="/projects/ddubi/#spark-redis">DDUBI · 최신 관측 처리</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/lightgbm.png" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>LightGBM</strong><span aria-hidden="true">90%</span></div>
+<div class="skill-meter" role="meter" aria-label="LightGBM 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="90" aria-valuetext="90%" style="--level:90%"></div>
+<a class="skill-example" href="/notes/prediction-input/">DDUBI · 버스 구간 예측 모델 비교</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/zephyr.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>Zephyr RTOS</strong><span aria-hidden="true">65%</span></div>
+<div class="skill-meter" role="meter" aria-label="Zephyr RTOS 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65" aria-valuetext="65%" style="--level:65%"></div>
+<a class="skill-example" href="/notes/tingle-usb-diagnostics/">Tingle · 키링 펌웨어 진단</a></div></li><li class="skill-row">
+<span class="skill-icon"><img src="/assets/tech/bluetooth.svg" width="32" height="32" alt=""></span>
+<div class="skill-body"><div class="skill-label"><strong>BLE</strong><span aria-hidden="true">85%</span></div>
+<div class="skill-meter" role="meter" aria-label="BLE 활용도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85" aria-valuetext="85%" style="--level:85%"></div>
+<a class="skill-example" href="/notes/tingle-demo/">Tingle · 두 키링의 근접 매칭</a></div></li></ul></section></div>
+<details class="skill-criteria"><summary>활용도 산정 기준</summary><p>기능 적용 30%, 다른 구성 요소와 연동 20%, 문제 진단 30%, 결과 검증 20%를 합산했습니다. 각 항목에서 직접 수행하거나 판단한 근거가 있으면 해당 비중 전체를, 팀·AI와 함께 작업한 범위만 확인되면 절반을 반영했습니다. 기록에서 확인되지 않는 항목은 0%로 계산했습니다.</p>
+<div class="table-wrap"><table><caption>기술별 평가 근거</caption><thead><tr><th scope="col">기술</th><th scope="col">기능 적용</th><th scope="col">다른 구성 요소와 연동</th><th scope="col">문제 진단</th><th scope="col">결과 검증</th></tr></thead><tbody><tr><th scope="row">Python</th><td>직접 확인</td><td>부분 확인</td><td>직접 확인</td><td>직접 확인</td></tr><tr><th scope="row">JavaScript</th><td>부분 확인</td><td>부분 확인</td><td>직접 확인</td><td>부분 확인</td></tr><tr><th scope="row">TypeScript</th><td>부분 확인</td><td>직접 확인</td><td>직접 확인</td><td>부분 확인</td></tr><tr><th scope="row">C</th><td>부분 확인</td><td>부분 확인</td><td>직접 확인</td><td>직접 확인</td></tr><tr><th scope="row">Django REST Framework</th><td>부분 확인</td><td>직접 확인</td><td>직접 확인</td><td>부분 확인</td></tr><tr><th scope="row">Vue 3</th><td>부분 확인</td><td>직접 확인</td><td>부분 확인</td><td>부분 확인</td></tr><tr><th scope="row">React</th><td>직접 확인</td><td>직접 확인</td><td>직접 확인</td><td>부분 확인</td></tr><tr><th scope="row">FastAPI</th><td>부분 확인</td><td>직접 확인</td><td>부분 확인</td><td>직접 확인</td></tr><tr><th scope="row">Apache Spark</th><td>부분 확인</td><td>직접 확인</td><td>부분 확인</td><td>부분 확인</td></tr><tr><th scope="row">LightGBM</th><td>직접 확인</td><td>부분 확인</td><td>직접 확인</td><td>직접 확인</td></tr><tr><th scope="row">Zephyr RTOS</th><td>부분 확인</td><td>부분 확인</td><td>직접 확인</td><td>부분 확인</td></tr><tr><th scope="row">BLE</th><td>직접 확인</td><td>직접 확인</td><td>부분 확인</td><td>직접 확인</td></tr></tbody></table></div></details></div></section>
 <section class="container band-content education-band" id="education"><h2>교육</h2><div><h3>삼성청년SW·AI아카데미(SSAFY) 15기 수료</h3><p>소비 기록 서비스부터 BLE 키링까지, 네 팀 프로젝트에서 기획·개발·기기 연동을 경험했습니다.</p></div></section>
 <section class="container projects-block" id="projects"><div class="section-head"><h2>프로젝트</h2></div>
 <nav class="project-jumps" aria-label="프로젝트 바로가기"><a class="" href="#project-flex">Flex_Log</a><a class="" href="#project-melly">Melly</a><a class="" href="#project-ddubi">DDUBI</a><a class="" href="#project-tingle">Tingle</a></nav>

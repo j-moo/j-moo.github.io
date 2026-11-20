@@ -1,6 +1,9 @@
 export const projects = [
   {
     id: 'flex', name: 'Flex_Log', field: '웹·서비스 기획', team: '2인 팀', period: '2026.05 기획 · 06 개발',
+    stackExamples: [
+      ['vue-api', 'Vue 3 · JavaScript', '가입과 소비 기록 화면에서 입력한 값이 API의 필수 필드와 맞는지 확인했습니다. 서버를 복구한 뒤에도 화면이 기대하는 필드명과 실제 응답이 달랐습니다. AI의 도움으로 인증 상태, 라우터, API 호출을 맞추고 프런트엔드 빌드를 확인했습니다.']
+    ],
     tagline: "소비 순간을 기록하는 소셜 가계부",
     languages: ["Python", "JavaScript"],
     frameworks: ["Django REST Framework", "Vue 3"],
@@ -56,6 +59,10 @@ export const projects = [
   },
   {
     id: 'ddubi', name: 'DDUBI', field: '데이터·백엔드', team: '6인 팀', period: '2026.08 – 09',
+    stackExamples: [
+      ['spark-redis', 'Apache Spark · 최신 관측 처리', 'Spark 배치에서 가장 최근 관측을 골라도 다음 배치에 이전 시각의 관측이 도착할 수 있었습니다. 이때 오래된 값이 최신값을 덮지 않도록 Redis에 기록하는 순간 기존·신규 관측 시각을 비교하는 방식으로 보완했습니다.'],
+      ['fastapi-runtime', 'FastAPI · 예측 요청 검증', '실제 매핑 구간을 로컬 FastAPI TestClient에서 조회했습니다. 예측값이 있어도 이력 표본이 없는 구간에는 데이터 부족 표시가 붙었고, 같은 구간의 날짜를 지원 범위 밖으로 바꾸자 예측값이 비었습니다. 이 결과로 경로 계산에서 제외할 조건을 확인했습니다.']
+    ],
     tagline: "약속 시간에서 역산하는 대중교통 출발 안내",
     languages: ["Python", "Dart", "Java"],
     frameworks: ["Flutter", "Spring Boot", "FastAPI"],
