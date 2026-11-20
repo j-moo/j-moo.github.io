@@ -9,6 +9,7 @@ export const skillGroups = [
     title: '사용 언어',
     skills: [
       {name: 'Python', icon: 'python.svg', levels: [1, .5, 1, 1], example: 'DDUBI · 참조 표 캐시 전후 비교', url: '/notes/ddubi-reader-cache/'},
+      {name: 'Java', icon: 'java.svg', levels: [.5, 1, 1, .5], example: 'DDUBI · 버스 소요시간 출처 추적', url: '/projects/ddubi/#java-route-source'},
       {name: 'JavaScript', icon: 'javascript.svg', levels: [.5, .5, 1, .5], example: 'Flex_Log · 소비 기록 화면 연동', url: '/projects/flex/#vue-api'},
       {name: 'TypeScript', icon: 'typescript.svg', levels: [.5, 1, 1, .5], example: 'Melly · 응모 정원 요청 오류 추적', url: '/notes/melly-disabled-application/'},
       {name: 'C', icon: 'c.svg', levels: [.5, .5, 1, 1], example: 'Tingle · 보드 진단 출력 검증', url: '/notes/tingle-usb-diagnostics/'}
@@ -17,6 +18,7 @@ export const skillGroups = [
   {
     title: '프레임워크·라이브러리',
     skills: [
+      {name: 'Spring Boot', icon: 'springboot.svg', levels: [.5, 1, .5, 1], example: 'DDUBI · 내부 API와 MySQL 연동 검증', url: '/projects/ddubi/#spring-baseline'},
       {name: 'Django REST Framework', icon: 'djangorest.svg', levels: [.5, 1, 1, .5], example: 'Flex_Log · 가입과 프로필 저장', url: '/notes/flex-signup/'},
       {name: 'Vue 3', icon: 'vuejs.svg', levels: [.5, 1, .5, .5], example: 'Flex_Log · 가입과 첫 소비 기록', url: '/projects/flex/#vue-api'},
       {name: 'React', icon: 'react.svg', levels: [1, 1, 1, .5], example: 'Melly · 영상 입장 오류 처리', url: '/notes/call-entry/'},
