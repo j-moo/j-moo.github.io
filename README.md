@@ -2,7 +2,7 @@
 
 [공개 블로그](https://j-moo.github.io/) · [작업 모음](https://j-moo.github.io/archive/) · [소개와 인쇄용 요약](https://j-moo.github.io/about/)
 
-특정 직무를 우선하지 않고, 네 팀 프로젝트를 맡은 일과 검증 결과로 소개한다. 작업 모음에는 Flex_Log, Melly, DDUBI, Tingle을 작업 시기 순으로 싣는다. 개발 기록 네 편은 기존 주소에서 읽을 수 있다.
+특정 직무를 우선하지 않고, 네 팀 프로젝트를 맡은 일과 검증 결과로 소개한다. 작업 모음에는 Flex_Log, Melly, DDUBI, Tingle을 작업 시기 순으로 싣는다. 홈에는 프로필 사진과 개발 슬로건, 개인 기술 스택, SSAFY 15기 수료 이력을 싣는다. 각 프로젝트의 서비스 화면과 팀 기술 스택, 개인 역할 아래에서 개발 기록 세 편씩을 읽을 수 있다.
 
 ## 실행
 
@@ -18,7 +18,7 @@ node serve.mjs
 ## 내용 수정
 
 - `content.mjs`에 프로젝트별 기여, 검증표와 근거 링크를 둔다.
-- `portfolio-data.mjs`에는 기존 개발 기록 본문이 있다.
+- `portfolio-data.mjs`에는 프로젝트별 개발 기록 본문이 있다.
 - `build.mjs`가 정적 HTML, 사이트맵, RSS와 검색 색인을 만든다. `styles.css`와 `app.js`에서 화면과 검색·테마·인쇄 동작을 수정한다.
 - `assets/sources.json`에 공개 자료의 출처와 측정 범위를 남긴다. 이미지나 발췌를 교체하면 캡션과 출처도 함께 갱신한다. 글꼴 라이선스는 `assets/Pretendard-LICENSE.txt`에 있다.
 - 변경 후 빌드해 `docs/`와 소스를 함께 반영한다. 공개용 자료만 수록한다.

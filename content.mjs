@@ -1,6 +1,11 @@
 export const projects = [
   {
     id: 'flex', name: 'Flex_Log', field: '웹·서비스 기획', team: '2인 팀', period: '2026.05 기획 · 06 개발',
+    tagline: "소비 순간을 기록하는 소셜 가계부",
+    languages: ["Python", "JavaScript"],
+    frameworks: ["Django REST Framework", "Vue 3"],
+    tools: ["Pinia", "SQLite"],
+    screen: ["flex-feed.webp", "소비 기록 피드에 카메라 사진과 금액이 표시된 Flex_Log 화면", "소비 기록 피드", 949, 916],
     role: '공동 기획 · 사용자 흐름 및 기능 검토', skills: ['Django REST', 'Vue', '데이터 모델'],
     title: '가입 폼을 채웠는데 왜 소비 기록을 시작할 수 없을까?',
     brief: '가입 실패와 빈 카테고리 목록을 따로 추적했습니다. 팀의 ERD와 구현을 대조해 계정·프로필 저장, 기본 카테고리 초기화 조건을 정리했습니다.',
@@ -23,6 +28,11 @@ export const projects = [
   },
   {
     id: 'melly', name: 'Melly', field: '프런트엔드', team: '팀 프로젝트', period: '2026.07 – 08',
+    tagline: "팬과 인플루언서를 잇는 영상 팬미팅",
+    languages: ["TypeScript", "Java"],
+    frameworks: ["React", "Spring Boot"],
+    tools: ["LiveKit"],
+    screen: ["melly-home.png", "두 장의 인물 사진으로 팬미팅을 소개하는 Melly 홈 화면", "팬미팅 홈 · 개발 미리보기", 1425, 891],
     role: '프런트엔드 · 화면 설계와 API 연동', skills: ['React', 'TypeScript', 'LiveKit 연동'],
     title: '입장 토큰은 정상인데 왜 영상 방이 열리지 않을까?',
     brief: '통화 권한과 타이머용 상태 조회를 따로 판정하게 바꾸고, 상태 조회만 실패할 때 영상 방과 오류 안내가 함께 뜨는지 검사했습니다.',
@@ -46,6 +56,11 @@ export const projects = [
   },
   {
     id: 'ddubi', name: 'DDUBI', field: '데이터·백엔드', team: '6인 팀', period: '2026.08 – 09',
+    tagline: "약속 시간에서 역산하는 대중교통 출발 안내",
+    languages: ["Python", "Dart", "Java"],
+    frameworks: ["Flutter", "Spring Boot", "FastAPI"],
+    tools: ["Apache Spark", "LightGBM"],
+    screen: ["ddubi-schedule.webp", "출발지와 도착 예정 시간을 입력하는 DDUBI 일정 등록 화면", "모바일 앱 · 일정 등록", 643, 1250],
     role: '데이터 연산 · 분산 백엔드', skills: ['Python', 'LightGBM', '노선 매핑'],
     title: '같은 5002번 중 어느 버스의 시간을 써야 할까?',
     brief: '경로 상세에서 예약 노선을 직접 식별하고, 기존에 연결한 169개 대안의 ID가 유지되는지 대조했습니다.',
@@ -70,6 +85,11 @@ export const projects = [
   },
   {
     id: 'tingle', name: 'Tingle', field: '임베디드·IoT', team: '6인 팀', period: '2026.10.05 – 11.18',
+    tagline: "가까운 사람과의 만남을 알리는 BLE 키링",
+    languages: ["C", "Kotlin", "Java"],
+    frameworks: ["Compose Multiplatform", "Spring Boot"],
+    tools: ["Zephyr RTOS", "BLE / GATT"],
+    screen: ["tingle-accept.webp", "Tingle 앱에서 매칭 제안을 수락할지 묻는 확인 창", "모바일 앱 · 제안 수락 창 발췌", 1200, 944],
     role: 'IoT · 키링 조립 및 기기 연동', skills: ['BLE', 'Zephyr / C', 'USB 진단'],
     title: '다시 만난 키링이 조용할 때, 무엇을 읽어야 할까?',
     brief: '기존 만남 기록을 보존한 채 상대별 상태를 읽는 진단을 요청했습니다. 실물 한 대에서 출력의 끝과 저장 내용까지 확인했습니다.',

@@ -38,5 +38,24 @@
     "source": "2026-08-12 보관 VideoCallRoom.test.tsx 회귀 테스트 한 건",
     "scope": "폴링을 끄고 LiveKit을 대체한 화면 분기 검사. 제목과 조건 설명을 덧붙인 발췌.",
     "project": "Melly"
+  },
+  "portrait.webp": {
+    "source": "본인이 공개용으로 선택한 증명사진",
+    "scope": "방향을 바로잡고 축소, EXIF 제외"
+  },
+  "flex-feed.webp": {
+    "project": "Flex_Log",
+    "source": "https://github.com/j-moo/Flex_Log/blob/00fc74510ab3a80185d14e71f79f5e55917dac20/assets/프리뷰.png",
+    "scope": "공개 미리보기의 소비 피드 발췌"
+  },
+  "ddubi-schedule.webp": {
+    "project": "DDUBI",
+    "source": "2026-10-02 보관 모바일 화면",
+    "scope": "개인 위치를 입력하기 전 일정 등록 화면 발췌"
+  },
+  "tingle-accept.webp": {
+    "project": "Tingle",
+    "source": "2026-11-17 촬영한 앱 제안 화면",
+    "scope": "계정·채팅 정보가 없는 수락 창만 발췌"
   }
 }
