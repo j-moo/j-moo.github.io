@@ -71,7 +71,8 @@ function skillsSection() {
   ).join('');
   return `<section class="portfolio-band" id="stack" aria-labelledby="stack-title"><div class="container skill-section">
 <header class="skill-heading"><h2 id="stack-title">기술 스택</h2><p>프로젝트 기록 기준 활용도</p></header>
-<div class="personal-skills">${skillGroups.map(group=>`<section class="skill-group"><h3>${html(group.title)}</h3><ul>${group.skills.map(skillRow).join('')}</ul></section>`).join('')}</div>
+<nav class="skill-jumps" aria-label="기술 분류 바로가기">${skillGroups.map(group=>link([group.title,'#skills-'+group.id])).join('')}</nav>
+<div class="personal-skills">${skillGroups.map(group=>`<section class="skill-group" id="skills-${group.id}"><h3>${html(group.title)}</h3><ul>${group.skills.map(skillRow).join('')}</ul></section>`).join('')}</div>
 <details class="skill-criteria"><summary>활용도 산정 기준</summary><p>${criteria.map(([name, weight])=>name+' '+weight+'%').join(', ')}를 합산했습니다. 각 항목에서 직접 수행하거나 판단한 근거가 있으면 해당 비중 전체를, 팀·AI와 함께 작업한 범위만 확인되면 절반을 반영했습니다. 기록에서 확인되지 않는 항목은 0%로 계산했습니다.</p>
 <div class="table-wrap"><table><caption>기술별 평가 근거</caption><thead><tr><th scope="col">기술</th>${criteria.map(([name])=>`<th scope="col">${name}</th>`).join('')}</tr></thead><tbody>${auditRows}</tbody></table></div></details></div></section>`;
 }
