@@ -1,1 +1,42 @@
-{"ddubi-model.png":{"project":"DDUBI","source":"2026-09-30 보관 모델 비교 그래프","scope":"9월 8일 동일 검증집합의 버스 구간 평균시간 MAE"},"melly-home.png":{"project":"Melly","source":"2026-09-29 보관 화면 검수 자료","scope":"개발 미리보기, 실제 이용 실적 아님"},"melly-signup.png":{"project":"Melly","source":"2026-09-29 보관 회원가입 화면","scope":"개발 미리보기, 개인정보 입력 없음"},"tingle-cad.png":{"project":"Tingle","source":"2026-11-13 R17 CAD 조립 배치","scope":"CAD 렌더, 실물 사진 아님"},"tingle-hardware.jpg":{"project":"Tingle","source":"2026-11-12 직접 촬영한 부품 배치","scope":"당시 제작 기판과 모듈"}}
+{
+  "ddubi-model.png": {
+    "project": "DDUBI",
+    "source": "2026-09-30 보관 모델 비교 그래프",
+    "scope": "9월 8일 동일 검증집합의 버스 구간 평균시간 MAE"
+  },
+  "melly-home.png": {
+    "project": "Melly",
+    "source": "2026-09-29 보관 화면 검수 자료",
+    "scope": "개발 미리보기, 실제 이용 실적 아님"
+  },
+  "melly-signup.png": {
+    "project": "Melly",
+    "source": "2026-09-29 보관 회원가입 화면",
+    "scope": "개발 미리보기, 개인정보 입력 없음"
+  },
+  "tingle-cad.png": {
+    "project": "Tingle",
+    "source": "2026-11-13 R17 CAD 조립 배치",
+    "scope": "CAD 렌더, 실물 사진 아님"
+  },
+  "tingle-hardware.jpg": {
+    "project": "Tingle",
+    "source": "2026-11-12 직접 촬영한 부품 배치",
+    "scope": "당시 제작 기판과 모듈"
+  },
+  "tingle-case.webp": {
+    "source": "2026-11-18 종료 자료 · 14:53:06 촬영",
+    "scope": "실물 케이스 외관. 방향을 바로잡고 축소한 웹용 사본. 촬영 메타데이터 제외.",
+    "project": "Tingle"
+  },
+  "ddubi-model-comparison.csv": {
+    "source": "2026-09-30 보관 v12 모델 비교 결과",
+    "scope": "동일 검증 999,894행에서 기준선과 네 후보 비교. 장치와 설정이 달라 실행시간은 동일 조건 속도 비교에 사용할 수 없음.",
+    "project": "DDUBI"
+  },
+  "melly-call-test.txt": {
+    "source": "2026-08-12 보관 VideoCallRoom.test.tsx 회귀 테스트 한 건",
+    "scope": "폴링을 끄고 LiveKit을 대체한 화면 분기 검사. 제목과 조건 설명을 덧붙인 발췌.",
+    "project": "Melly"
+  }
+}

@@ -1,48 +1,139 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {projects,notes} from './portfolio-data.mjs';
-const out=path.resolve('docs');fs.mkdirSync(out,{recursive:true});fs.cpSync('assets',path.join(out,'assets'),{recursive:true});fs.copyFileSync('styles.css',path.join(out,'styles.css'));fs.copyFileSync('app.js',path.join(out,'app.js'));fs.writeFileSync(path.join(out,'.nojekyll'),'');
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const arrow='<span aria-hidden="true">↗</span>';
-const nav=(active)=>'<aside class="sidebar"><a href="/" class="brand" aria-label="김종무 홈"><span class="brand-mark">jm<span>°</span></span><span>김종무<small>JONGMU KIM</small></span></a><p class="sidebar-label">PORTFOLIO & NOTES</p><nav aria-label="주 메뉴">'+[['/','홈','home','01'],['/#projects','프로젝트','projects','02'],['/notes/','개발 기록','notes','03'],['/about/','소개','about','04']].map(([href,title,id,num])=>'<a href="'+href+'" '+(active===id?'aria-current="page"':'')+'><span class="nav-num">'+num+'</span>'+title+'<span class="nav-dot"></span></a>').join('')+'</nav><button class="search-trigger" data-search><span>기록 검색</span><kbd>⌘ K</kbd></button><div class="side-bottom"><p><span class="status-dot"></span>배우고, 만들고, 기록합니다.</p><div><a href="https://github.com/j-moo" target="_blank" rel="noopener">GitHub '+arrow+'</a><button class="theme-toggle" aria-label="색상 테마 전환">◐</button></div><small>2026 · Software & beyond</small></div></aside>';
-const footer='<footer><a class="footer-brand" href="/">김종무<span>Software · Data · IoT</span></a><p>작업의 이유와 확인한 결과를 남깁니다.</p><div><a href="https://github.com/j-moo" target="_blank" rel="noopener">GitHub ↗</a><a href="/feed.xml">RSS ↗</a><a href="#top">맨 위로 ↑</a></div><small>© 2026 Jongmu Kim. Updated 2026.11.15</small></footer>';
-const search='<dialog id="search-dialog" aria-labelledby="search-title"><div class="search-head"><h2 id="search-title">프로젝트와 기록 검색</h2><button data-close-search aria-label="검색 닫기">✕</button></div><input id="search-input" type="search" placeholder="예: 데이터, 통화, 조립" autocomplete="off"><div id="search-results" aria-live="polite"></div><p class="search-hint">Esc 닫기 · 제목과 내용에서 검색합니다.</p></dialog>';
-function page(title,desc,body,active='home',url='/'){
- return '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+' · 김종무</title><meta name="description" content="'+esc(desc)+'"><meta name="theme-color" content="#f6f7f9"><meta property="og:type" content="website"><meta property="og:title" content="'+esc(title)+' · 김종무"><meta property="og:description" content="'+esc(desc)+'"><meta property="og:url" content="https://j-moo.github.io'+url+'"><link rel="canonical" href="https://j-moo.github.io'+url+'"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="김종무 개발 기록" href="/feed.xml"><link rel="preload" href="/assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/styles.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("jm-theme")||"light"}catch(e){}</script><script src="/app.js" defer></script></head><body id="top"><a href="#main" class="skip-link">본문 바로가기</a>'+nav(active)+'<div class="mobile-bar"><a href="/" class="mobile-brand">jm° <span>김종무</span></a><button data-search aria-label="검색 열기">⌕</button><button class="mobile-menu" aria-expanded="false" aria-label="메뉴 열기">☰</button></div><main id="main">'+body+footer+'</main>'+search+'</body></html>';
-}
-const tags=skills=>'<div class="tags">'+skills.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div>';
-function visual(p){
- if(p.id==='ddubi')return '<div class="project-visual visual-ddubi"><div class="visual-top"><span>DDUBI</span><span>DATA / ML</span></div><div class="transit"><div class="route-line"></div><span class="station s1">출발</span><span class="station s2">구간 예측</span><span class="station s3">환승</span><span class="station s4">도착</span><i class="moving-dot"></i></div><div class="visual-stat"><small>버스 구간 평균시간 · 검증 MAE</small><strong>27.61 <i>→</i> 26.04<em>초</em></strong><span>같은 검증 자료에서 5.68% 감소</span></div><small class="visual-caption">서비스 흐름 요약 / 오프라인 모델 평가</small></div>';
- if(p.id==='flex')return '<div class="project-visual visual-flex"><div class="visual-top"><span>Flex_log</span><span>WEB / PRODUCT</span></div><div class="flex-diagram"><span>기록<small>사진 · 소비 금액</small></span><i>↓</i><span>분석<small>월별 집계 · LLM</small></span><i>↓</i><span>다시 보기<small>저장 · 이력 조회</small></span></div><small class="visual-caption">서비스 흐름 요약</small></div>';
- return '<div class="project-visual visual-'+p.id+'"><img src="/assets/'+p.image+'" alt="'+esc(p.imageCaption)+'" loading="lazy" width="1200" height="900"><span class="image-label">'+(p.id==='melly'?'DEVELOPMENT PREVIEW':'CAD / ASSEMBLY STUDY')+'</span></div>';
-}
-function projectRow(p,i){return '<article class="project-row reveal"><a class="visual-link" href="/projects/'+p.id+'/" aria-label="'+p.name+' 상세 보기">'+visual(p)+'</a><div class="project-copy"><div class="eyebrow"><span>0'+(i+1)+' / '+p.category+'</span><span>'+p.period+'</span></div><h3><a href="/projects/'+p.id+'/">'+p.name+' '+arrow+'</a></h3><h4>'+p.tagline+'</h4><p>'+p.roleDetail+'</p>'+tags(p.skills.slice(0,4))+'<div class="role-line"><span>MY ROLE</span>'+p.role+'</div><a class="text-link" href="/projects/'+p.id+'/">문제와 해결 과정 읽기 <span>→</span></a></div></article>'}
-function noteRow(n){return '<a class="note-row reveal" href="/notes/'+n.id+'/" data-tag="'+n.tag+'" data-filter-text="'+esc(n.title+' '+n.summary+' '+n.project+' '+n.tag)+'"><span class="note-date">'+n.date+'</span><div><span class="note-category">'+n.project+' · '+n.tag+'</span><h3>'+n.title+'</h3><p>'+n.summary+'</p></div><span class="note-read">'+n.reading+' <b>↗</b></span></a>'}
-const intro='<section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="blue-dot"></span>SOFTWARE · DATA · IoT</div><h1>직접 만들고,<br><span class="ink-blue">끝까지</span><br>확인합니다<span class="period">.</span></h1><p>기계공학에서 소프트웨어로.<br>화면과 데이터를 연결하고, 작은 기기가<br>실제로 동작하는 과정까지 살펴봅니다.</p><div class="hero-actions"><a class="button primary" href="#projects">프로젝트 살펴보기 <span>↘</span></a><a class="button quiet" href="/about/">김종무 소개 →</a></div></div><div class="hero-board" aria-label="주요 작업 영역"><div class="board-header"><span>THE WORK, IN LAYERS</span><span>2026 —</span></div><div class="orbit-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="core">jm<span>°</span></div><span class="orbit-tag ot1">DATA</span><span class="orbit-tag ot2">SOFTWARE</span><span class="orbit-tag ot3">DEVICE</span><i class="orbit-star">✦</i></div><div class="board-bottom"><span>From an idea<br><b>to something that works.</b></span><a href="/projects/tingle/" aria-label="Tingle 프로젝트 보기">↗</a></div></div><div class="hero-foot"><span>김종무 <small>Jongmu Kim</small></span><span>Scroll to explore ↓</span></div></section>';
-const home=intro+'<section id="projects" class="section"><div class="section-heading"><div><span class="section-label">01 / SELECTED WORK</span><h2>문제에서 시작한<br>네 가지 프로젝트</h2></div><p>어떤 서비스인지, 무엇을 맡았는지,<br>어디까지 확인했는지 기록했습니다.</p></div>'+projects.map(projectRow).join('')+'</section><section id="notes" class="section"><div class="section-heading"><div><span class="section-label">02 / FIELD NOTES</span><h2>만드는 과정에 남은 질문</h2></div><a class="text-link" href="/notes/">기록 모두 보기 →</a></div><div class="notes-list">'+[notes[2],notes[0],notes[1]].map(noteRow).join('')+'</div></section><section id="about" class="about-strip reveal"><span class="section-label">03 / A LITTLE ABOUT ME</span><div><h2>이해한 것을 만들고,<br>만든 것을 다시 확인합니다.</h2><p>기계공학을 전공한 뒤 삼성청년SW·AI아카데미에서 소프트웨어와 AI를 공부하고 있습니다. 데이터의 연결부터 화면의 상태, 실제 부품의 조립까지 서로 다른 문제를 직접 만나며 배우고 있습니다.</p><a class="text-link" href="/about/">경험과 관심 더 보기 →</a></div><span class="about-symbol" aria-hidden="true">↗</span></section>';
-write('index.html',page('소프트웨어·데이터·IoT 포트폴리오','김종무의 프로젝트와 개발 기록. DDUBI, Tingle, Melly, Flex_log의 문제 해결 과정과 실제 기여를 소개합니다.',home));
-for(const p of projects){
- const related=notes.filter(n=>n.project===p.name);
- const chart=p.id==='ddubi'?'<div class="metric-chart" aria-label="동일 검증 자료 MAE: 과거 중앙값 27.61초, LightGBM 26.04초"><div><span>과거 중앙값</span><i style="--bar:92%"></i><strong>27.61초</strong></div><div><span>LightGBM</span><i style="--bar:86.8%"></i><strong>26.04초</strong></div><p>검증 999,894행 · 평균 절대 오차(MAE), 작을수록 좋음</p></div>':'';
- const body='<header class="detail-header"><a class="back-link" href="/#projects">← 모든 프로젝트</a><div class="eyebrow">'+p.category+' / '+p.period+'</div><h1>'+p.name+'<span>↗</span></h1><p class="detail-subtitle">'+p.tagline+'</p>'+tags(p.skills)+'<div class="project-facts"><div><small>내 역할</small><strong>'+p.role+'</strong></div><div><small>팀 구성</small><strong>'+p.team+'</strong></div><div><small>기간</small><strong>'+p.period+'</strong></div></div></header><div class="detail-layout"><article class="prose"><section id="overview"><h2>어떤 프로젝트인가요?</h2><p class="lead">'+p.overview+'</p><p>'+p.roleDetail+'</p></section><figure class="case-figure">'+(p.image?'<a href="/assets/'+p.image+'" target="_blank" rel="noopener"><img src="/assets/'+p.image+'" alt="'+esc(p.imageCaption)+'"></a><figcaption>'+p.imageCaption+'</figcaption>':visual(p))+'</figure><section id="problem"><span class="section-label">THE QUESTION</span><h2>'+p.hook+'</h2><p>'+p.intro+'</p></section><section id="process"><h2>판단하고 바꾼 과정</h2>'+p.steps.map(([t,body],i)=>'<div class="step"><span class="step-number">0'+(i+1)+'</span><div><h3>'+t+'</h3><p>'+body+'</p></div></div>').join('')+'</section><section id="result"><h2>'+p.resultTitle+'</h2><div class="result-metrics">'+p.metrics.map(([v,label])=>'<div><strong>'+v+'</strong><p>'+label+'</p></div>').join('')+'</div>'+chart+'<p>'+p.result+'</p><aside class="scope"><span>확인 범위</span><p>'+p.scope+'</p></aside></section><section id="learning"><h2>다음 작업에 가져갈 기준</h2><p>'+p.lesson+'</p></section><section id="evidence" class="evidence"><h3>기록의 근거</h3><p>'+p.sources+'</p><p>당시 작업 기록과 보관 자료를 대조해 2026년 11월 15일 포트폴리오로 정리했습니다. 본인의 판단·요구·검증과 팀 전체의 성과를 구분합니다.</p></section></article><nav class="toc" aria-label="프로젝트 목차"><span>ON THIS PAGE</span><a href="#overview">프로젝트와 역할</a><a href="#problem">해결하려던 문제</a><a href="#process">판단과 변경</a><a href="#result">결과와 확인 범위</a><a href="#learning">배운 기준</a><a href="#evidence">기록의 근거</a><button class="print-button" data-print>인쇄 / PDF 저장 ↗</button></nav></div>'+(related.length?'<section class="section related"><span class="section-label">RELATED NOTES</span><h2>이 프로젝트의 개발 기록</h2>'+related.map(noteRow).join('')+'</section>':'')+'<div class="next-project"><span>다음 프로젝트</span><a href="/projects/'+projects[(projects.indexOf(p)+1)%projects.length].id+'/">'+projects[(projects.indexOf(p)+1)%projects.length].name+' →</a></div>';
- write('projects/'+p.id+'/index.html',page(p.name+' — '+p.role,p.overview,body,'projects','/projects/'+p.id+'/'));
-}
-const filters=['전체',...new Set(notes.map(n=>n.tag))].map((t,i)=>'<button class="filter-button '+(!i?'active':'')+'" data-filter="'+t+'" aria-pressed="'+(!i)+'">'+t+'</button>').join('');
-const noteIndex='<header class="detail-header notes-header"><span class="section-label">FIELD NOTES / '+notes.length+' RECORDS</span><h1>개발 기록<span>↗</span></h1><p class="detail-subtitle">결과를 만들기까지, 판단이 바뀌었던 순간들.</p></header><section class="notes-content"><div class="filter-bar" aria-label="기록 분류">'+filters+'</div><label class="notes-search"><span>기록 검색</span><input type="search" id="notes-filter" placeholder="프로젝트, 주제, 궁금한 내용을 검색하세요"></label><div class="notes-list" id="filtered-notes">'+[...notes].sort((a,b)=>b.date.localeCompare(a.date)).map(noteRow).join('')+'</div><p id="no-notes" hidden>일치하는 기록이 없습니다. 다른 단어로 찾아보세요.</p></section>';
-write('notes/index.html',page('개발 기록','데이터, 프런트엔드, IoT와 협업 과정에서 배운 기준을 기록합니다.',noteIndex,'notes','/notes/'));
-for(const n of notes){
- const project=projects.find(p=>p.name===n.project);
- const body='<header class="article-header"><a class="back-link" href="/notes/">← 모든 기록</a><div class="eyebrow">'+n.project+' · '+n.tag+'<span>'+n.date+' / '+n.reading+' 읽기</span></div><h1>'+n.title+'</h1><p>'+n.summary+'</p></header><div class="article-layout"><article class="prose note-prose">'+n.sections.map(([h,b],i)=>'<section id="part-'+i+'"><h2>'+h+'</h2><p>'+b+'</p></section>').join('')+'<div class="article-end"><span class="status-dot"></span>당시 작업 기록을 2026.11.15에 다시 정리한 글입니다.</div><a class="project-return" href="/projects/'+project.id+'/"><span>프로젝트 전체 과정 보기</span><strong>'+n.project+' ↗</strong></a></article><nav class="toc" aria-label="글 목차"><span>IN THIS NOTE</span>'+n.sections.map(([h,b],i)=>'<a href="#part-'+i+'">'+h+'</a>').join('')+'<button class="print-button" data-print>인쇄 / PDF 저장 ↗</button></nav></div>';
- write('notes/'+n.id+'/index.html',page(n.title,n.summary,body,'notes','/notes/'+n.id+'/'));
-}
-const about='<header class="detail-header"><span class="section-label">ABOUT / JONGMU KIM</span><h1>김종무<span>↗</span></h1><p class="detail-subtitle">기계공학에서 출발해,<br>소프트웨어와 데이터, 기기로 경험을 넓히고 있습니다.</p></header><div class="about-page"><div class="about-intro"><div class="initial-portrait" aria-hidden="true">JM<span>ME → SW</span></div><div><p class="lead">복잡한 부품이 맞물려 하나의 기능을 만드는 일이 좋아 기계공학을 공부했습니다. 지금은 화면과 데이터, 작은 기기가 연결되어 동작하는 과정을 배우고 있습니다.</p><p>프로젝트에서 이해하지 못한 부분은 질문하고, 완료됐다는 설명은 실제 결과와 대조합니다. 잘된 결과와 남은 문제를 함께 기록해 다음 작업의 기준으로 삼습니다.</p><a class="text-link" href="https://github.com/j-moo" target="_blank" rel="noopener">GitHub에서 작업 보기 ↗</a></div></div><section><h2>배움과 프로젝트</h2><div class="timeline"><div><span>2026</span><h3>삼성청년SW·AI아카데미</h3><p>소프트웨어·AI 교육과 팀 프로젝트. 소비 기록 웹 서비스, 영상 팬미팅, 대중교통 데이터 연산, BLE 키링으로 경험을 넓혔습니다.</p></div><div><span>2024</span><h3>동아대학교 기계공학과 졸업</h3><p>기계장치와 구조에 대한 관심에서 출발했습니다. 현재의 하드웨어 조립과 실물 검증 경험으로 이어지고 있습니다.</p></div></div></section><section><h2>프로젝트에서 사용한 도구</h2><div class="skill-groups"><div><h3>데이터와 예측</h3>'+tags(['Python','SQL','LightGBM','전처리','모델 평가'])+'<p>입력의 연결 상태와 가용 시점, 비교 조건을 확인합니다.</p></div><div><h3>화면과 웹 서비스</h3>'+tags(['JavaScript','React','Vue','Django REST','API 연동'])+'<p>화면의 상태와 데이터 흐름을 연결해 점검합니다.</p></div><div><h3>기기와 실제 동작</h3>'+tags(['BLE','Zephyr C','XIAO','CAD 검토','3D 출력'])+'<p>기기 로그와 실물 조립, 앱의 최종 동작을 대조합니다.</p></div></div></section><section class="off-work"><span class="section-label">AWAY FROM THE KEYBOARD</span><h2>오래 좋아하는 것,<br>야구와 운동.</h2><p>초등학교 때 시작한 야구를 지금도 사회인 리그에서 이어가고 있습니다. 투구를 독학하고 운동하며 구속 132km/h까지 도전했습니다. 팀원이 실수했을 때 건네는 격려가 팀의 분위기를 바꾸는 것도 배웠습니다.</p></section></div>';
-write('about/index.html',page('소개','기계공학에서 소프트웨어로 경험을 넓히는 김종무를 소개합니다.',about,'about','/about/'));
-write('404.html',page('페이지를 찾을 수 없습니다','김종무 포트폴리오','<section class="error-page"><span>404</span><h1>아직 기록되지 않은 페이지입니다.</h1><a class="button primary" href="/">홈으로 돌아가기 →</a></section>'));
-const searchData=[...projects.map(p=>({title:p.name+' — '+p.tagline,summary:p.roleDetail,tag:'프로젝트',url:'/projects/'+p.id+'/'})),...notes.map(n=>({title:n.title,summary:n.summary,tag:n.project+' · '+n.tag,url:'/notes/'+n.id+'/'}))];write('search-index.json',JSON.stringify(searchData));
-const urls=['/','/notes/','/about/',...projects.map(p=>'/projects/'+p.id+'/'),...notes.map(n=>'/notes/'+n.id+'/')];
-write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls.map(u=>'<url><loc>https://j-moo.github.io'+u+'</loc><lastmod>2026-11-15</lastmod></url>').join('')+'</urlset>');
-write('robots.txt','User-agent: *\nAllow: /\nSitemap: https://j-moo.github.io/sitemap.xml\n');
-write('feed.xml','<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>김종무 개발 기록</title><link>https://j-moo.github.io/notes/</link><description>문제와 선택, 확인한 결과를 남깁니다.</description><language>ko</language>'+notes.map(n=>'<item><title>'+esc(n.title)+'</title><link>https://j-moo.github.io/notes/'+n.id+'/</link><guid>https://j-moo.github.io/notes/'+n.id+'/</guid><description>'+esc(n.summary)+'</description></item>').join('')+'</channel></rss>');
-console.log('Built '+urls.length+' pages + 404, search, RSS and sitemap.');
-function write(file,text){const target=path.join(out,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,text,'utf8');}
+import {projects, archive} from './content.mjs';
+import {notes} from './portfolio-data.mjs';
 
+const out = path.resolve('docs');
+const domain = 'https://j-moo.github.io';
+const updated = '2026-11-20';
+const github = 'https://github.com/j-moo';
+const html = value => String(value).replace(/[&<>"']/g, character =>
+  ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[character]));
+const projectUrl = project => '/projects/' + project.id + '/';
+const noteUrl = note => '/notes/' + note.id + '/';
+const urls = [];
+
+function write(file, content) {
+  const target = path.join(out, file);
+  fs.mkdirSync(path.dirname(target), {recursive: true});
+  fs.writeFileSync(target, content);
+}
+
+function link([label, url], className = '') {
+  return `<a class="${className}" href="${html(url)}">${html(label)}</a>`;
+}
+
+function page(url, title, description, body, active = '') {
+  const navigation = [
+    ['프로젝트', '/#projects', 'projects'], ['작업 모음', '/archive/', 'archive'],
+    ['개발 기록', '/notes/', 'notes'], ['소개', '/about/', 'about']
+  ].map(([name, href, key]) => `<a href="${href}" ${active === key ? 'aria-current="page"' : ''}>${name}</a>`).join('');
+  const document = `<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${html(title)} · 김종무</title><meta name="description" content="${html(description)}">
+<meta name="theme-color" content="#f9fafb"><meta property="og:type" content="website">
+<meta property="og:title" content="${html(title)} · 김종무"><meta property="og:description" content="${html(description)}">
+<meta property="og:url" content="${domain + url}"><link rel="canonical" href="${domain + url}">
+<link rel="icon" href="/assets/favicon.svg"><link rel="alternate" type="application/rss+xml" href="/feed.xml" title="김종무 개발 기록">
+<link rel="preload" href="/assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
+<script defer src="/app.js"></script></head><body id="top">
+<a class="skip" href="#main">본문 바로가기</a><header class="topbar"><div class="container nav-wrap">
+<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span aria-hidden="true">jm<span class="brand-dot">.</span></span>김종무</a>
+<nav aria-label="주 메뉴">${navigation}</nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
+</div></header><main id="main">${body}</main>
+<footer id="about"><div class="container footer-inner"><div><strong>김종무</strong><small>소프트웨어 개발자 · 2026.11.20</small></div><div class="links">${link(['GitHub 프로필', github])} ${link(['RSS', '/feed.xml'])} ${link(['맨 위로', '#top'])}</div></div></footer>
+<dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-heading"><h2 id="search-title">포트폴리오 검색</h2><button data-close-search>닫기</button></div>
+<label for="search-input">프로젝트, 역할 또는 기술</label><input type="search" id="search-input" placeholder="예: BLE, 모델, 영상" autocomplete="off"><div id="search-results" aria-live="polite"></div></dialog>
+</body></html>`;
+  if (url !== '/404.html') urls.push(url);
+  write(url === '/404.html' ? '404.html' : url.slice(1) + 'index.html', document);
+}
+
+function tags(values) {
+  return `<ul class="tags">${values.map(value => `<li>${html(value)}</li>`).join('')}</ul>`;
+}
+
+function visual(p) {
+  if (p.id === 'ddubi') return `<div class="art art-data" aria-hidden="true"><div class="art-caption">버스 구간 평균 절대 오차</div><div class="chart-line"><span>중앙값</span><i style="--value:92%"></i><b>27.61초</b></div><div class="chart-line best"><span>LightGBM</span><i style="--value:86.8%"></i><b>26.04초</b></div></div>`;
+  if (p.id === 'flex') return `<div class="art art-flex" aria-hidden="true"><div class="model-box"><small>계정</small><b>User</b></div><i class="relation"></i><div class="model-box"><small>프로필</small><b>Profile</b></div><span class="relation-note">한 트랜잭션에서 저장</span></div>`;
+  const image = p.id === 'tingle' ? ['tingle-cad.png','키링 내부 부품 배치 CAD 렌더'] : p.photo;
+  return `<div class="art art-${p.id}"><img loading="lazy" src="/assets/${image[0]}" alt="${html(image[1])}"></div>`;
+}
+
+function card(p) {
+  return `<article class="card"><a href="${projectUrl(p)}">${visual(p)}
+<div class="card-copy"><div class="meta"><strong>${p.name}</strong><span>${p.field}</span></div>
+<h3>${p.title}</h3><p>${p.brief}</p><span class="read">사례 읽기</span></div></a></article>`;
+}
+
+function noteRow(n) {
+  return `<a class="note-row" href="${noteUrl(n)}" data-tag="${html(n.tag)}" data-filter-text="${html([n.title,n.summary,n.project,n.tag].join(' '))}"><div class="note-meta"><span>${n.project} · ${n.tag}</span><time>${n.date}</time></div><div><h3>${n.title}</h3><p>${n.summary}</p></div></a>`;
+}
+
+fs.mkdirSync(out, {recursive:true});
+fs.cpSync('assets', path.join(out, 'assets'), {recursive:true});
+for (const file of ['styles.css','app.js']) fs.copyFileSync(file, path.join(out, file));
+
+write('.nojekyll','');
+const home = `<section class="intro container"><div class="intro-copy"><p class="kicker"><span class="rule"></span>김종무 · 소프트웨어 개발자</p>
+<h1>데이터와 화면,<br><em>실물을 연결합니다.</em></h1>
+<p class="lead">버스 번호가 모호하면 실제 노선을 열어 보고, 키링이 조용하면 보드에 남은 기록을 읽습니다. 무엇이 잘못됐는지 좁혀 가고, 바꾼 뒤 같은 조건에서 다시 확인합니다.</p>
+<div class="actions">${link(['프로젝트 보기','#projects'],'button primary')}${link(['소개와 경력 요약','/about/'],'button')}</div></div>
+<figure class="cover"><div class="cover-images"><img class="cover-case" src="/assets/tingle-case.webp" alt="직접 조립한 흰 케이스의 키링"><div class="inset"><img src="/assets/tingle-cad.png" alt="앞서 검토한 R17 내부 배치 렌더"></div></div><figcaption><b>Tingle</b><span>11.13 배치 검토 · 11.18 실물 케이스</span></figcaption></figure></section>
+<div class="route-band"><div class="container routes"><strong>직무별 사례</strong>${projects.map(p=>link([p.field,projectUrl(p)])).join('')}</div></div>
+<section class="container block" id="projects"><div class="section-head"><div><p class="kicker">Selected projects</p><h2>대표 프로젝트</h2></div>${link(['작업 모음 전체 보기','/archive/'],'text-link')}</div>
+<div class="cards">${projects.map(card).join('')}</div></section>
+<section class="container block divided" id="notes"><div class="section-head"><div><p class="kicker">Engineering notes</p><h2>개발 기록</h2></div>${link(['전체 글 보기','/notes/'],'text-link')}</div>
+${[...notes].sort((a,b)=>b.date.localeCompare(a.date)).map(noteRow).join('')}</section>`;
+page('/', '소프트웨어 개발자 포트폴리오', '김종무의 데이터·웹·IoT 프로젝트. 실제 선택과 검증 결과를 소개합니다.', home);
+
+for (const p of projects) {
+  const related = notes.filter(n=>n.project === p.name);
+  const body = `<header class="container article-top"><a class="back" href="/#projects">대표 프로젝트</a>
+<div class="kicker">${p.name} <span>/</span> ${p.field}</div><h1>${p.title}</h1><p class="lead">${p.service}</p>
+<dl class="facts">${[['담당',p.role],['구성',p.team],['작업 기간',p.period]].map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></header>
+<div class="container article-grid"><aside class="contents"><nav aria-label="사례 목차">${[['맡은 일','#overview'],['판단과 변경','#process'],['검증 결과','#result'],['확인 자료','#evidence']].map(item=>link(item)).join('')}</nav><button data-print>인쇄 / PDF 저장</button></aside>
+<article class="prose"><section id="overview"><h2 id="problem">제가 맡은 일</h2><p>${p.contribution}</p>${tags(p.skills)}</section>
+<section id="process"><h2>판단하고 바꾼 과정</h2>${p.steps.map(([title,body])=>`<h3>${title}</h3><p>${body}</p>`).join('')}</section>
+<section id="result"><h2>${p.evidence}</h2><div class="table-wrap"><table><thead><tr>${p.columns.map(t=>`<th scope="col">${t}</th>`).join('')}</tr></thead><tbody>${p.rows.map(row=>`<tr>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="scope" id="learning">${p.scope}</p></section>
+<section id="evidence"><h2>확인 자료</h2>${p.photo ? `<figure class="proof proof-${p.id}"><a href="/assets/${p.photo[0]}"><img src="/assets/${p.photo[0]}" alt="${p.photo[1]}" loading="lazy"></a><figcaption>${p.photo[1]}</figcaption></figure>` : ''}<div class="links">${p.links.map(item=>link(item,'document-link')).join('')}</div></section>
+${related.length ? `<section><h2>관련 개발 기록</h2>${related.map(noteRow).join('')}</section>` : ''}
+</article></div>`;
+  page(projectUrl(p), p.name + ' · ' + p.role, p.brief, body, 'projects');
+}
+
+const archiveItem = item => `<article class="archive-item" id="${item.id}"><div><p class="meta">${item.field}</p><h3>${item.name}</h3><time>${item.date}</time></div><div><h4>${item.title}</h4><p>${item.text}</p>${item.link ? link(item.link,'text-link') : ''}</div></article>`;
+page('/archive/', '작업 모음', '팀 프로젝트와 해커톤, 웹서비스 실습, 직접 사용한 개인 도구의 작업 범위.', `<div class="container"><header class="index-top"><p class="kicker">Project archive</p><h1>작업 모음</h1><p class="lead">팀에서 맡은 역할과 직접 사용하며 바꾼 도구를 모았습니다.</p></header>
+<section><h2>팀 프로젝트</h2><div class="archive-team">${projects.map(p=>link([p.name+' · '+p.field,projectUrl(p)],'document-link')).join('')}</div></section><section class="block"><h2>해커톤 · 실습 · 개인 작업</h2>${archive.map(archiveItem).join('')}</section></div>`,'archive');
+
+const filters = ['전체',...new Set(notes.map(n=>n.tag))];
+page('/notes/','개발 기록','문제를 좁히고 다시 확인한 과정',`<div class="container narrow"><header class="index-top"><p class="kicker">Engineering notes</p><h1>개발 기록</h1><p class="lead">실험 조건과 설계 판단을 한 가지 질문씩 풀어 썼습니다.</p></header>
+<div class="filter-bar">${filters.map((tag,i)=>`<button data-filter="${tag}" aria-pressed="${i===0}">${tag}</button>`).join('')}</div><label for="notes-filter">글 찾기</label><input type="search" id="notes-filter" placeholder="제목, 주제, 프로젝트">
+<div id="filtered-notes">${[...notes].sort((a,b)=>b.date.localeCompare(a.date)).map(noteRow).join('')}</div><p id="no-notes" hidden>일치하는 글이 없습니다.</p></div>`,'notes');
+for (const n of notes) {
+  const p = projects.find(p=>p.name===n.project);
+  page(noteUrl(n),n.title,n.summary,`<div class="container narrow"><header class="article-top"><a class="back" href="/notes/">개발 기록</a><p class="kicker">${n.project} · ${n.tag} · ${n.date}</p><h1>${n.title}</h1><p class="lead">${n.summary}</p></header><article class="prose reading">
+${n.sections.map(([h,b],i)=>`<section id="part-${i}"><h2>${h}</h2><p>${b}</p></section>`).join('')}
+<p class="scope">당시 작업을 2026년 11월 15일 정리한 글입니다.</p>${link([p.name+' 프로젝트 상세',projectUrl(p)],'button')} <button data-print>인쇄 / PDF 저장</button></article></div>`,'notes');
+}
+
+page('/about/', '소개와 경력 요약', '김종무의 교육, 프로젝트별 역할과 검증 결과', `<div class="container narrow"><header class="article-top"><p class="kicker">About · Jongmu Kim</p><h1>김종무</h1><p class="lead">기계공학에서 출발해 데이터 연산, 웹 서비스, 임베디드 소프트웨어를 경험했습니다. 팀에서는 사용자가 겪은 문제를 재현할 조건과 해결 여부를 판단할 기준을 구체화하는 일을 해 왔습니다.</p>
+<div class="actions">${link(['GitHub 프로필',github],'button primary')}<button data-print>요약 인쇄 / PDF 저장</button></div></header>
+<article class="prose reading"><section><h2>교육</h2><p><strong>삼성청년SW·AI아카데미</strong> · 2026년 소프트웨어·AI 교육 및 팀 프로젝트<br><strong>동아대학교 기계공학과</strong> · 2024년 졸업</p></section>
+<section><h2>프로젝트 경험</h2>${projects.map(p=>`<div class="cv-item"><h3>${link([p.name,projectUrl(p)])} <span>${p.period}</span></h3><strong>${p.role}</strong><p>${p.brief}</p></div>`).join('')}</section>
+<section><h2>팀에서 일할 때</h2><p>DDUBI에서 저는 실시간 위치와 혼잡도까지 폭넓게 요청했습니다. 수집 담당자와 API 호출 한도와 시간대별 누락을 살펴본 뒤 학습에 쓸 수 있는 입력을 다시 정했습니다. 상대가 어떤 데이터를 왜 만들어야 하는지 설명하고, 실제로 전달할 수 있는 범위를 함께 확인하는 방법을 배웠습니다.</p>${link(['데이터 수집 담당자와 조율한 기록','/notes/collectable-data/'],'text-link')}</section>
+<section><h2>야구와 운동</h2><p>초등학교 때 시작한 야구를 사회인 리그에서 이어가고 있습니다. 투구를 독학하며 구속 132km/h까지 도전했습니다.</p></section></article></div>`, 'about');
+
+page('/404.html', '페이지를 찾을 수 없습니다', '포트폴리오 홈으로 이동할 수 있습니다.', `<div class="container index-top"><p class="kicker">404</p><h1>페이지를 찾을 수 없습니다.</h1>${link(['홈으로 돌아가기','/'],'button primary')}</div>`);
+
+const index = [
+  ...projects.map(p=>({title:p.name+' · '+p.title,summary:p.brief,tag:[p.field,p.role,...p.skills].join(' · '),url:projectUrl(p)})),
+  ...archive.map(p=>({title:p.name+' · '+p.title,summary:p.text,tag:p.field,url:'/archive/#'+p.id})),
+  ...notes.map(n=>({title:n.title,summary:n.summary,tag:n.project+' · '+n.tag,url:noteUrl(n)}))
+];
+write('search-index.json',JSON.stringify(index));
+write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u=>`<url><loc>${domain+u}</loc><lastmod>${updated}</lastmod></url>`).join('')}</urlset>`);
+write('robots.txt','User-agent: *\nAllow: /\nSitemap: '+domain+'/sitemap.xml\n');
+write('feed.xml',`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>김종무 개발 기록</title><link>${domain}/notes/</link><description>개발 과정에서 내린 판단과 확인한 결과</description><language>ko</language>${notes.map(n=>`<item><title>${html(n.title)}</title><link>${domain+noteUrl(n)}</link><guid>${domain+noteUrl(n)}</guid><description>${html(n.summary)}</description></item>`).join('')}</channel></rss>`);
+console.log('Built '+urls.length+' pages, 404, search index, RSS and sitemap.');

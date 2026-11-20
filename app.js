@@ -1,19 +1,98 @@
-const root=document.documentElement;
-document.querySelectorAll('.theme-toggle').forEach(b=>b.addEventListener('click',()=>{const theme=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=theme;try{localStorage.setItem('jm-theme',theme)}catch{}b.setAttribute('aria-label',theme==='dark'?'밝은 테마로 전환':'어두운 테마로 전환')}));
-const menu=document.querySelector('.mobile-menu'),side=document.querySelector('.sidebar');
-menu?.addEventListener('click',()=>{const open=side.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기')});
-document.querySelectorAll('.sidebar nav a').forEach(a=>a.addEventListener('click',()=>{side.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
-document.querySelectorAll('[data-print]').forEach(b=>b.addEventListener('click',()=>window.print()));
-if('IntersectionObserver'in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}},{threshold:.05});document.querySelectorAll('.reveal').forEach(e=>{e.classList.add('js-reveal');observer.observe(e)})}
-let filter='전체';const notes=[...document.querySelectorAll('#filtered-notes .note-row')],filterInput=document.querySelector('#notes-filter');
-function applyFilter(){const q=filterInput?.value.trim().toLowerCase()||'';let count=0;for(const n of notes){const show=(filter==='전체'||n.dataset.tag===filter)&&n.dataset.filterText.toLowerCase().includes(q);n.hidden=!show;if(show){count++;n.classList.add('visible')}}const empty=document.querySelector('#no-notes');if(empty)empty.hidden=count>0}
-document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});applyFilter()}));filterInput?.addEventListener('input',applyFilter);
-const dialog=document.querySelector('#search-dialog'),input=document.querySelector('#search-input'),results=document.querySelector('#search-results');let index=null;let trigger=null;
-function renderSearch(){if(!index)return;const q=input.value.trim().toLowerCase();const items=index.filter(n=>(n.title+' '+n.summary+' '+n.tag).toLowerCase().includes(q));results.replaceChildren();for(const item of items){const a=document.createElement('a');a.href=item.url;const small=document.createElement('small');small.textContent=item.tag;const title=document.createElement('strong');title.textContent=item.title;const p=document.createElement('p');p.textContent=item.summary;a.append(small,title,p);results.append(a)}if(!items.length){const p=document.createElement('p');p.textContent='일치하는 기록이 없습니다. 다른 단어로 검색해 보세요.';results.append(p)}}
-async function openSearch(e){trigger=e?.currentTarget||document.activeElement;dialog.showModal();input.focus();if(!index){results.textContent='기록을 불러오는 중입니다.';try{const r=await fetch('/search-index.json');if(!r.ok)throw Error();index=await r.json();renderSearch()}catch{results.textContent='검색을 불러오지 못했습니다. 개발 기록 메뉴에서 모든 글을 볼 수 있습니다.'}}else renderSearch()}
-document.querySelectorAll('[data-search]').forEach(b=>b.addEventListener('click',openSearch));
-document.querySelector('[data-close-search]')?.addEventListener('click',()=>dialog.close());
-dialog?.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}});
-dialog?.addEventListener('close',()=>trigger?.focus?.());input?.addEventListener('input',renderSearch);
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(dialog.open)dialog.close();else openSearch()}if(e.key==='Escape'&&side?.classList.contains('open')){side.classList.remove('open');menu?.setAttribute('aria-expanded','false')}});
+const root = document.documentElement;
+const themeButton = document.querySelector('.theme-toggle');
+function labelTheme() {
+  themeButton.setAttribute('aria-label', root.dataset.theme === 'dark' ? '밝은 테마로 전환' : '어두운 테마로 전환');
+}
+labelTheme();
+themeButton.addEventListener('click', () => {
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('jm-theme', root.dataset.theme); } catch {}
+  labelTheme();
+});
 
+for (const button of document.querySelectorAll('[data-print]')) {
+  button.addEventListener('click', () => window.print());
+}
+
+const noteInput = document.querySelector('#notes-filter');
+if (noteInput) {
+  const buttons = [...document.querySelectorAll('[data-filter]')];
+  const rows = [...document.querySelectorAll('#filtered-notes .note-row')];
+  let category = '전체';
+  function filterNotes() {
+    const term = noteInput.value.trim().toLowerCase();
+    for (const row of rows) {
+      row.hidden = (category !== '전체' && row.dataset.tag !== category) ||
+        !row.dataset.filterText.toLowerCase().includes(term);
+    }
+    document.querySelector('#no-notes').hidden = rows.some(row => !row.hidden);
+  }
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      category = button.dataset.filter;
+      for (const item of buttons) item.setAttribute('aria-pressed', String(item === button));
+      filterNotes();
+    });
+  }
+  noteInput.addEventListener('input', filterNotes);
+}
+
+const dialog = document.querySelector('#search-dialog');
+const searchInput = document.querySelector('#search-input');
+const results = document.querySelector('#search-results');
+let searchIndex;
+let trigger;
+function renderResults() {
+  if (!searchIndex) return;
+  const term = searchInput.value.trim().toLowerCase();
+  const matches = searchIndex.filter(item => [item.title, item.summary, item.tag].join(' ').toLowerCase().includes(term));
+  results.replaceChildren();
+  for (const item of matches) {
+    const anchor = document.createElement('a');
+    anchor.href = item.url;
+    const field = document.createElement('small');
+    field.textContent = item.tag;
+    const title = document.createElement('strong');
+    title.textContent = item.title;
+    const summary = document.createElement('p');
+    summary.textContent = item.summary;
+    anchor.append(field, title, summary);
+    results.append(anchor);
+  }
+  if (!matches.length) results.textContent = '일치하는 글이 없습니다. 다른 단어로 검색해 보세요.';
+}
+async function openSearch() {
+  trigger = document.activeElement;
+  dialog.showModal();
+  searchInput.focus();
+  if (!searchIndex) {
+    results.textContent = '검색 자료를 불러오는 중입니다.';
+    try {
+      const response = await fetch('/search-index.json');
+      if (!response.ok) throw new Error('search index unavailable');
+      searchIndex = await response.json();
+    } catch {
+      results.textContent = '검색 자료를 열 수 없습니다. 작업 모음과 개발 기록에서 전체 글을 볼 수 있습니다.';
+      return;
+    }
+  }
+  renderResults();
+}
+document.querySelector('[data-search]').addEventListener('click', openSearch);
+document.querySelector('[data-close-search]').addEventListener('click', () => dialog.close());
+searchInput.addEventListener('input', renderResults);
+results.addEventListener('click', event => {
+  if (event.target.closest('a')) dialog.close();
+});
+dialog.addEventListener('close', () => trigger?.focus());
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const box = dialog.getBoundingClientRect();
+  if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+});
+document.addEventListener('keydown', event => {
+  if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k') return;
+  event.preventDefault();
+  if (dialog.open) dialog.close();
+  else openSearch();
+});
