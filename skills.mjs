@@ -34,23 +34,10 @@ export const skillGroups = [
     ]
   },
   {
-    id: 'data-libraries', title: '데이터·머신러닝 라이브러리',
+    id: 'data-libraries', title: '데이터 라이브러리',
     skills: [
       {name: 'pandas', icon: 'pandas.svg', levels: [.5, 1, .5, 1], example: 'DDUBI · 날짜별 교통 데이터 전처리', url: '/projects/ddubi/#daily-parquet'},
-      {name: 'NumPy', icon: 'numpy.svg', levels: [.5, .5, .5, 1], example: 'DDUBI · 버스 구간 예측 오차 계산', url: '/projects/ddubi/#numpy-errors'},
-      {name: 'PyArrow', icon: 'pyarrow.png', levels: [.5, 1, .5, .5], example: 'DDUBI · 날짜별 Parquet 저장', url: '/projects/ddubi/#daily-parquet'},
-      {name: 'scikit-learn', icon: 'scikitlearn.svg', levels: [.5, .5, .5, 1], example: 'DDUBI · ExtraTrees의 오차 비교', url: '/projects/ddubi/#candidate-models'},
-      {name: 'CatBoost', icon: 'catboost.png', levels: [.5, .5, .5, 1], example: 'DDUBI · 트리 깊이에 따른 모델 비교', url: '/projects/ddubi/#candidate-models'},
-      {name: 'LightGBM', icon: 'lightgbm.png', levels: [1, .5, 1, 1], example: 'DDUBI · 버스 구간 예측 모델 비교', url: '/notes/prediction-input/'}
-    ]
-  },
-  {
-    id: 'ai-tools', title: 'AI 도구',
-    skills: [
-      {name: 'ChatGPT', icon: 'chatgpt.svg', levels: [1, 0, .5, .5], example: 'Tingle · 초기 기획안과 화면 흐름 검토', url: '/projects/tingle/#chatgpt-planning'},
-      {name: 'Codex', icon: 'codex.svg', levels: [1, 1, 1, .5], example: 'Melly · 역할별 화면과 API 대조', url: '/projects/melly/#codex-api'},
-      {name: 'Google Stitch', icon: 'google.svg', levels: [1, .5, 1, .5], example: 'Melly · 로그인 시안 검토', url: '/projects/melly/#stitch-design'},
-      {name: 'GPT API (GMS)', icon: 'gpt-api.svg', levels: [.5, 1, .5, .5], example: 'Flex_Log · 월별 소비 분석 요청', url: '/projects/flex/#gms-analysis'}
+      {name: 'NumPy', icon: 'numpy.svg', levels: [.5, .5, .5, 1], example: 'DDUBI · 버스 구간 예측 오차 계산', url: '/projects/ddubi/#numpy-errors'}
     ]
   },
   {
