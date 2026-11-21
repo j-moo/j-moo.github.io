@@ -9,6 +9,7 @@ const out = path.resolve('docs');
 const domain = 'https://j-moo.github.io';
 const updated = '2026-11-21';
 const github = 'https://github.com/j-moo';
+const email = 'rlawhdan363@gmail.com';
 const html = value => String(value).replace(/[&<>"']/g, character =>
   ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[character]));
 const projectUrl = project => '/projects/' + project.id + '/';
@@ -73,7 +74,13 @@ function skillsSection() {
   <h3>${html(group.title)}</h3><ul>${group.skills.map(skill => `<li><button type="button" class="tool-icon" aria-label="${html(skill.name)}" aria-expanded="false"><img src="/assets/tech/${html(skill.icon)}" width="34" height="34" alt=""><span aria-hidden="true" class="tool-name">${html(skill.name)}</span></button></li>`).join('')}</ul></section>`).join('')}</div></section>`;
 }
 
-const education = '삼성청년SW·AI아카데미(SSAFY) 15기 수료';
+const contact = `<address class="profile-contact">${link([email, 'mailto:' + email], 'contact-email')}</address>`;
+
+function educationSection(className) {
+  return `<section class="${className}" id="education" aria-labelledby="education-title"><h2 id="education-title" lang="en">Education</h2>
+  <dl class="education-list"><div><dt>삼성청년SW·AI아카데미 (SSAFY)</dt><dd>15기 수료</dd></div>
+  <div><dt>동아대학교 기계공학과</dt><dd>2024년 졸업</dd></div></dl></section>`;
+}
 
 function serviceScreen(p) {
   const [file, alt, caption, width, height] = p.screen;
@@ -81,7 +88,7 @@ function serviceScreen(p) {
 }
 
 function projectStack(p) {
-  const groups = [['사용 언어', p.languages], ['프레임워크', p.frameworks], ['도구·기술', p.tools]];
+  const groups = [['사용 언어', p.languages], ['프레임워크·라이브러리', p.frameworks], ['도구·기술', p.tools]];
   return `<dl class="project-stack">${groups.map(([label, items])=>`<div><dt>${label}</dt><dd>${html(items.join(' · '))}</dd></div>`).join('')}</dl>`;
 }
 
@@ -124,9 +131,10 @@ const home = `<section class="profile-hero" aria-labelledby="profile-name"><div 
 <div class="profile-art"><div class="portrait-print"><img src="/assets/portrait.webp" width="467" height="600" alt="김종무의 프로필 사진" fetchpriority="high"></div></div>
 <div class="profile-intro"><p class="profile-principle">기능을 만들고 나면 처음 쓰는 사람처럼 다시 써 봅니다.</p>
 <p class="profile-experience">네 번의 팀 프로젝트에서 화면을 설계하고, 교통 데이터를 다루고, 키링을 앱에 연결했습니다.</p>
+${contact}
 <div class="profile-actions">${arrowLink('프로젝트 보기','#projects','hero-link','↓')}${arrowLink('GitHub',github,'hero-secondary','↗')}</div></div>
 </div></section>${skillsSection()}
-<section class="container edu-line" id="education" aria-labelledby="education-title"><h2 id="education-title">교육</h2><p>${education}</p></section>
+${educationSection('container education-home')}
 <section class="container projects-block" id="projects" aria-labelledby="projects-title">${sectionHead('프로젝트','projects-title')}
 <div class="work-grid">${projects.map(showcase).join('')}</div></section>`;
 
@@ -164,8 +172,9 @@ ${n.sections.map(([h,b],i)=>`<section id="part-${i}"><h2>${h}</h2><p>${b}</p></s
 }
 
 page('/about/', '소개와 경력 요약', '김종무의 교육, 프로젝트별 역할과 검증 결과', `<div class="container narrow"><header class="article-top"><p class="kicker">소프트웨어 개발자</p><h1>김종무</h1><p class="lead">새로 가입한 사람이 첫 소비를 기록할 수 있는지, 팬이 대기실에서 자기 차례에 영상 방으로 들어갈 수 있는지 직접 확인해 왔습니다. 문제가 생기면 같은 상황을 다시 만들고, 팀원과 함께 화면과 데이터가 어디에서 어긋났는지 살핍니다.</p>
+${contact}
 <div class="actions">${link(['GitHub 프로필',github],'button primary')}<button data-print>요약 인쇄 / PDF 저장</button></div></header>
-<article class="prose reading"><section><h2>교육</h2><p><strong>${education}</strong></p></section>
+<article class="prose reading">${educationSection('education-summary')}
 <section><h2>프로젝트 경험</h2>${projects.map(p=>`<div class="cv-item"><h3>${link([p.name,projectUrl(p)])} <span>${p.period}</span></h3><strong>${p.role}</strong><p>${p.outcome}</p></div>`).join('')}</section>
 <section><h2>팀에서 일할 때</h2><p>DDUBI에서 저는 실시간 위치와 혼잡도까지 폭넓게 요청했습니다. 수집 담당자와 API 호출 한도와 시간대별 누락을 살펴본 뒤 학습에 쓸 수 있는 입력을 다시 정했습니다. 상대가 어떤 데이터를 왜 만들어야 하는지 설명하고, 실제로 전달할 수 있는 범위를 함께 확인하는 방법을 배웠습니다.</p>${link(['데이터 수집 담당자와 조율한 기록','/notes/collectable-data/'],'text-link')}</section>
 <section><h2>야구와 운동</h2><p>초등학교 때 시작한 야구를 사회인 리그에서 이어가고 있습니다. 투구를 독학하며 구속 132km/h까지 도전했습니다.</p></section></article></div>`, 'about');

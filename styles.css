@@ -95,6 +95,8 @@ h1, h2, h3, h4 { line-height: 1.18; }
 .profile-intro { grid-area: intro; margin-top: clamp(1.45rem, 2.7vw, 2.6rem); }
 .profile-principle { font-size: clamp(1.12rem, 1.55vw, 1.5rem); font-weight: 630; text-wrap: balance; line-height: 1.55; letter-spacing: -.035em; }
 .profile-experience { max-width: 29em; text-wrap: balance; font-size: clamp(1rem, 1.13vw, 1.12rem); line-height: 1.7; margin-top: .52rem; color: var(--muted); }
+.profile-contact { margin-top: .65rem; font-style: normal; }
+.contact-email { display: inline-flex; align-items: center; min-height: 36px; font-weight: 580; color: var(--blue); text-decoration: underline; text-underline-offset: .22em; }
 .profile-actions { display: flex; align-items: center; gap: 1.45rem; margin-top: clamp(1.35rem, 2.4vw, 2.25rem); }
 .hero-link, .hero-secondary { display: inline-flex; gap: .7rem; align-items: center; min-height: 44px; font-weight: 680; font-size: .95rem; }
 .hero-link { padding: .6rem 1.18rem; border-radius: 2rem; color: var(--sheet); background: var(--ink); }
@@ -123,9 +125,12 @@ h1, h2, h3, h4 { line-height: 1.18; }
 .tool-icon:focus-visible .tool-name, .tool-icon[aria-expanded=true] .tool-name { visibility: visible; }
 .tool-group li:last-child .tool-name { left: auto; right: 0; }
 @media (hover:hover) { .tool-icon:hover .tool-name { visibility: visible; } }
-.edu-line { border-block: 1px solid var(--rule); display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1.5rem; padding-block: 1.15rem; }
-.edu-line h2 { font-size: 1rem; color: var(--muted); }
-.edu-line p { font-weight: 650; font-size: 1.06rem; }
+.education-home { border-block: 1px solid var(--rule); display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr); gap: 1rem 2rem; align-items: baseline; padding-block: clamp(1.6rem, 3vw, 2.8rem); }
+.education-home h2 { font-size: clamp(1.9rem, 3.5vw, 3.5rem); letter-spacing: -.055em; }
+.education-list > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .15rem 1rem; }
+.education-list > div + div { border-top: 1px solid var(--rule); padding-top: .75rem; margin-top: .75rem; }
+.education-list dt { font-weight: 650; }
+.education-list dd { color: var(--muted); font-size: .94rem; }
 .projects-block > .section-head { margin-bottom: clamp(1.5rem, 3vw, 3rem); }
 .projects-block { padding-block: clamp(2.3rem,4.7vw,4.8rem); }
 .work-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2.5rem,5vw,5rem) clamp(1.5rem,3.5vw,3.6rem); }
@@ -173,6 +178,7 @@ figcaption { font-size: .84rem; color: var(--muted); margin-top: .35rem; }
 .project-stack > div, .case-facts > div { display: grid; grid-template-columns: 5.45rem minmax(0,1fr); align-items: baseline; gap: .7rem; }
 .project-stack dt, .case-facts dt { font-size: .83rem; color: var(--muted); }
 .project-stack dd, .case-facts dd { font-size: .95rem; }
+.project-stack > div { grid-template-columns: 7.6rem minmax(0,1fr); }
 .case-top { padding-block: clamp(1.8rem,4vw,4rem); }
 .case-title { display: flex; flex-wrap: wrap; gap: .5rem 2rem; align-items: baseline; }
 .case-title h1 { font-size: clamp(3.3rem,7vw,7rem); line-height: 1; }
@@ -282,6 +288,7 @@ dialog::backdrop { background: #15171a99; }
   .profile-intro { margin-top: 1.8rem; }
   .profile-principle { max-width: 21em; }
   .profile-actions { margin-top: 1.15rem; }
+  .education-home { grid-template-columns: minmax(0, 1fr); }
   .work-grid { grid-template-columns: 1fr; }
   .tool-groups { gap: 1rem 1.4rem; }
   .tool-icon { width: 37px; min-height: 37px; height: 37px; }

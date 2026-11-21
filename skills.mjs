@@ -10,14 +10,17 @@ export const skillGroups = [
     ]
   },
   {
-    id: 'frameworks', title: '프레임워크·라이브러리',
+    id: 'frameworks', title: '프레임워크',
     skills: [
       {name: 'Spring Boot', icon: 'springboot.svg'},
       {name: 'Django REST Framework', icon: 'djangorest.svg'},
       {name: 'Vue 3', icon: 'vuejs.svg'},
-      {name: 'React', icon: 'react.svg'},
       {name: 'FastAPI', icon: 'fastapi.svg'}
     ]
+  },
+  {
+    id: 'ui-libraries', title: 'UI 라이브러리',
+    skills: [{name: 'React', icon: 'react.svg'}]
   },
   {
     id: 'databases', title: '데이터베이스',
@@ -28,16 +31,19 @@ export const skillGroups = [
     ]
   },
   {
-    id: 'data-libraries', title: '데이터 라이브러리',
+    id: 'data-libraries', title: '데이터 분석 라이브러리',
     skills: [
       {name: 'pandas', icon: 'pandas.svg'},
       {name: 'NumPy', icon: 'numpy.svg'}
     ]
   },
   {
-    id: 'distributed-embedded', title: '분산 처리·임베디드',
+    id: 'distributed-embedded', title: '분산 처리',
+    skills: [{name: 'Apache Spark', icon: 'apachespark.svg'}]
+  },
+  {
+    id: 'embedded', title: '임베디드·IoT',
     skills: [
-      {name: 'Apache Spark', icon: 'apachespark.svg'},
       {name: 'Zephyr RTOS', icon: 'zephyr.svg'},
       {name: 'BLE', icon: 'bluetooth.svg'}
     ]
