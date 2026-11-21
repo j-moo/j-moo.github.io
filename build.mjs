@@ -1,18 +1,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {createHash} from 'node:crypto';
 import {projects} from './content.mjs';
 import {notes} from './portfolio-data.mjs';
 import {criteria, skillGroups} from './skills.mjs';
 
 const out = path.resolve('docs');
 const domain = 'https://j-moo.github.io';
-const updated = '2026-11-20';
+const updated = '2026-11-21';
 const github = 'https://github.com/j-moo';
 const html = value => String(value).replace(/[&<>"']/g, character =>
   ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[character]));
 const projectUrl = project => '/projects/' + project.id + '/';
 const noteUrl = note => '/notes/' + note.id + '/';
 const urls = [];
+const styleVersion = createHash('sha256').update(fs.readFileSync('styles.css', 'utf8').replaceAll('\r\n', '\n')).digest('hex').slice(0, 12);
 
 function write(file, content) {
   const target = path.join(out, file);
@@ -24,6 +26,14 @@ function link([label, url], className = '') {
   return `<a class="${className}" href="${html(url)}">${html(label)}</a>`;
 }
 
+function arrowLink(label, url, className, arrow = '→') {
+  return `<a class="${className}" href="${html(url)}"><span>${html(label)}</span><span class="link-arrow" aria-hidden="true">${arrow}</span></a>`;
+}
+
+function sectionHead(title, id, detail = '') {
+  return `<header class="section-head"><h2 id="${id}">${html(title)}</h2>${detail ? `<p>${html(detail)}</p>` : ''}</header>`;
+}
+
 function page(url, title, description, body, active = '') {
   const navigation = [
     ['프로젝트', '/#projects', 'projects'], ['작업 모음', '/archive/', 'archive'],
@@ -32,18 +42,18 @@ function page(url, title, description, body, active = '') {
   const document = `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${html(title)} · 김종무</title><meta name="description" content="${html(description)}">
-<meta name="theme-color" content="#f9fafb"><meta property="og:type" content="website">
+<meta name="theme-color" content="#f8f7f3"><meta property="og:type" content="website">
 <meta property="og:title" content="${html(title)} · 김종무"><meta property="og:description" content="${html(description)}">
 <meta property="og:url" content="${domain + url}"><link rel="canonical" href="${domain + url}">
 <link rel="icon" href="/assets/favicon.svg"><link rel="alternate" type="application/rss+xml" href="/feed.xml" title="김종무 개발 기록">
 <link rel="preload" href="/assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
-<script defer src="/app.js"></script></head><body id="top">
+<link rel="stylesheet" href="/styles.css?v=${styleVersion}"><link rel="stylesheet" href="/motion.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
+<script defer src="/app.js"></script><script defer src="/motion.js"></script></head><body id="top">
 <a class="skip" href="#main">본문 바로가기</a><header class="topbar"><div class="container nav-wrap">
-<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span aria-hidden="true">jm<span class="brand-dot">.</span></span>김종무</a>
+<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span class="brand-mark" aria-hidden="true">jm<span class="brand-dot">.</span></span><span class="brand-name" lang="en">Jongmu Kim</span></a>
 <nav aria-label="주 메뉴">${navigation}</nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
 </div></header><main id="main">${body}</main>
-<footer id="about"><div class="container footer-inner"><div><strong>김종무</strong><small>소프트웨어 개발자 · 2026.11.20</small></div><div class="links">${link(['GitHub 프로필', github])} ${link(['RSS', '/feed.xml'])} ${link(['맨 위로', '#top'])}</div></div></footer>
+<footer id="about"><div class="container footer-inner"><div><strong>김종무</strong><small>소프트웨어 개발자 · ${updated.replaceAll('-', '.')}</small></div><div class="links">${link(['GitHub 프로필', github])} ${link(['RSS', '/feed.xml'])} ${link(['맨 위로', '#top'])}</div></div></footer>
 <dialog id="search-dialog" aria-labelledby="search-title"><div class="dialog-heading"><h2 id="search-title">포트폴리오 검색</h2><button data-close-search>닫기</button></div>
 <label for="search-input">프로젝트, 역할 또는 기술</label><input type="search" id="search-input" placeholder="예: BLE, 모델, 영상" autocomplete="off"><div id="search-results" aria-live="polite"></div></dialog>
 </body></html>`;
@@ -70,7 +80,7 @@ function skillsSection() {
     `<tr><th scope="row">${html(skill.name)}</th>${skill.levels.map(level=>`<td>${labels[level]}</td>`).join('')}</tr>`
   ).join('');
   return `<section class="portfolio-band" id="stack" aria-labelledby="stack-title"><div class="container skill-section">
-<header class="skill-heading"><h2 id="stack-title">기술 스택</h2><p>프로젝트 기록 기준 활용도</p></header>
+${sectionHead('기술 스택','stack-title','프로젝트 기록 기준 활용도')}
 <nav class="skill-jumps" aria-label="기술 분류 바로가기">${skillGroups.map(group=>link([group.title,'#skills-'+group.id])).join('')}</nav>
 <div class="personal-skills">${skillGroups.map(group=>`<section class="skill-group" id="skills-${group.id}"><h3>${html(group.title)}</h3><ul>${group.skills.map(skillRow).join('')}</ul></section>`).join('')}</div>
 <details class="skill-criteria"><summary>활용도 산정 기준</summary><p>${criteria.map(([name, weight])=>name+' '+weight+'%').join(', ')}를 합산했습니다. 각 항목에서 직접 수행하거나 판단한 근거가 있으면 해당 비중 전체를, 팀·AI와 함께 작업한 범위만 확인되면 절반을 반영했습니다. 기록에서 확인되지 않는 항목은 0%로 계산했습니다.</p>
@@ -81,7 +91,7 @@ const education = '삼성청년SW·AI아카데미(SSAFY) 15기 수료';
 
 function serviceScreen(p) {
   const [file, alt, caption, width, height] = p.screen;
-  return `<figure class="service-screen screen-${p.id}"><a class="screen-mat" href="/assets/${file}" aria-label="${html(p.name+' '+caption+' 크게 보기')}"><img src="/assets/${file}" width="${width}" height="${height}" alt="${html(alt)}" loading="lazy"></a><figcaption>${html(caption)}</figcaption></figure>`;
+  return `<figure class="service-screen screen-${p.id}"><a class="screen-mat" href="/assets/${file}" aria-label="${html(p.name+' '+caption+' 크게 보기')}"><img src="/assets/${file}" width="${width}" height="${height}" alt="${html(alt)}" loading="lazy"><span class="expand-screen" aria-hidden="true">↗</span></a><figcaption>${html(caption)}</figcaption></figure>`;
 }
 
 function projectStack(p) {
@@ -93,37 +103,40 @@ function projectNotes(p) {
   return notes.filter(n=>n.project === p.name).sort((a,b)=>a.date.localeCompare(b.date));
 }
 
+function noteDate(date) {
+  return `<time datetime="${date.replaceAll('.', '-')}">${date}</time>`;
+}
+
 function showcase(p) {
   const related = projectNotes(p);
   return `<article class="showcase" id="project-${p.id}" aria-labelledby="name-${p.id}">
+<header class="project-heading"><h3 id="name-${p.id}">${link([p.name,projectUrl(p)])}</h3><p class="project-period"><span>${html(p.field)}</span> ${html(p.period)}</p></header>
 <div class="showcase-main">${serviceScreen(p)}<div class="showcase-copy">
-<p class="project-period">${html(p.period)} <span>·</span> ${html(p.field)}</p>
-<h3 id="name-${p.id}">${link([p.name,projectUrl(p)])}</h3>
 <p class="service-title">${html(p.tagline)}</p><p class="service-desc">${html(p.service)}</p>
 <dl class="personal-role"><dt>내 역할</dt><dd>${html(p.role)}</dd></dl>
-${projectStack(p)}${link(['프로젝트 자세히 보기',projectUrl(p)],'case-link')}</div></div>
+${projectStack(p)}${arrowLink('프로젝트 자세히 보기',projectUrl(p),'case-link')}</div></div>
 <section class="project-journal" aria-labelledby="journal-${p.id}"><h4 id="journal-${p.id}">${p.name} 개발 기록</h4>
-<ul>${related.map(n=>`<li><a href="${noteUrl(n)}"><time>${n.date}</time><span>${html(n.title)}</span></a></li>`).join('')}</ul></section></article>`;
+<ul>${related.map(n=>`<li><a href="${noteUrl(n)}">${noteDate(n.date)}<strong>${html(n.title)}</strong><span class="link-arrow" aria-hidden="true">↗</span></a></li>`).join('')}</ul></section></article>`;
 }
 
 function noteRow(n) {
-  return `<a class="note-row" href="${noteUrl(n)}" data-tag="${html(n.tag)}" data-filter-text="${html([n.title,n.summary,n.project,n.tag].join(' '))}"><div class="note-meta"><span>${n.project} · ${n.tag}</span><time>${n.date}</time></div><div><h3>${n.title}</h3><p>${n.summary}</p></div></a>`;
+  return `<a class="note-row" href="${noteUrl(n)}" data-tag="${html(n.tag)}" data-filter-text="${html([n.title,n.summary,n.project,n.tag].join(' '))}"><div class="note-meta"><span>${n.project} · ${n.tag}</span>${noteDate(n.date)}</div><div><h3>${n.title}</h3><p>${n.summary}</p></div></a>`;
 }
 
 fs.mkdirSync(out, {recursive:true});
 fs.cpSync('assets', path.join(out, 'assets'), {recursive:true});
-for (const file of ['styles.css','app.js']) fs.copyFileSync(file, path.join(out, file));
+for (const file of ['styles.css','motion.css','app.js','motion.js']) fs.copyFileSync(file, path.join(out, file));
 
 write('.nojekyll','');
 const home = `<section class="container profile-hero" aria-labelledby="slogan"><div class="profile-copy"><p class="kicker"><span class="rule"></span>김종무 · 소프트웨어 개발자</p>
-<h1 id="slogan">직접 써 보고,<br><em>끝까지 확인합니다.</em></h1>
-<p class="lead">안녕하세요, 개발자 김종무입니다. 기계공학을 전공하고 웹 서비스와 데이터, 임베디드 소프트웨어를 경험했습니다.</p>
-<div class="actions">${link(['프로젝트 보기','#projects'],'button primary')}${link(['GitHub 프로필',github],'button')}</div></div>
+<h1 id="slogan">한 기능씩,<br><em>내 손으로 <span class="slogan-end">고칠 때까지<span class="slogan-stop">.</span></span></em></h1>
+<p class="lead">기계공학을 전공한 개발자 김종무입니다. 네 번의 팀 프로젝트를 거치며 낯선 문제를 작게 나누는 법을 배웠습니다. 이제는 제가 만든 기능을 다시 열고, 어느 줄을 왜 고쳐야 하는지 제 말로 설명하고 싶습니다.</p>
+<div class="actions">${arrowLink('프로젝트 보기','#projects','button primary','↓')}${arrowLink('GitHub 프로필',github,'button','↗')}</div></div>
 <figure class="profile-photo"><img src="/assets/portrait.webp" width="467" height="600" fetchpriority="high" alt="개발자 김종무의 증명사진"><figcaption><b>김종무</b><span lang="en">Jongmu Kim</span></figcaption></figure></section>
 ${skillsSection()}
-<section class="container band-content education-band" id="education"><h2>교육</h2><div><h3>${education}</h3><p>소비 기록 서비스부터 BLE 키링까지, 네 팀 프로젝트에서 기획·개발·기기 연동을 경험했습니다.</p></div></section>
-<section class="container projects-block" id="projects"><div class="section-head"><h2>프로젝트</h2></div>
-<nav class="project-jumps" aria-label="프로젝트 바로가기">${projects.map(p=>link([p.name,'#project-'+p.id])).join('')}</nav>
+<section class="container band-content education-band" id="education" aria-labelledby="education-title">${sectionHead('교육','education-title')}<div><h3>${education}</h3><p>소비 기록 서비스부터 BLE 키링까지, 네 팀 프로젝트에서 기획·개발·기기 연동을 경험했습니다.</p></div></section>
+<section class="container projects-block" id="projects" aria-labelledby="projects-title">${sectionHead('프로젝트','projects-title',`${projects.length}개 팀 프로젝트 · 개발 기록 ${notes.length}편`)}
+<nav class="project-jumps" aria-label="프로젝트 바로가기">${projects.map(p=>`<a href="#project-${p.id}"><strong>${html(p.name)}</strong><span>${html(p.field)}</span><span class="link-arrow" aria-hidden="true">↓</span></a>`).join('')}</nav>
 <div class="showcases">${projects.map(showcase).join('')}</div></section>`;
 page('/', '소프트웨어 개발자 포트폴리오', '소프트웨어 개발자 김종무의 기술 스택과 SSAFY 15기 수료, 네 팀 프로젝트에서 맡은 일과 개발 기록을 소개합니다.', home);
 

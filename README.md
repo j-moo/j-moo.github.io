@@ -20,6 +20,6 @@ node serve.mjs
 - `content.mjs`에 프로젝트별 기여, 검증표와 근거 링크를 둔다.
 - `skills.mjs`에 홈 기술별 기록 근거와 평가 항목을 둔다. 평가 항목의 비중과 직접·부분 확인 여부로 퍼센트를 계산한다. 아이콘 출처는 [아이콘 안내](assets/tech/README.md)에 있다.
 - `portfolio-data.mjs`에는 프로젝트별 개발 기록 본문이 있다.
-- `build.mjs`가 정적 HTML, 사이트맵, RSS와 검색 색인을 만든다. `styles.css`와 `app.js`에서 화면과 검색·테마·인쇄 동작을 수정한다.
+- `build.mjs`가 정적 HTML, 사이트맵, RSS와 검색 색인을 만든다. `styles.css`와 `app.js`에서 화면과 검색·테마·인쇄 동작을 수정한다. 서비스 화면의 첫 진입과 링크 피드백은 `motion.js`와 `motion.css`에서 조정한다.
 - `assets/sources.json`에 공개 자료의 출처와 측정 범위를 남긴다. 이미지나 발췌를 교체하면 캡션과 출처도 함께 갱신한다. 글꼴 라이선스는 `assets/Pretendard-LICENSE.txt`에 있다.
 - 변경 후 빌드해 `docs/`와 소스를 함께 반영한다. 공개용 자료만 수록한다.

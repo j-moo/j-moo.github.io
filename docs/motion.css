@@ -1,0 +1,56 @@
+/* Draw the rule under the journal title, while the full row stays clickable. */
+.project-journal a > strong {
+  justify-self: start;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+}
+
+.project-journal a:focus-visible > strong {
+  background-size: 100% 1px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-journal a:hover > strong {
+    background-size: 100% 1px;
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .project-journal a > strong {
+    transition: background-size 180ms ease-out;
+  }
+
+  .link-arrow {
+    display: inline-block;
+    transition: translate 160ms ease-out;
+  }
+
+  :where(a, button):focus-visible .link-arrow {
+    translate: 2px 0;
+  }
+
+  .screen-mat img.is-entering {
+    animation: screen-enter 290ms cubic-bezier(.2, .65, .3, 1);
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  :where(a, button):hover .link-arrow {
+    translate: 2px 0;
+  }
+
+  :where(a, button):active .link-arrow {
+    translate: 0;
+  }
+}
+
+@keyframes screen-enter {
+  from { translate: 0 7px; opacity: .84; }
+  to   { translate: 0; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
