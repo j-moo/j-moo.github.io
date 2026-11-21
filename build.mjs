@@ -55,7 +55,7 @@ function page(url, title, description, body, active = '') {
 <link rel="stylesheet" href="${assetUrls['styles.css']}"><link rel="stylesheet" href="${assetUrls['motion.css']}"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
 <script defer src="${assetUrls['app.js']}"></script><script defer src="${assetUrls['motion.js']}"></script></head><body id="top">
 <a class="skip" href="#main">본문 바로가기</a><header class="topbar"><div class="container nav-wrap">
-<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span class="brand-mark" aria-hidden="true">jm<span class="brand-dot">.</span></span><span class="brand-name" lang="en">Jongmu Kim</span></a>
+<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span class="brand-mark" aria-hidden="true">jm<span class="brand-dot">.</span></span><span class="brand-name">포트폴리오</span></a>
 <nav aria-label="주 메뉴">${navigation}</nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
 </div></header><main id="main">${body}</main>
 <footer id="about"><div class="container footer-inner"><div><strong>김종무</strong><small>소프트웨어 개발자 · ${updated.replaceAll('-', '.')}</small></div><div class="links">${link(['GitHub 프로필', github])} ${link(['RSS', '/feed.xml'])} ${link(['맨 위로', '#top'])}</div></div></footer>
@@ -118,12 +118,13 @@ fs.cpSync('assets', path.join(out, 'assets'), {recursive:true});
 for (const file of uiFiles) fs.copyFileSync(file, path.join(out, file));
 
 write('.nojekyll','');
-const home = `<section class="masthead" aria-labelledby="slogan"><div class="container mast-grid">
-<div class="mast-copy"><p class="mast-byline">김종무 <span lang="en">JONGMU KIM</span></p>
-<h1 id="slogan">화면 밖까지<br><em>디버깅합니다.</em></h1>
-<div class="intro-bio"><img src="/assets/portrait.webp" width="467" height="600" alt="김종무의 증명사진"><p>기계공학을 전공한 개발자 김종무입니다. 팬미팅의 입장 화면을 만들고, 버스의 이동 시간을 계산하고, 만남을 알리는 키링을 직접 조립했습니다.</p></div>
-<div class="mast-actions">${arrowLink('프로젝트 보기','#projects','hero-link','↓')}${arrowLink('GitHub',github,'hero-link','↗')}</div></div>
-<a class="mast-figure" href="/projects/tingle/#demo-tingle"><img src="/assets/tingle-demo.webp" width="800" height="694" alt="직접 배선한 기판과 완성 키링의 LED가 함께 켜진 실물 시연 장면" fetchpriority="high"><span><strong>Tingle</strong><span>실물 매칭 · LED 점등 ↗</span></span></a>
+const home = `<section class="profile-hero" aria-labelledby="profile-name"><div class="container profile-grid">
+<header class="profile-heading"><p class="profile-role">소프트웨어 개발자</p>
+<h1 id="profile-name"><span>김종무</span></h1><p class="profile-roman" lang="en">Jongmu Kim</p></header>
+<div class="profile-art"><div class="portrait-print"><img src="/assets/portrait.webp" width="467" height="600" alt="김종무의 프로필 사진" fetchpriority="high"></div></div>
+<div class="profile-intro"><p class="profile-principle">기능을 만들고 나면 처음 쓰는 사람처럼 다시 써 봅니다.</p>
+<p class="profile-experience">네 번의 팀 프로젝트에서 화면을 설계하고, 교통 데이터를 다루고, 키링을 앱에 연결했습니다.</p>
+<div class="profile-actions">${arrowLink('프로젝트 보기','#projects','hero-link','↓')}${arrowLink('GitHub',github,'hero-secondary','↗')}</div></div>
 </div></section>${skillsSection()}
 <section class="container edu-line" id="education" aria-labelledby="education-title"><h2 id="education-title">교육</h2><p>${education}</p></section>
 <section class="container projects-block" id="projects" aria-labelledby="projects-title">${sectionHead('프로젝트','projects-title')}
@@ -162,9 +163,9 @@ ${n.sections.map(([h,b],i)=>`<section id="part-${i}"><h2>${h}</h2><p>${b}</p></s
 <p class="scope">당시 작업을 ${n.published || '2026년 11월 15일'} 정리한 글입니다.</p>${link([p.name+' 프로젝트 상세',projectUrl(p)],'button')} <button data-print>인쇄 / PDF 저장</button></article></div>`,'notes');
 }
 
-page('/about/', '소개와 경력 요약', '김종무의 교육, 프로젝트별 역할과 검증 결과', `<div class="container narrow"><header class="article-top"><p class="kicker">About · Jongmu Kim</p><h1>김종무</h1><p class="lead">기계공학에서 출발해 데이터 연산, 웹 서비스, 임베디드 소프트웨어를 경험했습니다. 팀에서는 사용자가 겪은 문제를 재현할 조건과 해결 여부를 판단할 기준을 구체화하는 일을 해 왔습니다.</p>
+page('/about/', '소개와 경력 요약', '김종무의 교육, 프로젝트별 역할과 검증 결과', `<div class="container narrow"><header class="article-top"><p class="kicker">소프트웨어 개발자</p><h1>김종무</h1><p class="lead">새로 가입한 사람이 첫 소비를 기록할 수 있는지, 팬이 대기실에서 자기 차례에 영상 방으로 들어갈 수 있는지 직접 확인해 왔습니다. 문제가 생기면 같은 상황을 다시 만들고, 팀원과 함께 화면과 데이터가 어디에서 어긋났는지 살핍니다.</p>
 <div class="actions">${link(['GitHub 프로필',github],'button primary')}<button data-print>요약 인쇄 / PDF 저장</button></div></header>
-<article class="prose reading"><section><h2>교육</h2><p><strong>${education}</strong><br><strong>동아대학교 기계공학과</strong> · 2024년 졸업</p></section>
+<article class="prose reading"><section><h2>교육</h2><p><strong>${education}</strong></p></section>
 <section><h2>프로젝트 경험</h2>${projects.map(p=>`<div class="cv-item"><h3>${link([p.name,projectUrl(p)])} <span>${p.period}</span></h3><strong>${p.role}</strong><p>${p.outcome}</p></div>`).join('')}</section>
 <section><h2>팀에서 일할 때</h2><p>DDUBI에서 저는 실시간 위치와 혼잡도까지 폭넓게 요청했습니다. 수집 담당자와 API 호출 한도와 시간대별 누락을 살펴본 뒤 학습에 쓸 수 있는 입력을 다시 정했습니다. 상대가 어떤 데이터를 왜 만들어야 하는지 설명하고, 실제로 전달할 수 있는 범위를 함께 확인하는 방법을 배웠습니다.</p>${link(['데이터 수집 담당자와 조율한 기록','/notes/collectable-data/'],'text-link')}</section>
 <section><h2>야구와 운동</h2><p>초등학교 때 시작한 야구를 사회인 리그에서 이어가고 있습니다. 투구를 독학하며 구속 132km/h까지 도전했습니다.</p></section></article></div>`, 'about');

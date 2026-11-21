@@ -1,56 +1,59 @@
-/* Keep the underline attached to the title when its cover also links to the case. */
-.work-card h3 a {
-  justify-self: start;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-position: left bottom;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-}
-
-.work-card h3 a:focus-visible {
-  background-size: 100% 1px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .work-card h3 a:hover {
-    background-size: 100% 1px;
-  }
+/* Entrances run once. With reduced motion, print or no script, the layout is readable. */
+.work-card h3 a:hover, .work-card h3 a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .12em;
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
-  .work-card h3 a {
-    transition: background-size 180ms ease-out;
+  .profile-heading h1 span {
+    animation: name-rise 850ms cubic-bezier(.16, 1, .32, 1) backwards;
   }
-
-  .link-arrow {
-    display: inline-block;
-    transition: translate 160ms ease-out;
+  .profile-roman {
+    animation: signature-in 800ms 110ms cubic-bezier(.16, 1, .32, 1) backwards;
   }
-
-  :where(a, button):focus-visible .link-arrow {
-    translate: 2px 0;
+  .portrait-print {
+    animation: photo-settle 1050ms cubic-bezier(.2, .82, .25, 1) backwards;
   }
-
-  .screen-mat img.is-entering {
-    animation: screen-enter 290ms cubic-bezier(.2, .65, .3, 1);
+  .profile-art::before {
+    animation: disc-open 900ms cubic-bezier(.25, .8, .25, 1) backwards;
   }
+  .profile-intro {
+    animation: bio-in 700ms 200ms ease-out backwards;
+  }
+  .work-cover.is-entering, .screen-mat.is-entering {
+    animation: cover-in 800ms cubic-bezier(.16, 1, .32, 1) backwards;
+  }
+  .link-arrow { transition: transform 200ms ease-out; }
+  .hero-link:is(:hover, :focus-visible) .link-arrow { transform: translateY(3px); }
+  .hero-secondary:is(:hover, :focus-visible) .link-arrow { transform: translate(2px, -2px); }
+  .case-link:is(:hover, :focus-visible) .link-arrow { transform: translateX(4px); }
 }
-
 @media screen and (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  :where(a, button):hover .link-arrow {
-    translate: 2px 0;
-  }
-
-  :where(a, button):active .link-arrow {
-    translate: 0;
-  }
+  .work-cover img { transition: transform 420ms ease-out; }
+  .work-cover:is(:hover, :focus-visible) img { transform: scale(1.025); }
 }
-
-@keyframes screen-enter {
-  from { translate: 0 7px; opacity: .84; }
-  to   { translate: 0; opacity: 1; }
+@keyframes name-rise {
+  from { transform: translateY(90%); }
+  to { transform: translateY(0); }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+@keyframes signature-in {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes photo-settle {
+  from { opacity: .2; transform: translate(8%, 10%) rotate(8deg) scale(.9); }
+  to { opacity: 1; transform: rotate(-5deg); }
+}
+@keyframes disc-open {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes bio-in {
+  from { opacity: .2; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cover-in {
+  from { opacity: .4; transform: translateY(24px); clip-path: inset(0 0 12% 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0); }
 }

@@ -6,10 +6,10 @@
 <meta property="og:url" content="https://j-moo.github.io/notes/flex-signup/"><link rel="canonical" href="https://j-moo.github.io/notes/flex-signup/">
 <link rel="icon" href="/assets/favicon.svg"><link rel="alternate" type="application/rss+xml" href="/feed.xml" title="김종무 개발 기록">
 <link rel="preload" href="/assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=f584f382e236"><link rel="stylesheet" href="/motion.css?v=a27e01d145b8"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
-<script defer src="/app.js?v=1d2fe753ca85"></script><script defer src="/motion.js?v=4253dea5bdb4"></script></head><body id="top">
+<link rel="stylesheet" href="/styles.css?v=c3c918bf2f1e"><link rel="stylesheet" href="/motion.css?v=8e665addcc79"><script>try{document.documentElement.dataset.theme=localStorage.getItem('jm-theme')||'light'}catch{}</script>
+<script defer src="/app.js?v=1d2fe753ca85"></script><script defer src="/motion.js?v=25ecf5a65033"></script></head><body id="top">
 <a class="skip" href="#main">본문 바로가기</a><header class="topbar"><div class="container nav-wrap">
-<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span class="brand-mark" aria-hidden="true">jm<span class="brand-dot">.</span></span><span class="brand-name" lang="en">Jongmu Kim</span></a>
+<a href="/" class="brand" aria-label="김종무 포트폴리오 홈"><span class="brand-mark" aria-hidden="true">jm<span class="brand-dot">.</span></span><span class="brand-name">포트폴리오</span></a>
 <nav aria-label="주 메뉴"><a href="/#projects" >프로젝트</a><a href="/archive/" >작업 모음</a><a href="/notes/" aria-current="page">개발 기록</a><a href="/about/" >소개</a></nav><div class="nav-tools"><button data-search type="button"><i class="glass" aria-hidden="true"></i>검색</button><button class="theme-toggle" type="button" aria-label="색상 테마 전환">◐</button></div>
 </div></header><main id="main"><div class="container narrow"><header class="article-top"><a class="back" href="/notes/">개발 기록</a><p class="kicker">Flex_Log · 데이터 모델 · 2026.06.15</p><h1>계정은 생겼는데 왜 가입을 다시 해야 할까?</h1><p class="lead">가입과 첫 소비 기록 사이에서 계정·프로필 저장과 기본 카테고리 생성을 따로 점검했다.</p></header><article class="prose reading">
 <section id="part-0"><h2>가입 다음 화면에서 발견한 문제</h2><p>가입 오류와 카테고리 목록이 비는 현상을 보고, 팀원과 만든 ERD를 실제 모델과 대조해 달라고 요청했다. 사용자 행이 생겨도 프로필이 준비되지 않으면 가입을 마칠 수 없었다. 테이블만 만들어 둔 카테고리 역시 사용자가 고를 항목을 제공하지 못했다.</p></section><section id="part-1"><h2>저장의 경계를 정하다</h2><p>AI와 함께 사용자와 프로필 생성을 한 트랜잭션으로 묶은 로직을 확인했다. 이메일 중복을 먼저 검사하고, 프로필 저장이 실패하면 사용자 생성도 되돌리게 했다. 기본 카테고리 8종은 별도로 초기화했다. 가입 화면을 검토할 때 다음 화면이 실제로 읽을 데이터까지 확인하게 된 계기였다.</p></section>

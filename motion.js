@@ -1,11 +1,10 @@
-/* Images are visible before JavaScript runs, even when observation is unavailable. */
+/* Observe the covers themselves so long project articles can animate on small screens. */
 (() => {
-  const images = document.querySelectorAll('.service-screen .screen-mat img');
-  if (!images.length || !window.IntersectionObserver || !window.matchMedia) return;
+  if (!window.IntersectionObserver || !window.matchMedia) return;
+  const covers = document.querySelectorAll('.work-cover, .screen-mat');
+  if (!covers.length) return;
 
   const motion = window.matchMedia('(prefers-reduced-motion: no-preference)');
-  if (!motion.matches) return;
-
   const observer = new IntersectionObserver(entries => {
     for (const {target, isIntersecting} of entries) {
       if (!isIntersecting) continue;
@@ -15,11 +14,9 @@
   }, {threshold: .08});
 
   function finish(event) {
-    if (event.animationName === 'screen-enter') {
-      event.target.classList.remove('is-entering');
-    }
+    if (event.animationName === 'cover-in') event.target.classList.remove('is-entering');
   }
   document.addEventListener('animationend', finish);
   document.addEventListener('animationcancel', finish);
-  for (const image of images) observer.observe(image);
+  for (const cover of covers) observer.observe(cover);
 })();
