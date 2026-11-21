@@ -57,5 +57,45 @@
     "project": "Tingle",
     "source": "2026-11-17 촬영한 앱 제안 화면",
     "scope": "계정·채팅 정보가 없는 수락 창만 발췌"
+  },
+  "flex-landing.webp": {
+    "project": "Flex_Log",
+    "source": "https://github.com/j-moo/Flex_Log/blob/00fc74510ab3a80185d14e71f79f5e55917dac20/frontend/src/views/HomeView.vue",
+    "scope": "2026-11-21 원본 Vue 컴포넌트·로고·스타일의 마지막 상태를 서버에서 정적 렌더. 고정 너비와 대체 글꼴로 출력."
+  },
+  "ddubi-home.webp": {
+    "project": "DDUBI",
+    "source": "2026-10-02 Android 실기기 01-home-existing.png",
+    "scope": "시연 일정이 등록된 앱 메인 화면. 단말 상·하단 일부를 잘라 웹용으로 축소."
+  },
+  "tingle-landing.webp": {
+    "project": "Tingle",
+    "source": "팀 웹 프런트엔드 src/landing/sections/Intro/intro.json",
+    "scope": "실제 랜딩 인트로의 마지막 벡터 프레임을 11월 21일 정적으로 내보냄."
+  },
+  "ddubi-sequence.mp4": {
+    "project": "DDUBI",
+    "source": "2026-10-02 Android 실기기 원본 6장",
+    "scope": "기존 일정 홈, 빈 등록 폼, 출발지·목적지 검색, 저장 버튼, 새 일정 홈 순서로 장당 2초 편집."
+  },
+  "melly-demo.mp4": {
+    "project": "Melly",
+    "source": "팀 발표 영상 부울경_4_E106_영상.mp4",
+    "scope": "33~49초의 당첨 확인과 입장 대기 흐름, 무음 발췌."
+  },
+  "tingle-demo.mp4": {
+    "project": "Tingle",
+    "source": "종료 자료의 키링 매칭 시연 동영상.mp4",
+    "scope": "9~23초의 실물 두 기기 매칭·LED 점등. 기기가 보이는 영역으로 잘라 무음으로 발췌."
+  },
+  "melly-demo.webp": {
+    "project": "Melly",
+    "source": "melly-demo.mp4의 4초 지점",
+    "scope": "당첨 확인 화면 영상 포스터."
+  },
+  "tingle-demo.webp": {
+    "project": "Tingle",
+    "source": "tingle-demo.mp4의 9초 지점",
+    "scope": "기판과 조립한 키링의 LED가 함께 켜진 시연 프레임."
   }
 }

@@ -1,5 +1,5 @@
-/* Draw the rule under the journal title, while the full row stays clickable. */
-.project-journal a > strong {
+/* Keep the underline attached to the title when its cover also links to the case. */
+.work-card h3 a {
   justify-self: start;
   background-image: linear-gradient(currentColor, currentColor);
   background-position: left bottom;
@@ -7,18 +7,18 @@
   background-size: 0% 1px;
 }
 
-.project-journal a:focus-visible > strong {
+.work-card h3 a:focus-visible {
   background-size: 100% 1px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .project-journal a:hover > strong {
+  .work-card h3 a:hover {
     background-size: 100% 1px;
   }
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
-  .project-journal a > strong {
+  .work-card h3 a {
     transition: background-size 180ms ease-out;
   }
 

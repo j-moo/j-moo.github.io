@@ -96,3 +96,26 @@ document.addEventListener('keydown', event => {
   if (dialog.open) dialog.close();
   else openSearch();
 });
+
+// A tap opens the same technology label that a pointer or keyboard can reveal.
+const toolStrip = document.querySelector('.tool-strip');
+if (toolStrip) {
+  let openIcon;
+  function closeLabel() {
+    openIcon?.setAttribute('aria-expanded', 'false');
+    openIcon = null;
+  }
+  document.addEventListener('click', event => {
+    const icon = event.target.closest('.tool-icon');
+    const shouldOpen = icon && icon !== openIcon;
+    closeLabel();
+    if (shouldOpen) {
+      icon.setAttribute('aria-expanded', 'true');
+      openIcon = icon;
+    }
+  });
+  toolStrip.addEventListener('focusout', closeLabel);
+  toolStrip.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeLabel();
+  });
+}
