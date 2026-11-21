@@ -135,10 +135,10 @@ h1, h2, h3, h4 { line-height: 1.18; }
 .education-details h3 { margin: 0 0 .4rem; font-size: 1.03rem; color: var(--ink); }
 .education-details h3 span { margin-left: .35rem; font-size: .87rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
 .education-details h3:not(:first-child) { margin-top: 1.2rem; }
-.education-details p, .education-details li { line-height: 1.7; }
-.education-details p + p { margin-top: .4rem; }
-.education-details ul { list-style: none; padding: 0; margin: 0; }
-.education-details li + li { margin-top: .4rem; }
+.education-details li { line-height: 1.6; }
+.education-details ul { list-style: disc; padding-inline-start: 1.15rem; margin: 0; }
+.education-details li + li { margin-top: .2rem; }
+.education-list time { font: inherit; }
 .education-details a { color: var(--blue); text-decoration: underline; text-underline-offset: .16em; font-weight: 650; }
 .projects-block > .section-head { margin-bottom: clamp(1.5rem, 3vw, 3rem); }
 .projects-block { padding-block: clamp(2.3rem,4.7vw,4.8rem); }

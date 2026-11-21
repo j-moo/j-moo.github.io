@@ -81,14 +81,20 @@ function educationSection(className) {
   <dl class="education-list"><div><dt>삼성청년SW·AI아카데미 (SSAFY)</dt><dd>15기 수료</dd>
   <dd class="education-details">
     <h3>1학기 · SW·AI 이론 및 실습 <span>925시간</span></h3>
-    <p>Python으로 자료구조와 알고리즘을 익히고, Django REST Framework로 만든 API를 Vue 화면에 연결하는 실습을 했습니다. SQL과 데이터 모델링, 머신러닝의 기초도 배웠습니다.</p>
-    <p>관통 프로젝트 ${link(['Flex_Log', '/projects/flex/'])}에서는 팀원과 사진으로 쓰는 소셜 가계부를 기획하고, 가입부터 첫 소비 기록까지의 흐름을 점검했습니다.</p>
+    <ul>
+      <li>Python · 자료구조 · 알고리즘</li>
+      <li>웹 개발(Django·Vue) · 데이터베이스(SQL)</li>
+      <li>인공지능 · 머신러닝 기초</li>
+      <li>${link(['Flex_Log', '/projects/flex/'])} · 1학기에 배운 내용을 모두 아우르는 관통 프로젝트</li>
+    </ul>
     <h3>2학기 · 팀 프로젝트</h3>
-    <ul><li>${link(['Melly', '/projects/melly/'])} · 팬미팅 목록 화면을 설계하고 영상 통화 입장 화면을 팀 백엔드 API와 연결했습니다.</li>
-    <li>${link(['DDUBI', '/projects/ddubi/'])} · 버스 경로를 공식 노선과 대조하고, 정류장 사이의 이동시간을 예측하는 데 쓸 데이터를 검증했습니다.</li>
-    <li>${link(['Tingle', '/projects/tingle/'])} · BLE 키링을 조립하고, 두 키링이 서로를 감지했을 때 앱에 매칭 제안이 도착하는지 실물로 시험했습니다.</li></ul>
+    <ul>
+      <li>${link(['Melly', '/projects/melly/'])} · WebRTC를 이용한 팬미팅 서비스</li>
+      <li>${link(['DDUBI', '/projects/ddubi/'])} · 머신러닝을 이용한 대중교통 사용자 일정 맞춤 경로 추천 서비스</li>
+      <li>${link(['Tingle', '/projects/tingle/'])} · BLE를 이용한 소개팅 앱 서비스</li>
+    </ul>
   </dd></div>
-  <div><dt>동아대학교 기계공학과</dt><dd>2024년 졸업</dd></div></dl></section>`;
+  <div><dt>동아대학교 기계공학과</dt><dd><time datetime="2017-03">2017년 3월</time> 입학 · <time datetime="2024-02">2024년 2월</time> 졸업</dd></div></dl></section>`;
 }
 
 function serviceScreen(p) {
