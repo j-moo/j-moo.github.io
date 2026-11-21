@@ -1,1 +1,10 @@
-{"name":"jongmu-portfolio","private":true,"type":"module","scripts":{"build":"node build.mjs","dev":"node serve.mjs","check":"node --check app.js && node --check motion.js && node --check build.mjs"}}
+{
+  "name": "jongmu-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node serve.mjs",
+    "check": "node --check build.mjs && node --check intro-before-paint.js && node --check docs/js/app.js && node --check docs/js/glass.js && node --check docs/js/libraries.js && node --check docs/js/motion.js && node --check docs/js/player.js"
+  }
+}

@@ -1,0 +1,6 @@
+*.mjs text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+docs/js/vendor/** -text -whitespace
+docs/assets/fonts/*-OFL.txt -whitespace

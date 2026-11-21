@@ -1,6 +1,6 @@
 export const skillGroups = [
   {
-    id: 'languages', title: '사용 언어',
+    id: 'languages', title: '프로그래밍 언어',
     skills: [
       {name: 'Python', icon: 'python.svg'},
       {name: 'Java', icon: 'java.svg'},
@@ -10,7 +10,7 @@ export const skillGroups = [
     ]
   },
   {
-    id: 'frameworks', title: '프레임워크',
+    id: 'frameworks', title: '웹 프레임워크',
     skills: [
       {name: 'Spring Boot', icon: 'springboot.svg'},
       {name: 'Django REST Framework', icon: 'djangorest.svg'},
@@ -31,7 +31,7 @@ export const skillGroups = [
     ]
   },
   {
-    id: 'data-libraries', title: '데이터 분석 라이브러리',
+    id: 'data-libraries', title: '데이터 분석·수치 계산',
     skills: [
       {name: 'pandas', icon: 'pandas.svg'},
       {name: 'NumPy', icon: 'numpy.svg'}
@@ -42,7 +42,7 @@ export const skillGroups = [
     skills: [{name: 'Apache Spark', icon: 'apachespark.svg'}]
   },
   {
-    id: 'embedded', title: '임베디드·IoT',
+    id: 'embedded', title: '임베디드 시스템·IoT',
     skills: [
       {name: 'Zephyr RTOS', icon: 'zephyr.svg'},
       {name: 'BLE', icon: 'bluetooth.svg'}
