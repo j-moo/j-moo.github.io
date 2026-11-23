@@ -1,6 +1,7 @@
 import {copyFileSync, existsSync, mkdirSync, readdirSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {skillGroups} from './skills.mjs';
 
 export const submissionFiles = new Set([
   '.nojekyll','index.html','404.html','robots.txt','sitemap.xml',
@@ -10,7 +11,13 @@ export const submissionFiles = new Set([
     'split-type-0.3.4.min.js','lenis-LICENSE.txt','split-type-LICENSE.txt'].map(n=>'js/vendor/'+n),
   ...['exhibit-head','exhibit-ko','exhibit-sans'].flatMap(n=>['assets/fonts/'+n+'.woff2','assets/fonts/'+n+'-OFL.txt']),
   ...['portrait.webp','portrait-120.webp','portrait-384.webp','paper-fibre.svg','music-mark.svg',
-    'case-flex.svg','case-melly.svg','case-ddubi.svg','case-tingle.svg','kim-jongmu-portfolio.pdf'].map(n=>'assets/'+n)
+    'case-flex.svg','case-melly.svg','case-ddubi.svg','case-tingle.svg','kim-jongmu-portfolio.pdf'].map(n=>'assets/'+n),
+  ...['desk-reference-clean.webp','desk-reference-mobile.webp','matte-fibres.webp',
+    'flex-landing.webp','melly-home.webp','ddubi-home.webp','tingle-landing.webp',
+    'melly-demo.mp4','ddubi-sequence.mp4','tingle-demo.mp4'].map(name=>'assets/'+name),
+  ...['flex','melly','ddubi','tingle'].flatMap(id=>['','-384'].map(size=>'assets/'+id+'-cover-art'+size+'.webp')),
+  ...skillGroups.flatMap(group=>group.skills.map(skill=>'assets/tech/'+skill.icon)),
+  ...['Devicon-LICENSE.txt','Simple-Icons-LICENSE.txt','Zephyr-LICENSE.txt','README.md'].map(name=>'assets/tech/'+name)
 ]);
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

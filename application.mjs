@@ -65,6 +65,26 @@ export const applicationCases = {
 export const featuredCases = ['ddubi', 'tingle'];
 export const applicationPdf = '/assets/kim-jongmu-portfolio.pdf';
 
+export function aiPractice(summaries) {
+  const entries = ['ddubi', 'tingle', 'flex', 'melly'].map(id => {
+    const item = applicationCases[id];
+    const project = summaries.find(project => project.id === id);
+    return `<details class="ai-example" data-note-id="ai-${id}">
+      <summary><span class="ai-project">${project.name}</span><strong>${item.focus}</strong></summary>
+      <div class="ai-body"><h3>${item.title}</h3>
+        <dl><dt>AI에 맡긴 작업</dt><dd>${item.ai}</dd>
+        <dt>내 판단과 검증</dt><dd>${item.decision}</dd></dl>
+        ${measurements(item)}<p>${item.conclusion}</p><p class="ai-scope">${item.scope}</p>
+        <button class="ai-project-link" type="button" data-open-project="${id}">${project.name} 프로젝트 상세 <span aria-hidden="true">↗</span></button>
+      </div></details>`;
+  });
+  return `<section id="ai" data-glass-pane="ai" class="home-section ledger" aria-labelledby="ai-title">
+    <h2 id="ai-title" lang="en">AI in Practice</h2>
+    <div class="ai-intro"><p>프로젝트에서 AI에 맡긴 일과 그 결과를 직접 확인한 과정을 담았습니다.</p>
+      <a href="${applicationPdf}">대표 사례 PDF <span aria-hidden="true">↗</span></a></div>
+    <div class="ai-examples">${entries.join('')}</div></section>`;
+}
+
 export function casePlate(id, name) {
   const item = applicationCases[id];
   const colors = {ddubi:['#153b39','#98dfbd'],tingle:['#342948','#dfc0ff'],flex:['#49331d','#ffd17d'],melly:['#4a2a40','#ffb9dc']};

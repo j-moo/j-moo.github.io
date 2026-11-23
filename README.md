@@ -1,6 +1,6 @@
 # 김종무 개발 포트폴리오
 
-DDUBI의 운행시간 모델 검증과 Tingle의 실물 보드 진단을 중심으로 AI를 활용한 작업, 개인이 맡은 역할과 결과를 소개한다. 두 사례를 모은 [제출용 PDF](https://j-moo.github.io/assets/kim-jongmu-portfolio.pdf)와 Flex_Log·Melly의 추가 사례를 담은 [웹 포트폴리오](https://j-moo.github.io/#projects)를 제공한다.
+[웹 포트폴리오](https://j-moo.github.io/#projects)에서 명함을 눌러 프로젝트별 서비스, 개인 기여, 주요 기능과 트러블슈팅을 읽을 수 있다. 왼쪽 사이드바의 AI 활용 사례에서 네 프로젝트의 활용 방법을 확인하거나 DDUBI와 Tingle을 정리한 [제출용 PDF](https://j-moo.github.io/assets/kim-jongmu-portfolio.pdf)를 열 수 있다.
 
 ## 로컬 실행
 

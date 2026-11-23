@@ -64,7 +64,7 @@ body[data-page="home"] .music-desk {background:transparent;}
   body[data-page="home"] .music-intro.is-loading:not([hidden]){
     inset:auto; top:calc(50% - 1.5rem); left:50%; translate:-50% 0;
     width:max-content; padding:1rem 1.3rem;
-    background:#e5dfd2 url("/assets/paper-fibre.svg") center / 13rem;
+    background:#e5dfd2 url("/assets/matte-fibres.webp") center / 13rem;
     box-shadow:0 2px 5px #24221e24;
   }
 }

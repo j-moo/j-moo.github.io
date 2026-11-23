@@ -23,7 +23,7 @@ const scripts = ['libraries', 'app', 'player', 'glass', 'motion'].map(file =>
 
 write('index.html', `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>김종무 · AI 활용 개발 포트폴리오</title><meta name="description" content="김종무의 개발 포트폴리오. DDUBI의 예측 모델과 Tingle의 실물 보드에서 AI를 어떻게 활용하고 결과를 검증했는지 소개합니다.">
+<title>김종무 · 개발 포트폴리오</title><meta name="description" content="김종무의 개발 포트폴리오. 네 팀 프로젝트의 서비스와 담당 업무, 개발 과정, AI 활용 사례를 소개합니다.">
 <link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:title" content="김종무 · 개발 포트폴리오"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${domain}/assets/portrait.webp">
 <link rel="icon" href="/assets/music-mark.svg"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="/assets/fonts/exhibit-sans.woff2" as="font" type="font/woff2" crossorigin>

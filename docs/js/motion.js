@@ -172,7 +172,7 @@
       '.cr-picker > h2', '.cr-app', '.cr-return', '.cr-intro', '.cr-section > :is(h3,h4,p,ol,dl,figure,table)',
       '.cr-gallery > figure', '.cr-cad-charts > figure', '.cr-note > summary', '.cr-note-body > :is(p,h4)',
       '.cr-adjacent', '[data-glass-pane] > h2', '.profile-liner > *', '.skill-group',
-      '.education-item > :is(h3,p)', '.semesters > section'
+      '.education-item > :is(h3,p)', '.semesters > section', '.ai-example > summary', '.ai-body > :is(h3,dl,figure,p)'
     ].join(',');
     const playing = new Set();
     const pending = new Set();
