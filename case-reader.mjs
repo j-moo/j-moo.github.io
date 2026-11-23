@@ -184,7 +184,10 @@ export function projectLibrary() {
   return `<div class="cr-library"><div class="cr-picker" data-project-picker>
     <h2 id="projects-title" data-picker-title tabindex="-1" lang="en">Projects</h2>
     <div class="cr-apps">${projectSummaries.map(project => `<button class="cr-app cr-tile-${project.id}" type="button" data-open-project="${project.id}" aria-label="${project.name} 프로젝트 열기">
-      <span class="cr-icon"><svg viewBox="0 0 52 52" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${projects[project.id].icon}</svg></span>
+      <span class="cr-icon"><svg viewBox="0 0 52 52" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <defs><g id="picker-mark-${project.id}">${projects[project.id].icon}</g></defs>
+        <use class="cr-icon-edge" href="#picker-mark-${project.id}"/><use href="#picker-mark-${project.id}"/>
+      </svg></span>
       <span class="cr-app-name" lang="en">${project.name}</span></button>`).join('')}</div>
     <noscript><p>아래에서 네 프로젝트의 상세와 개발 기록을 차례로 읽을 수 있습니다.</p></noscript>
   </div>${projectSummaries.map(detail).join('')}</div>`;

@@ -12,7 +12,9 @@
   const tabs = [...rail.querySelectorAll('[data-glass-tab]')];
   const url = '/#projects';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let pane, project, focusNext, swap, saveTimer, printing = false, printFocus, printScroll;
+  const tabMotion = matchMedia('screen and (prefers-reduced-motion: no-preference) and (forced-colors: none)');
+  let tabTransition;
+  let pane, project, focusNext, saveTimer, printing = false, printFocus, printScroll;
   let restoring = false, stageMounted = false;
   const initial = history.state?.portfolio;
   history.scrollRestoration = 'manual';
@@ -82,24 +84,48 @@
     }
     focusReady();
   }
+  function stopTabTransition() {
+    if (!tabTransition) return;
+    // Replacing a selection before its first frame rejects the snapshot's ready promise.
+    tabTransition.ready.catch(() => {});
+    tabTransition.skipTransition();
+    tabTransition = null;
+    delete document.documentElement.dataset.readerSwitch;
+  }
   function open(key, id, button) {
+    stopTabTransition();
     const fromGlass = active();
-    const changed = pane !== key || project !== id || !fromGlass;
-    checkpoint();
-    if (changed) history.pushState({portfolio:{pane:key,project:id,scene:'glass'}}, '', url);
-    render(key,id);
-    const view = currentView();
-    swap?.cancel();
-    if (fromGlass && changed && !reduced.matches && view.animate) {
-      swap = view.animate([{opacity:.16,translate:'0 .8rem'},{opacity:1,translate:'0 0'}],
-        {duration:370,easing:'cubic-bezier(.22,.65,.26,1)'});
+    const tab = button?.matches('[data-glass-tab]');
+    const sameView = pane === key && project === id;
+    if (fromGlass && tab && sameView) return;
+    function select() {
+      checkpoint();
+      if (!sameView || !fromGlass) history.pushState({portfolio:{pane:key,project:id,scene:'glass'}}, '', url);
+      render(key,id);
+      const view = currentView();
+      focusNext = tab ? button : view.querySelector('h2,h3') || view;
+      reader.scrollTop = 0;
+      if (tab && fromGlass && hasPin()) focusReady();
+      else move('glass',true,null,view);
+      queueSave();
     }
-    focusNext = button?.matches('[data-glass-tab]') ? button : view.querySelector('h2,h3') || view;
-    reader.scrollTop = 0;
-    move('glass',true,null,view);
-    queueSave();
+    if (!tab || !fromGlass || !hasPin() || !tabMotion.matches || !document.startViewTransition) {
+      select();
+      return;
+    }
+    document.documentElement.dataset.readerSwitch = '';
+    const transition = document.startViewTransition(() => {
+      if (tabTransition === transition) select();
+    });
+    tabTransition = transition;
+    transition.finished.then(() => {
+      if (tabTransition !== transition) return;
+      tabTransition = null;
+      delete document.documentElement.dataset.readerSwitch;
+    });
   }
   function desk() {
+    stopTabTransition();
     checkpoint();
     history.pushState({portfolio:{pane:'projects',project:null,scene:'desk',y:0,readerTop:0}},'',url);
     render('projects',null);
@@ -107,6 +133,7 @@
     move('desk',true);
   }
   function restore(saved, focus) {
+    stopTabTransition();
     clearTimeout(saveTimer);
     restoring = true;
     render(saved?.pane, saved?.project);
@@ -114,7 +141,10 @@
       if (Array.isArray(saved.records)) for (const el of reader.querySelectorAll('details[data-note-id]')) el.open = saved.records.includes(el.dataset.noteId);
       const deskScene = saved.scene === 'desk';
       focusNext = focus ? deskScene ? stage : currentView().querySelector('h2,h3') || currentView() : null;
-      const scene = Number.isFinite(saved.y) ? 'restore' : deskScene ? 'desk' : 'glass';
+      // WebKit can move the viewport to the focused icon before the pinned scene catches up.
+      // Restore a reader entry inside the interactive part of the timeline.
+      const scene = hasPin() && saved.scene === 'glass' ? 'glass' :
+        Number.isFinite(saved.y) ? 'restore' : deskScene ? 'desk' : 'glass';
       move(scene,false,saved);
     } else if (focus) {
       focusNext = stage;
@@ -141,6 +171,7 @@
     const next = tabs[indices[event.key]];
     if (!next) return;
     event.preventDefault();
+    next.focus({preventScroll:true});
     next.click();
   });
   for (const type of ['pointerdown','keydown','wheel']) document.addEventListener(type, () => { focusNext = null; }, {capture:true, passive:true});
@@ -163,6 +194,7 @@
   if (initial && Number.isFinite(initial.y)) requestAnimationFrame(() => { if (!stageMounted) restore(initial,false); });
   window.addEventListener('beforeprint', () => {
     if (printing) return;
+    stopTabTransition();
     checkpoint();
     printing = true;
     printFocus = document.activeElement;

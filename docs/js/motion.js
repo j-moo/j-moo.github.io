@@ -166,6 +166,67 @@
     }, stop);
   }
 
+  function observeReader(stage, reader, signal) {
+    if (!Element.prototype.animate) return;
+    const targets = [
+      '.cr-picker > h2', '.cr-app', '.cr-return', '.cr-intro', '.cr-section > :is(h3,h4,p,ol,dl,figure,table)',
+      '.cr-gallery > figure', '.cr-cad-charts > figure', '.cr-note > summary', '.cr-note-body > :is(p,h4)',
+      '.cr-adjacent', '[data-glass-pane] > h2', '.profile-liner > *', '.skill-group',
+      '.education-item > :is(h3,p)', '.semesters > section'
+    ].join(',');
+    const playing = new Set();
+    const pending = new Set();
+    const seen = new WeakSet();
+    let previousTop = reader.scrollTop;
+    function stopEffects() {
+      for (const effect of playing) effect.cancel();
+      playing.clear();
+    }
+    function readViewport(delta) {
+      if (!pending.size) return;
+      const bounds = reader.getBoundingClientRect();
+      const entering = [];
+      for (const el of pending) {
+        const rect = el.getBoundingClientRect();
+        if (!rect.height || rect.bottom <= bounds.top || rect.top >= bounds.bottom) continue;
+        pending.delete(el);
+        seen.add(el);
+        // Only elements that actually crossed the bottom edge during this scroll reveal.
+        if (delta > 0 && rect.top + delta >= bounds.bottom - 1) entering.push(el);
+      }
+      for (const [i, el] of entering.entries()) {
+        const effect = el.animate([{opacity:.24, translate:'0 .55rem'}, {opacity:1, translate:'0 0'}],
+          {duration:920, delay:Math.min(i,3)*85, easing:'cubic-bezier(.35,.08,.25,1)', fill:'backwards'});
+        playing.add(effect);
+        effect.finished.then(() => playing.delete(effect), () => playing.delete(effect));
+      }
+    }
+    function watch() {
+      stopEffects();
+      pending.clear();
+      // Navigation restores the reader's scroll position synchronously after rendering.
+      queueMicrotask(() => {
+        if (signal.aborted || stage.dataset.stageActive !== 'glass') return;
+        previousTop = reader.scrollTop;
+        for (const el of reader.querySelectorAll(targets)) {
+          if (!seen.has(el) && !el.closest('[hidden]')) pending.add(el);
+        }
+        readViewport(0);
+      });
+    }
+    reader.addEventListener('scroll', () => {
+      const top = Math.max(0,reader.scrollTop);
+      const delta = top - previousTop;
+      previousTop = top;
+      if (delta < 0) stopEffects();
+      if (delta) readViewport(delta);
+    }, {passive:true,signal});
+    window.addEventListener('portfolio-glass-change',watch,{signal});
+    window.addEventListener('portfolio-stage-change',watch,{signal});
+    signal.addEventListener('abort',stopEffects,{once:true});
+    watch();
+  }
+
   function pinHomeStage(gsap, ScrollTrigger, lenis) {
     const stage = query('#stage');
     const desk = stage?.querySelector('[data-stage-scene="desk"]');
@@ -245,13 +306,9 @@
         });
         const smallText = all('.identity-heading, .identity-contact, .track-heading, .track-title, .album-credit', desk);
         const links = all('.desk-shortcuts button', desk);
-        const firstHeading = all('[data-glass-pane] > h2, [data-project-picker] h2', reader);
-        const sectionBodies = all('[data-project-picker] [data-open-project], .profile-liner, .skill-groups, .education-items', reader);
-        const projectDetails = all('[data-project-detail]', reader);
         const controls = all('[data-glass-tab]', shell);
         const hint = desk.querySelector('[data-desk-guide]');
-        rememberStyles([desk, glass, shell, contact, albums, ...links, ...smallText, ...firstHeading,
-          ...sectionBodies, ...projectDetails, ...controls, ...(hint ? [hint] : [])]);
+        rememberStyles([desk, glass, shell, reader, contact, albums, ...links, ...smallText, ...controls, ...(hint ? [hint] : [])]);
         master.addLabel('desk', 0)
           .addLabel('clear', 16)
           .to(links, {opacity:0, yPercent:-28, duration:13, stagger:1}, 'clear')
@@ -263,11 +320,10 @@
           .to(desk, {autoAlpha:0, duration:9}, 50)
           .addLabel('glassIn', 44)
           .fromTo(glass, {autoAlpha:0}, {autoAlpha:1, duration:22, ease:'power2.out'}, 'glassIn')
-          .fromTo(shell, {yPercent:12, scale:.97}, {yPercent:0, scale:1, duration:27}, 'glassIn')
-          .fromTo(firstHeading, {opacity:0, y:'.75em'}, {opacity:1, y:0, duration:12}, 54)
-          .fromTo(sectionBodies, {opacity:0, y:'.8em'}, {opacity:1, y:0, duration:13}, 58)
-          .fromTo(projectDetails, {opacity:0, y:'.65em'}, {opacity:1, y:0, duration:11}, 62)
-          .fromTo(controls, {opacity:0, yPercent:16}, {opacity:1, yPercent:0, duration:9, stagger:1.5}, 64)
+          .fromTo(shell, {scale:() => matchMedia(wide).matches ? .84 : .91, opacity:0},
+            {scale:1, opacity:1, duration:27, ease:'power2.out'}, 'glassIn')
+          .fromTo(reader, {opacity:0}, {opacity:1, duration:24, ease:'sine.inOut'}, 53)
+          .fromTo(controls, {opacity:0}, {opacity:1, duration:16, stagger:1.5, ease:'sine.inOut'}, 57)
           .addLabel('glass', 78)
           .to({}, {duration:22}, 'glass');
       });
@@ -350,6 +406,7 @@
       gsap.ticker.add(tick);
       stage = pinHomeStage(gsap, ScrollTrigger, lenis);
       if (!stage) { cleanup(); return; }
+      observeReader(query('#stage'), query('[data-stage-reader]'), signal);
       root.classList.add('motion-ready');
       window.addEventListener('scroll', progress, {passive:true, signal});
       window.addEventListener('resize', refresh, {passive:true, signal});

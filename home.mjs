@@ -213,7 +213,6 @@ export function home() {
   return `<div id="stage" tabindex="-1"><picture class="desk-light" aria-hidden="true"><source media="(max-width: 700px)" srcset="/assets/desk-reference-mobile.webp"><img src="/assets/desk-reference-clean.webp" width="640" height="640" alt="" fetchpriority="high"></picture>${hero()}
     <section id="collection" class="glass-field" data-stage-scene="glass" data-glass-host aria-label="포트폴리오 열람">
       <div class="glass-shell" data-glass-shell>
-        <span class="glass-lens-edge" aria-hidden="true"></span>
         <nav class="glass-rail" data-glass-nav aria-label="포트폴리오 항목">${destinations.map(d=>`<button type="button" id="tab-${d.id}" class="rail-link" data-open-pane="${d.id}" data-glass-tab="${d.id}" aria-label="${d.railLabel}"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">${d.icon}</svg><span class="rail-tip" aria-hidden="true">${d.railLabel}</span></button>`).join('')}<button type="button" class="rail-back" data-open-desk aria-label="명함으로 돌아가기"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m10 5-7 7 7 7M4 12h16"/></svg><span class="rail-tip" aria-hidden="true">명함으로 돌아가기</span></button></nav>
         <div class="glass-reader" data-stage-reader>
           <section id="pane-projects" data-glass-pane="projects" aria-labelledby="projects-title">${projectLibrary()}</section>

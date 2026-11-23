@@ -41,7 +41,7 @@ body[data-page="home"] #main {
 }
 @media screen and (forced-colors:none) {
   #stage[data-stage-ready] .glass-reader {
-    --reader-thumb:rgb(53 52 49 / .6);
+    --reader-thumb:rgb(32 26 22 / .48);
     scrollbar-width:thin;scrollbar-color:var(--reader-thumb) transparent;
   }
   #stage[data-stage-ready] .glass-reader::-webkit-scrollbar {width:.52rem;background:transparent;}
@@ -53,7 +53,7 @@ body[data-page="home"] #main {
   #stage[data-stage-ready] .glass-reader::-webkit-scrollbar-thumb {
     background:var(--reader-thumb);border:2px solid transparent;background-clip:padding-box;border-radius:1rem;
   }
-  #stage[data-stage-ready] .glass-reader::-webkit-scrollbar-thumb:hover {background-color:rgb(53 52 49 / .78);}
+  #stage[data-stage-ready] .glass-reader::-webkit-scrollbar-thumb:hover {background-color:rgb(32 26 22 / .7);}
   @supports selector(::-webkit-scrollbar) {
     /* Chromium's non-auto standard values suppress its native part selectors. */
     #stage[data-stage-ready] .glass-reader {scrollbar-width:auto;scrollbar-color:auto;}
@@ -69,19 +69,23 @@ body[data-page="home"] .music-desk {background:transparent;}
   }
 }
 .glass-field {
-  --glass-margin:clamp(.45rem,1.55vmin,1.35rem);
+  --glass-margin:clamp(.8rem,3.8vmin,2.4rem);
   --rail-width:clamp(3.75rem,6.7vw,6rem);
-  --glass-ink:#201f21; --glass-muted:#383638; --glass-line:rgb(47 43 50 / .24);
-  --glass-edge:rgb(255 255 255 / .92);
-  --ink:var(--glass-ink); --muted:var(--glass-muted); --accent:#343230; --rule:var(--glass-line);
+  --glass-ink:#0d0b0a; --glass-muted:#110f0e; --glass-line:rgb(35 29 26 / .28);
+  --glass-edge:rgb(255 255 255 / .64); --glass-radius:clamp(1.6rem,3.3vmin,2.7rem);
+  --glass-control:transparent;
+  --ink:var(--glass-ink); --muted:var(--glass-muted); --accent:var(--glass-ink); --rule:var(--glass-line);
   position:relative; isolation:isolate; padding:var(--glass-margin);
   min-block-size:100svh; color:var(--glass-ink); color-scheme:light;
 }
 .glass-shell {
   position:relative; display:grid; grid-template-columns:var(--rail-width) minmax(0,1fr);
   align-items:start; margin-inline:auto; min-block-size:calc(100svh - 2 * var(--glass-margin));
+  transform-origin:center; border-radius:var(--glass-radius);border:1px solid var(--glass-edge);
+  border-block-end-color:rgb(65 51 44 / .24);
+  background:transparent;
 }
-.glass-shell,.media-viewer[open] {
+.media-viewer[open] {
   border:1px solid var(--glass-edge,rgb(255 255 255 / .92)); border-radius:clamp(1.15rem,2.3vw,2.25rem);
   background:
     radial-gradient(ellipse at 0% 31%,rgb(210 227 250 / .29),transparent 48%),
@@ -93,7 +97,7 @@ body[data-page="home"] .music-desk {background:transparent;}
   backdrop-filter:blur(15px) saturate(1.12) brightness(1.09);
 }
 /* The outer bevel reflects a cool and a warm edge; its clear center reveals the desk. */
-.glass-shell::after,.media-viewer[open]::after {
+.media-viewer[open]::after {
   content:""; position:absolute; inset:-1px; pointer-events:none; z-index:2;
   padding:clamp(2px,.29vw,4px); border-radius:inherit;
   background:conic-gradient(from 22deg,#fff 0%,#f1e5f9ad 15%,#81768077 27%,#fff6f9ed 39%,#ffffff1f 49%,#66667794 62%,#dae9ffff 76%,#ffffff40 85%,#fff);
@@ -101,25 +105,11 @@ body[data-page="home"] .music-desk {background:transparent;}
   mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
 }
-.glass-lens-edge {
-  position:absolute; inset:1px; z-index:1; pointer-events:none; border-radius:inherit;
-  /* The cut edge redirects the same photograph, creating a narrow optical break in the shadow. */
-  padding:clamp(4px,.55vw,8px);
-  background:var(--refraction-photo, url("/assets/desk-reference-clean.webp")) calc(50% + 1.1rem) calc(50% - 1.8rem) / max(108vw,108lvh) auto fixed;
-  filter:contrast(1.2) brightness(1.08);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude;
-}
-@media (max-width:700px) {
-  .glass-lens-edge {--refraction-photo:url("/assets/desk-reference-mobile.webp");}
-}
 .glass-shell::before {
   content:"";position:absolute;inset:0 auto 0 0;width:var(--rail-width);
   border-radius:inherit;border-top-right-radius:0;border-bottom-right-radius:0;
-  border-right:1px solid rgb(255 255 255 / .59);
-  background:linear-gradient(100deg,rgb(255 255 255 / .24),rgb(236 241 250 / .07) 62%,rgb(255 255 255 / .25));
-  box-shadow:1px 0 0 rgb(76 70 80 / .13);pointer-events:none;
+  border-right:1px solid var(--glass-line);
+  pointer-events:none;
 }
 .glass-rail {
   --rail-gap:clamp(.32rem,1.2vh,.85rem);
@@ -133,16 +123,16 @@ body[data-page="home"] .music-desk {background:transparent;}
   padding:0;appearance:none;border:1px solid transparent;border-radius:30%;background:transparent;
   transition:background-color .15s ease-out,box-shadow .15s ease-out;
 }
-.glass-rail :is(.rail-link,.rail-back):where(:not([data-glass-tab="projects"])):is(:hover,:focus-visible){background-color:rgb(255 255 255 / .35);}
+.glass-rail :is(.rail-link,.rail-back):where(:not([data-glass-tab="projects"])):is(:hover,:focus-visible){border-color:var(--glass-edge);}
 .glass-rail .rail-link[aria-selected="true"] {
-  color:#222836;border-color:rgb(255 255 255 / .8);
-  background:linear-gradient(145deg,rgb(255 255 255 / .82),rgb(238 244 252 / .24) 55%,rgb(250 244 250 / .49));
-  box-shadow:inset 0 1px 1px #fff,inset 0 -1px 2px #b3a7b65c,0 2px 5px #3f39432e;
+  color:var(--glass-ink);border-color:var(--glass-edge);background:var(--glass-control);
+  box-shadow:inset 0 1px 0 #ffffff14;
 }
 .glass-rail .rail-link[aria-selected="true"]::before {
-  content:"";position:absolute;inset-inline-start:-.38rem;inset-block:34%;inline-size:2px;border-radius:1rem;background:#535964;
+  content:"";position:absolute;inset-inline-start:-.38rem;inset-block:34%;inline-size:2px;border-radius:1rem;background:currentColor;
 }
-.glass-rail .rail-back {margin-block-start:auto;color:#47454b;}
+.glass-rail .rail-back {margin-block-start:auto;color:var(--glass-muted);}
+.glass-shell :focus-visible {outline-color:var(--glass-ink);}
 .glass-rail .rail-back svg {inline-size:1.17rem;block-size:1.17rem;}
 .rail-tip {
   display:none;position:absolute;left:calc(100% + .4rem);padding:.3rem .65rem;white-space:nowrap;
@@ -153,6 +143,20 @@ body[data-page="home"] .music-desk {background:transparent;}
 :is(.rail-link,.rail-back):focus-visible .rail-tip{display:block;}
 @media(hover:hover){:is(.rail-link,.rail-back):hover .rail-tip {display:block;}}
 .glass-reader {min-inline-size:0;padding:clamp(1.25rem,4vw,3.6rem);color:var(--glass-ink);}
+/* Snapshot only the reading area. The glass, desk and sidebar stay live. */
+html[data-reader-switch] {view-transition-name:none;}
+html[data-reader-switch] .glass-reader {view-transition-name:reader-content;}
+html[data-reader-switch]::view-transition {pointer-events:none;}
+html[data-reader-switch]::view-transition-group(reader-content),
+html[data-reader-switch]::view-transition-old(reader-content),
+html[data-reader-switch]::view-transition-new(reader-content) {
+  pointer-events:none;animation-duration:360ms;animation-timing-function:ease-in-out;
+}
+@media (prefers-reduced-motion:reduce), (forced-colors:active) {
+  html[data-reader-switch]::view-transition-group(reader-content),
+  html[data-reader-switch]::view-transition-old(reader-content),
+  html[data-reader-switch]::view-transition-new(reader-content) {animation-duration:0s;}
+}
 .glass-reader a,.glass-reader h2,.glass-reader h3,.glass-reader h4 {color:inherit;}
 .glass-reader [data-glass-pane] {width:100%;max-width:none;margin:0;scroll-margin-block-start:1rem;}
 .glass-reader [data-glass-pane]+[data-glass-pane]{margin-top:3rem;}
@@ -163,7 +167,7 @@ body[data-page="home"] .music-desk {background:transparent;}
 .glass-reader .pane-heading,.glass-reader .ledger>h2 {margin:0 0 clamp(1.35rem,3.2vw,2.5rem);}
 .glass-reader .pane-heading h2,.glass-reader .ledger>h2 {font:650 clamp(1.65rem,3.2vw,2.85rem)/1.15 var(--font-ko);letter-spacing:-.065em;}
 .glass-reader .pane-heading h2{margin:0;}
-.glass-reader :is(.ledger>h2,.cr-picker>h2):lang(en){font:500 clamp(2rem,4vw,3.5rem)/1.1 Georgia,serif;letter-spacing:-.045em;}
+.glass-reader :is(.ledger>h2,.cr-picker>h2):lang(en){font:500 clamp(2rem,4vw,3.5rem)/1.1 var(--font-latin);letter-spacing:-.055em;}
 .pane-index,.profile-liner nav a {font-size:.9rem;text-underline-offset:.24em;}
 .glass-evidence{margin-top:1.4rem;font-size:.92rem;}
 .glass-evidence>summary {cursor:pointer;width:fit-content;text-underline-offset:.25em;}
@@ -182,13 +186,12 @@ body[data-page="home"] .music-desk {background:transparent;}
 .glass-reader .skill-group{border-color:var(--glass-line);padding:0 0 .6rem;}
 .glass-reader .skill-icons {gap:.45rem;}
 .glass-reader .skill-button {
-  inline-size:3rem;block-size:3rem;border:1px solid rgb(255 255 255 / .9);border-radius:27%;
-  background:linear-gradient(145deg,rgb(255 255 255 / .77),rgb(255 255 255 / .24) 48%,rgb(229 232 244 / .3) 76%,rgb(255 247 245 / .65));
-  box-shadow:inset 0 1px 1px #fff,inset 0 -1px 3px #8e8b9b61,0 1px 1px #423f473b,0 3px 7px -4px #35303c96;
+  inline-size:3rem;block-size:3rem;border:1px solid var(--glass-edge);border-radius:27%;
+  background:var(--glass-control);box-shadow:inset 0 1px 0 #ffffff16;
 }
-.glass-reader .skill-button img{filter:drop-shadow(0 1px 1px rgb(255 255 255 / .65));}
-.glass-reader .skill-button:is(:hover,[aria-expanded="true"]){background-color:rgb(255 255 255 / .38);outline:1px solid #5a5563;outline-offset:1px;}
-.glass-reader .skill-button:focus-visible{outline:2px solid #48435a;outline-offset:2px;}
+.glass-reader .skill-button img{filter:drop-shadow(0 0 1px rgb(255 255 255 / .55));}
+.glass-reader .skill-button:is(:hover,[aria-expanded="true"]){outline:1px solid var(--glass-ink);outline-offset:1px;}
+.glass-reader .skill-button:focus-visible{outline:2px solid var(--glass-ink);outline-offset:2px;}
 .glass-reader .skill-name{color:#24222a;border:1px solid #b0aab6;background:#faf8fb;}
 .glass-reader :is(button.education-project,button[data-print]){
   color:inherit;background:transparent;border:0;padding:0;font:inherit;
@@ -209,12 +212,6 @@ body[data-page="home"] .music-desk {background:transparent;}
 .glass-reader .footer-grid {inline-size:100%;grid-template-columns:minmax(0,1fr);gap:1rem;}
 .glass-reader .site-footer address a {display:inline;overflow-wrap:anywhere;font-size:clamp(1.05rem,2.4vw,1.85rem);}
 .glass-reader .footer-links {justify-content:start;border-top:1px solid var(--glass-line);}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .glass-shell {background-color:rgb(246 244 243 / .66);}
-}
-@supports not (mask-composite:exclude) {
-  @supports not (-webkit-mask-composite:xor) {.glass-shell::after,.glass-lens-edge{display:none;}}
-}
 @media(max-width:44rem){
   .glass-field{--rail-width:3.25rem;}
   .glass-reader{padding:1.2rem clamp(.72rem,2.8vw,1.25rem);}
@@ -230,20 +227,20 @@ body[data-page="home"] .music-desk {background:transparent;}
 }
 @media(prefers-reduced-motion:reduce){.glass-rail :is(.rail-link,.rail-back){transition:none;}}
 @media(prefers-reduced-transparency:reduce){
-  .glass-shell {background:#eeeceb;-webkit-backdrop-filter:none;backdrop-filter:none;}
-  .glass-reader .skill-button,.glass-rail .rail-link[aria-selected="true"]{background:#faf8f7;}
-  .glass-lens-edge{display:none;}
+  .glass-shell {background:#f2ede5;}
 }
 @media(forced-colors:active){
+  .glass-field{--glass-ink:CanvasText;--glass-muted:CanvasText;--glass-line:CanvasText;background:Canvas;}
   .glass-shell {border-color:CanvasText;background:Canvas;-webkit-backdrop-filter:none;backdrop-filter:none;}
-  .glass-shell::after,.glass-lens-edge,.glass-rail .rail-link[aria-selected="true"]::before{display:none;}
+  .glass-rail .rail-link[aria-selected="true"]::before{display:none;}
   .glass-shell::before {border-color:CanvasText;}
   .glass-rail .rail-link[aria-selected="true"]{border:2px solid Highlight;}
   .glass-reader .skill-button{border-color:ButtonText;}
 }
 @media print{
+  .glass-field{--glass-ink:#111;--glass-muted:#333;--glass-line:#aaa;color-scheme:light;}
   body[data-page="home"] #main{overflow:visible;background:white;}
-  #stage > .desk-light,.glass-shell::after,.glass-lens-edge{display:none;}
+  #stage > .desk-light{display:none;}
   #stage,#stage > [data-stage-scene],#stage .glass-reader {position:static!important;inset:auto!important;overflow:visible!important;block-size:auto!important;}
   #stage > [data-stage-scene] {display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;}
   .glass-field,.glass-shell,.glass-reader{display:block;margin:0;padding:0;min-height:0;box-shadow:none;border:0;background:white;color:black;-webkit-backdrop-filter:none;backdrop-filter:none;}
