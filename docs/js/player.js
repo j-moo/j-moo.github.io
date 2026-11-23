@@ -157,6 +157,10 @@
     tourIndex++;
     showTourStep();
   });
+  tour.querySelector('[data-read-featured]').addEventListener('click', () => {
+    finishTour(false);
+    hero.querySelector('.application-links [data-open-project="ddubi"]').click();
+  });
   // A real navigation on the final step completes the guide without moving focus back to the desk.
   document.addEventListener('click', event => {
     if (hero.dataset.tourStep !== 'details' || event.button || event.defaultPrevented) return;
