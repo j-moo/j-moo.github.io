@@ -1,0 +1,101 @@
+{
+  "ddubi-model.png": {
+    "project": "DDUBI",
+    "source": "2026-09-30 보관 모델 비교 그래프",
+    "scope": "9월 8일 동일 검증집합의 버스 구간 평균시간 MAE"
+  },
+  "melly-home.png": {
+    "project": "Melly",
+    "source": "2026-09-29 보관 화면 검수 자료",
+    "scope": "개발 미리보기, 실제 이용 실적 아님"
+  },
+  "melly-signup.png": {
+    "project": "Melly",
+    "source": "2026-09-29 보관 회원가입 화면",
+    "scope": "개발 미리보기, 개인정보 입력 없음"
+  },
+  "tingle-cad.png": {
+    "project": "Tingle",
+    "source": "2026-11-13 R17 CAD 조립 배치",
+    "scope": "CAD 렌더, 실물 사진 아님"
+  },
+  "tingle-hardware.jpg": {
+    "project": "Tingle",
+    "source": "2026-11-12 직접 촬영한 부품 배치",
+    "scope": "당시 제작 기판과 모듈"
+  },
+  "tingle-case.webp": {
+    "source": "2026-11-18 종료 자료 · 14:53:06 촬영",
+    "scope": "실물 케이스 외관. 방향을 바로잡고 축소한 웹용 사본. 촬영 메타데이터 제외.",
+    "project": "Tingle"
+  },
+  "ddubi-model-comparison.csv": {
+    "source": "2026-09-30 보관 v12 모델 비교 결과",
+    "scope": "동일 검증 999,894행에서 기준선과 네 후보 비교. 장치와 설정이 달라 실행시간은 동일 조건 속도 비교에 사용할 수 없음.",
+    "project": "DDUBI"
+  },
+  "melly-call-test.txt": {
+    "source": "2026-08-12 보관 VideoCallRoom.test.tsx 회귀 테스트 한 건",
+    "scope": "폴링을 끄고 LiveKit을 대체한 화면 분기 검사. 제목과 조건 설명을 덧붙인 발췌.",
+    "project": "Melly"
+  },
+  "portrait.webp": {
+    "source": "본인이 공개용으로 선택한 증명사진",
+    "scope": "방향을 바로잡고 축소, EXIF 제외"
+  },
+  "flex-feed.webp": {
+    "project": "Flex_Log",
+    "source": "https://github.com/j-moo/Flex_Log/blob/00fc74510ab3a80185d14e71f79f5e55917dac20/assets/프리뷰.png",
+    "scope": "공개 미리보기의 소비 피드 발췌"
+  },
+  "ddubi-schedule.webp": {
+    "project": "DDUBI",
+    "source": "2026-10-02 보관 모바일 화면",
+    "scope": "개인 위치를 입력하기 전 일정 등록 화면 발췌"
+  },
+  "tingle-accept.webp": {
+    "project": "Tingle",
+    "source": "2026-11-17 촬영한 앱 제안 화면",
+    "scope": "계정·채팅 정보가 없는 수락 창만 발췌"
+  },
+  "flex-landing.webp": {
+    "project": "Flex_Log",
+    "source": "https://github.com/j-moo/Flex_Log/blob/00fc74510ab3a80185d14e71f79f5e55917dac20/frontend/src/views/HomeView.vue",
+    "scope": "2026-11-21 원본 Vue 컴포넌트·로고·스타일의 마지막 상태를 서버에서 정적 렌더. 고정 너비와 대체 글꼴로 출력."
+  },
+  "ddubi-home.webp": {
+    "project": "DDUBI",
+    "source": "2026-10-02 Android 실기기 01-home-existing.png",
+    "scope": "시연 일정이 등록된 앱 메인 화면. 단말 상·하단 일부를 잘라 웹용으로 축소."
+  },
+  "tingle-landing.webp": {
+    "project": "Tingle",
+    "source": "팀 웹 프런트엔드 src/landing/sections/Intro/intro.json",
+    "scope": "실제 랜딩 인트로의 마지막 벡터 프레임을 11월 21일 정적으로 내보냄."
+  },
+  "ddubi-sequence.mp4": {
+    "project": "DDUBI",
+    "source": "2026-10-02 Android 실기기 원본 6장",
+    "scope": "기존 일정 홈, 빈 등록 폼, 출발지·목적지 검색, 저장 버튼, 새 일정 홈 순서로 장당 2초 편집."
+  },
+  "melly-demo.mp4": {
+    "project": "Melly",
+    "source": "팀 발표 영상 부울경_4_E106_영상.mp4",
+    "scope": "33~49초의 당첨 확인과 입장 대기 흐름, 무음 발췌."
+  },
+  "tingle-demo.mp4": {
+    "project": "Tingle",
+    "source": "종료 자료의 키링 매칭 시연 동영상.mp4",
+    "scope": "9~23초의 실물 두 기기 매칭·LED 점등. 기기가 보이는 영역으로 잘라 무음으로 발췌."
+  },
+  "melly-demo.webp": {
+    "project": "Melly",
+    "source": "melly-demo.mp4의 4초 지점",
+    "scope": "당첨 확인 화면 영상 포스터."
+  },
+  "tingle-demo.webp": {
+    "project": "Tingle",
+    "source": "tingle-demo.mp4의 9초 지점",
+    "scope": "기판과 조립한 키링의 LED가 함께 켜진 시연 프레임."
+  }
+}

@@ -1,8 +1,6 @@
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { home } from './home.mjs';
-import { casePlate } from './application.mjs';
-import { projectSummaries } from './cases.mjs';
 
 const site = new URL('./docs/', import.meta.url);
 const domain = 'https://j-moo.github.io';
@@ -15,15 +13,14 @@ function asset(path) {
 function write(path, content) {
   writeFileSync(new URL(path, site), content + '\n');
 }
-for (const project of projectSummaries) write('assets/case-'+project.id+'.svg',casePlate(project.id,project.name));
-const styles = ['base', 'home', 'motion', 'glass', 'case-reader', 'application'].map(file =>
+const styles = ['base', 'home', 'motion', 'glass', 'case-reader'].map(file =>
   '<link rel="stylesheet" href="' + asset('css/' + file + '.css') + '">').join('\n');
 const scripts = ['libraries', 'app', 'player', 'glass', 'motion'].map(file =>
   '<script defer src="' + asset('js/' + file + '.js') + '"></script>').join('\n');
 
 write('index.html', `<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>김종무 · 개발 포트폴리오</title><meta name="description" content="김종무의 개발 포트폴리오. 네 팀 프로젝트의 서비스와 담당 업무, 개발 과정, AI 활용 사례를 소개합니다.">
+<title>김종무 · 개발 포트폴리오</title><meta name="description" content="김종무의 개발 포트폴리오. Flex_Log, Melly, DDUBI, Tingle의 서비스 화면과 개발 기록을 살펴보세요.">
 <link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:title" content="김종무 · 개발 포트폴리오"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${domain}/assets/portrait.webp">
 <link rel="icon" href="/assets/music-mark.svg"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="/assets/fonts/exhibit-sans.woff2" as="font" type="font/woff2" crossorigin>
