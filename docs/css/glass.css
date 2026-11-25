@@ -178,21 +178,29 @@ html[data-reader-switch]::view-transition-new(reader-content) {
 .glass-evidence figcaption,.glass-evidence .feature-intro h3+p {color:var(--glass-muted);}
 .profile-liner {display:grid;grid-template-columns:minmax(5rem,.58fr) minmax(0,1.5fr);align-items:start;gap:clamp(1rem,3.5vw,2.8rem);}
 .profile-liner>img {display:block;width:100%;height:auto;}
-.profile-liner h3{margin:0 0 .6rem;font:500 clamp(1.6rem,3.1vw,2.5rem)/1.12 Georgia,serif;}
+.profile-liner h3{margin:0 0 .45rem;font:500 clamp(1.6rem,3.1vw,2.5rem)/1.12 Georgia,serif;}
 .profile-liner p{font:450 clamp(.96rem,1.65vw,1.16rem)/1.63 var(--font-ko);margin:0 0 .6em;}
-.profile-liner div>a {display:inline-block;font-size:.96rem;margin:.65rem 0 .3rem;text-underline-offset:.23em;}
+.profile-liner .profile-subtitle{font-size:clamp(.9rem,1.35vw,1.02rem);color:var(--glass-muted);margin-bottom:.75em;}
+.profile-liner .profile-bio{max-width:40em;font:420 clamp(.92rem,1.4vw,1.02rem)/1.68 var(--font-ko);margin-bottom:.9em;}
+.profile-liner div>a {display:inline-block;font-size:.96rem;margin:.35rem 0 .3rem;text-underline-offset:.23em;}
 .profile-liner nav {display:flex;gap:.2rem .85rem;flex-wrap:wrap;margin-top:.7rem;}
-.glass-reader .skill-groups {gap:1.4rem 1.5rem;grid-template-columns:repeat(auto-fit,minmax(min(12rem,100%),1fr));}
-.glass-reader .skill-group{border-color:var(--glass-line);padding:0 0 .6rem;}
-.glass-reader .skill-icons {gap:.45rem;}
+.stack-note{margin:0 0 1.25rem;max-width:44em;font-size:.9rem;line-height:1.6;color:var(--glass-muted);}
+.glass-reader .skill-groups {gap:1.4rem 1.5rem;grid-template-columns:repeat(auto-fit,minmax(min(13rem,100%),1fr));}
+.glass-reader .skill-group{border-color:var(--glass-line);padding:0 0 .75rem;}
+.glass-reader .skill-icons {gap:.48rem;}
 .glass-reader .skill-button {
-  inline-size:3rem;block-size:3rem;border:1px solid var(--glass-edge);border-radius:27%;
+  display:inline-flex;align-items:center;gap:.45rem;
+  inline-size:auto;block-size:auto;min-inline-size:0;min-block-size:2.45rem;
+  padding:.35rem .7rem;border:1px solid var(--glass-edge);border-radius:.65rem;
   background:var(--glass-control);box-shadow:inset 0 1px 0 #ffffff16;
 }
 .glass-reader .skill-button img{filter:drop-shadow(0 0 1px rgb(255 255 255 / .55));}
 .glass-reader .skill-button:is(:hover,[aria-expanded="true"]){outline:1px solid var(--glass-ink);outline-offset:1px;}
 .glass-reader .skill-button:focus-visible{outline:2px solid var(--glass-ink);outline-offset:2px;}
-.glass-reader .skill-name{color:#24222a;border:1px solid #b0aab6;background:#faf8fb;}
+.glass-reader .skill-name{
+  display:inline;position:static;padding:0;border:0;background:transparent;
+  color:var(--glass-ink);font-size:.84rem;font-weight:520;white-space:nowrap;
+}
 .glass-reader :is(button.education-project,button[data-print]){
   color:inherit;background:transparent;border:0;padding:0;font:inherit;
   text-align:start;text-decoration:underline;text-underline-offset:.23em;

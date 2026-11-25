@@ -9,14 +9,12 @@
   const tour = hero.querySelector('[data-desk-tour]');
   const tourMessages = [...tour.querySelectorAll('[data-tour-message]')];
   const advanceTour = tour.querySelector('[data-tour-next]');
+  const skipTour = tour.querySelector('[data-tour-skip]');
   const tourVideo = tour.querySelector('[data-tour-video]');
   const tourImage = tour.querySelector('[data-tour-image]');
-  const deskButtons = [...hero.querySelectorAll('[data-open-pane],[data-open-project],[data-deck-action]')];
-  const mail = hero.querySelector('.identity-mail');
-  const glassShell = document.querySelector('[data-glass-shell]');
-  const skipLink = document.querySelector('.skip-link');
   const stage = hero.closest('#stage');
   const tourEvents = new AbortController();
+  const tourStorageKey = 'jongmu-desk-tour-v1';
   let tourIndex = 0;
   const motion = matchMedia('(prefers-reduced-motion: no-preference) and (forced-colors: none)');
   const deck = [...slides].sort((a, b) => Number(a.dataset.depth) - Number(b.dataset.depth));
@@ -114,23 +112,11 @@
     slide.style.setProperty('--track-position', duration ? Math.min(1,seconds/duration) : 0);
     slide.querySelector('[data-elapsed]').textContent = '00:' + String(seconds).padStart(2,'0');
   }
-  function setTourAccess(step) {
-    const locked = step === 'play' || step === 'browse';
-    document.documentElement.toggleAttribute('data-tour-locked', locked);
-    glassShell.inert = Boolean(step);
-    skipLink.inert = locked;
-    mail.inert = Boolean(step);
-    for (const button of deskButtons) {
-      const key = button.dataset.deckAction;
-      if (step === 'play') button.disabled = key !== 'play';
-      else if (step === 'browse') button.disabled = key !== 'prev' && key !== 'next';
-      else button.disabled = step === 'details' && Boolean(key);
-    }
-  }
   function finishTour(focusScrollButton) {
     delete hero.dataset.tourStep;
+    tour.hidden = true;
     tour.inert = true;
-    setTourAccess(null);
+    try { sessionStorage.setItem(tourStorageKey, '1'); } catch {}
     tourEvents.abort();
     lightResize.disconnect();
     cancelAnimationFrame(lightFrame);
@@ -144,7 +130,6 @@
     }
     const last = tourIndex === tourMessages.length - 1;
     hero.dataset.tourStep = current.dataset.tourMessage;
-    setTourAccess(current.dataset.tourMessage);
     for (const note of tourMessages) note.hidden = note !== current;
     tour.querySelector('[data-tour-count]').textContent = (tourIndex + 1) + ' / ' + tourMessages.length;
     tour.querySelector('[data-tour-label]').textContent = last ? '마침' : '다음';
@@ -157,14 +142,19 @@
     tourIndex++;
     showTourStep();
   });
-  // A real navigation on the final step completes the guide without moving focus back to the desk.
+  skipTour?.addEventListener('click', () => finishTour(true));
+  // Any direct navigation, scroll into the reader, or Escape dismisses the non-blocking guide.
   document.addEventListener('click', event => {
-    if (hero.dataset.tourStep !== 'details' || event.button || event.defaultPrevented) return;
-    const button = event.target.closest('[data-open-pane],[data-open-project]');
+    if (!hero.dataset.tourStep || event.button || event.defaultPrevented) return;
+    const button = event.target.closest('[data-open-pane],[data-open-project],.identity-mail,.skip-link');
     if (button && !button.closest('[inert],:disabled')) finishTour(false);
   }, {capture:true, signal:tourEvents.signal});
+  window.addEventListener('keydown', event => {
+    if (hero.dataset.tourStep && event.key === 'Escape' && !event.isComposing && !watching) finishTour(false);
+  }, {signal:tourEvents.signal});
   function finishOnGlass() {
-    if (hero.dataset.tourStep !== 'details') return;
+    if (!hero.dataset.tourStep) return;
+    const glassShell = document.querySelector('[data-glass-shell]');
     const reached = stage.hasAttribute('data-stage-ready') ? stage.dataset.stageActive === 'glass'
       : glassShell.getBoundingClientRect().top < innerHeight * .55;
     if (reached) finishTour(false);
@@ -415,9 +405,11 @@
   addEventListener('pagehide',() => {if (watching) endFlip(false);stopMotion();});
   applyOrder();
   const restored = history.state?.portfolio;
-  if (restored?.scene === 'glass' || restored?.y > 8) finishTour(false);
+  const deepGlass = /^#(?:ai|artist|stack|education|projects\/(?:flex|melly|ddubi|tingle))$/.test(location.hash);
+  let tourSeen = false;
+  try { tourSeen = sessionStorage.getItem(tourStorageKey) === '1'; } catch {}
+  if (deepGlass || tourSeen || restored?.scene === 'glass' || restored?.y > 8) finishTour(false);
   else {
-    setTourAccess('play');
     Promise.all([cardsReady, window.portfolioHeroAssetsReady]).then(() => {
       // Leave one painted frame with the settled cards before showing the glass and dimmer together.
       requestAnimationFrame(() => requestAnimationFrame(() => {

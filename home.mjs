@@ -8,23 +8,20 @@ export const portraitSizes = '(max-width: 650px) 38vw, (max-height: 740px) 28vh,
 
 const destinations = [
   {id:'projects', label:'Projects', railLabel:'프로젝트', icon:'<rect x="3" y="4" width="7" height="7" rx="1.15"/><rect x="14" y="4" width="7" height="7" rx="1.15"/><rect x="3" y="15" width="7" height="6" rx="1.15"/><rect x="14" y="15" width="7" height="6" rx="1.15"/>'},
+  {id:'ai', label:'AI in Practice', railLabel:'AI 활용 사례', icon:'<rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3m-11.5-2 2-4.5 2 4.5m-3.2-1.3h2.4M15 10v3"/>'},
   {id:'artist', label:'Profile', railLabel:'프로필', icon:'<circle cx="12" cy="8" r="3.6"/><path d="M4.8 20c.4-4.1 3.1-6.1 7.2-6.1s6.8 2 7.2 6.1"/>'},
   {id:'stack', label:'Tech Stack', railLabel:'기술 스택', icon:'<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 4 9 5 9-5"/>'},
   {id:'education', label:'Education', railLabel:'교육', icon:'<path d="m2 9 10-5 10 5-10 5L2 9Zm4 2.2v5.2c3.5 3.2 8.5 3.2 12 0v-5.2M22 9v6"/>'}
 ];
 
-const sidebarDestinations = [
-  destinations[0],
-  {id:'ai', railLabel:'AI 활용 사례', icon:'<rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3m-11.5-2 2-4.5 2 4.5m-3.2-1.3h2.4M15 10v3"/>'},
-  ...destinations.slice(1)
-];
+const sidebarDestinations = destinations;
 
 const covers = {
   flex: {
     screen: 'flex-landing.webp', alt: 'Flex-Log 로고 아래 시작 버튼이 보이는 첫 화면'
   },
   melly: {
-    screen: 'melly-home.webp', alt: '분홍색 배경에 폴라로이드 사진 두 장이 놓인 Melly 첫 화면'
+    screen: 'melly-fan-desktop.webp', alt: '예약한 팬미팅과 알림을 확인하는 팬 대시보드'
   },
   ddubi: {
     screen: 'ddubi-home.webp', alt: '오늘의 일정과 교통 통제에 따른 출발 안내가 보이는 앱 홈'
@@ -103,7 +100,7 @@ function hero() {
           <article class="contact-card" data-paper data-cut-stock>
             <button type="button" class="card-open" data-open-pane="artist" aria-label="김종무 프로필 열기"></button>
             <div class="portrait-link"><img src="/assets/portrait-384.webp" srcset="${portraitSources}" sizes="${portraitSizes}" width="467" height="600" alt="김종무의 증명사진"></div>
-            <div class="identity-heading"><h1 id="hero-title" data-hero-title>김종무</h1><p data-hero-sub>신입 개발자</p></div>
+            <div class="identity-heading"><h1 id="hero-title" data-hero-title>김종무</h1><p data-hero-sub>신입 개발자</p><p class="identity-scope" data-hero-sub>웹 · 데이터 · 임베디드</p></div>
             <div class="identity-contact" data-hero-action><a class="identity-mail" href="mailto:rlawhdan363@gmail.com">rlawhdan363@<wbr>gmail.com</a>
             <span class="card-cue" aria-hidden="true">프로필 보기 ↗</span></div>
           </article>
@@ -121,7 +118,10 @@ function hero() {
             <p data-tour-message="browse" hidden><strong>다음</strong> 또는 <strong>이전</strong> 버튼을 눌러 어떤 프로젝트가 있는지 미리 확인해 보세요.</p>
             <p data-tour-message="details" hidden>아래로 <strong>스크롤</strong>하거나 <strong>카드</strong> 또는 <strong>상단 메뉴</strong>를 눌러 상세 정보를 보세요.</p>
           </div>
-          <button type="button" class="tour-next" data-tour-next aria-label="안내 다음 단계"><span data-tour-label>다음</span><span data-tour-arrow aria-hidden="true">→</span></button>
+          <div class="tour-actions">
+            <button type="button" class="tour-skip" data-tour-skip aria-label="이용 안내 건너뛰기">건너뛰기</button>
+            <button type="button" class="tour-next" data-tour-next aria-label="안내 다음 단계"><span data-tour-label>다음</span><span data-tour-arrow aria-hidden="true">→</span></button>
+          </div>
     </section>
     <svg class="tour-shade" aria-hidden="true" focusable="false">
       <defs>
@@ -158,24 +158,28 @@ function artist() {
   return `<section id="artist" data-glass-pane="artist" class="home-section ledger" aria-labelledby="artist-title">
     <span class="section-rule" data-draw-rule aria-hidden="true"></span>
     <h2 id="artist-title" lang="en" data-reveal>Profile</h2>
-    <div class="profile-liner"><img src="/assets/portrait-384.webp" width="467" height="600" alt="김종무의 증명사진" loading="lazy"><div><h3>김종무</h3><p>신입 개발자</p>
-    <a href="mailto:rlawhdan363@gmail.com">rlawhdan363@gmail.com</a><nav aria-label="프로필 관련 링크"><a href="https://github.com/j-moo">GitHub ↗</a><button type="button" data-print>포트폴리오 인쇄</button></nav></div></div>
+    <div class="profile-liner"><img src="/assets/portrait-384.webp" width="467" height="600" alt="김종무의 증명사진" loading="lazy"><div><h3>김종무</h3><p class="profile-subtitle">신입 개발자 · 웹 · 데이터 · 임베디드</p>
+    <p class="profile-bio">설계 조건과 실제 동작이 어긋나는 지점을 코드·데이터·실물 장비에서 끝까지 확인하는 개발자입니다. 웹 화면 연동(Flex_Log·Melly), 버스 구간 데이터와 예측 모델 검증(DDUBI), BLE 키링 펌웨어·실물 진단(Tingle)을 거치며 직접 확인한 근거로 문제를 좁혀 왔습니다.</p>
+    <a href="mailto:rlawhdan363@gmail.com">rlawhdan363@gmail.com</a><nav aria-label="프로필 관련 링크"><a href="https://github.com/j-moo" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/assets/kim-jongmu-portfolio.pdf" target="_blank" rel="noopener noreferrer">대표 사례 PDF ↗</a><button type="button" data-print>포트폴리오 인쇄</button></nav></div></div>
   </section>`;
 }
 export function skills() {
   return `<section id="stack" data-glass-pane="stack" class="home-section ledger" aria-labelledby="stack-title">
     <span class="section-rule" data-draw-rule aria-hidden="true"></span>
     <h2 id="stack-title" lang="en" data-reveal>Tech Stack</h2>
-    <div class="ledger-content skill-groups">${skillGroups.map(group => `
+    <div class="ledger-content">
+      <p class="stack-note">직접 구현·연동·진단·분석에 사용한 언어와 도구입니다. 프로젝트별 팀 전체 기술은 각 프로젝트 상세에서 구분해 표시했습니다.</p>
+      <div class="skill-groups">${skillGroups.map(group => `
       <section class="skill-group" id="skills-${group.id}" data-reveal>
         <h3>${group.title}</h3>
         <ul class="skill-icons">${group.skills.map(({name, icon}) => `
-          <li><button type="button" class="skill-button" data-skill aria-label="${name}" aria-expanded="false">
+          <li><span class="skill-button">
             <img src="/assets/tech/${icon}" alt="" width="24" height="24" loading="lazy">
-            <span class="skill-name" aria-hidden="true">${name}</span>
-          </button></li>`).join('')}
+            <span class="skill-name">${name}</span>
+          </span></li>`).join('')}
         </ul>
       </section>`).join('')}
+      </div>
     </div>
   </section>`;
 }

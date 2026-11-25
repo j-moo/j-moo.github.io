@@ -10,13 +10,29 @@
   const panes = by('[data-glass-pane]', 'glassPane');
   const projects = by('[data-project-detail]', 'projectDetail');
   const tabs = [...rail.querySelectorAll('[data-glass-tab]')];
-  const url = '/#projects';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const tabMotion = matchMedia('screen and (prefers-reduced-motion: no-preference) and (forced-colors: none)');
   let tabTransition;
   let pane, project, focusNext, saveTimer, printing = false, printFocus, printScroll;
   let restoring = false, stageMounted = false;
-  const initial = history.state?.portfolio;
+  function parseHash() {
+    const raw = location.hash.slice(1);
+    if (!raw || raw === 'projects') return null;
+    if (raw.startsWith('projects/')) {
+      const id = raw.slice('projects/'.length);
+      return projects.has(id) ? { pane: 'projects', project: id, scene: 'glass' } : null;
+    }
+    return panes.has(raw) ? { pane: raw, project: null, scene: 'glass' } : null;
+  }
+  function hashFor(scene, key, id) {
+    if (scene === 'desk') return '/#projects';
+    if (key === 'projects' && id) return '/#projects/' + id;
+    if (key && key !== 'projects') return '/#' + key;
+    return '/#projects';
+  }
+  const hashInitial = parseHash();
+  const initial = history.state?.portfolio || hashInitial;
+  if (!history.state?.portfolio && hashInitial) history.replaceState({portfolio: hashInitial}, '', hashFor(hashInitial.scene, hashInitial.pane, hashInitial.project));
   history.scrollRestoration = 'manual';
   const hasPin = () => stage.hasAttribute('data-stage-ready');
   const active = () => hasPin() ? stage.dataset.stageActive === 'glass' :
@@ -58,8 +74,9 @@
   function checkpoint() {
     clearTimeout(saveTimer);
     if (printing || restoring || hasPin() && !stageMounted) return;
+    const scene = active() ? 'glass' : 'desk';
     const records = [...reader.querySelectorAll('details[data-note-id][open]')].map(el => el.dataset.noteId);
-    history.replaceState({...history.state, portfolio:{pane, project, scene:active() ? 'glass' : 'desk', y:scrollY, readerTop:reader.scrollTop, records}}, '', url);
+    history.replaceState({...history.state, portfolio:{pane, project, scene, y:scrollY, readerTop:reader.scrollTop, records}}, '', hashFor(scene, pane, project));
   }
   function queueSave() {
     if (restoring || printing) return;
@@ -100,7 +117,7 @@
     if (fromGlass && tab && sameView) return;
     function select() {
       checkpoint();
-      if (!sameView || !fromGlass) history.pushState({portfolio:{pane:key,project:id,scene:'glass'}}, '', url);
+      if (!sameView || !fromGlass) history.pushState({portfolio:{pane:key,project:id,scene:'glass'}}, '', hashFor('glass', key, id));
       render(key,id);
       const view = currentView();
       focusNext = tab ? button : view.querySelector('h2,h3') || view;
@@ -127,7 +144,7 @@
   function desk() {
     stopTabTransition();
     checkpoint();
-    history.pushState({portfolio:{pane:'projects',project:null,scene:'desk',y:0,readerTop:0}},'',url);
+    history.pushState({portfolio:{pane:'projects',project:null,scene:'desk',y:0,readerTop:0}},'',hashFor('desk','projects',null));
     render('projects',null);
     focusNext = stage.querySelector('[data-hero] [data-open-pane="artist"]') || stage;
     move('desk',true);
@@ -175,9 +192,11 @@
     next.click();
   });
   for (const type of ['pointerdown','keydown','wheel']) document.addEventListener(type, () => { focusNext = null; }, {capture:true, passive:true});
-  window.addEventListener('popstate', () => restore(history.state?.portfolio,true));
+  window.addEventListener('popstate', () => restore(history.state?.portfolio || parseHash(),true));
   window.addEventListener('hashchange', () => {
-    if (location.hash !== '#projects') history.replaceState(history.state,'',url);
+    const target = parseHash();
+    if (target && (target.pane !== pane || target.project !== project)) restore(target,true);
+    else if (!target && location.hash && location.hash !== '#projects') history.replaceState(history.state,'',hashFor(active() ? 'glass' : 'desk', pane, project));
   });
   reader.addEventListener('scroll',queueSave,{passive:true});
   reader.addEventListener('toggle',queueSave,true);
@@ -191,7 +210,7 @@
     firstMount = false;
     if (saved) restore(saved,false);
   });
-  if (initial && Number.isFinite(initial.y)) requestAnimationFrame(() => { if (!stageMounted) restore(initial,false); });
+  if (initial) requestAnimationFrame(() => { if (!stageMounted) restore(initial,false); });
   window.addEventListener('beforeprint', () => {
     if (printing) return;
     stopTabTransition();

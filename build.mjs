@@ -24,7 +24,7 @@ write('index.html', `<!doctype html>
 <link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:title" content="김종무 · 개발 포트폴리오"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${domain}/assets/portrait.webp">
 <link rel="icon" href="/assets/music-mark.svg"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="/assets/fonts/exhibit-sans.woff2" as="font" type="font/woff2" crossorigin>
-<script>if(location.pathname+location.search+location.hash!=='/#projects')history.replaceState(history.state,'','/#projects');</script>
+<script>if(!location.hash&&location.pathname==='/')history.replaceState(history.state,'','/#projects');</script>
 ${styles}
 ${scripts}</head>
 <body id="projects" data-page="home"><a class="skip skip-link" href="/#projects" data-open-pane="projects">프로젝트 바로가기</a>

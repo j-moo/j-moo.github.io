@@ -18,21 +18,6 @@
   });
   window.portfolioHeroAssetsReady = Promise.allSettled([...decoded,document.fonts?.ready])
     .then(results => results.every(result => result.status === 'fulfilled'));
-  const buttons = [...document.querySelectorAll('[data-skill]')];
-  function selectSkill(active) {
-    for (const el of buttons) el.setAttribute('aria-expanded', String(el === active));
-  }
-  for (const button of buttons) {
-    button.addEventListener('focus', () => selectSkill(button));
-    button.addEventListener('blur', () => selectSkill(null));
-    button.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') selectSkill(button); });
-    button.addEventListener('pointerleave', e => {
-      if (e.pointerType === 'mouse' && document.activeElement !== button) selectSkill(null);
-    });
-    button.addEventListener('click', () => selectSkill(button));
-  }
-  document.addEventListener('pointerdown', e => { if (!e.target.closest('[data-skill]')) selectSkill(null); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') selectSkill(null); });
   document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
 
   const dialog = document.getElementById('image-dialog');

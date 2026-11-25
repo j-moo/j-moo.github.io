@@ -2,7 +2,8 @@
   const layer = document.querySelector('[data-loader]');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const deadline = 1880;
-  if (history.state?.portfolio?.scene === 'glass' || document.hidden || reduce.matches || matchMedia('print, (forced-colors: active)').matches ||
+  const deepGlass = /^#(?:ai|artist|stack|education|projects\/(?:flex|melly|ddubi|tingle))$/.test(location.hash);
+  if (deepGlass || history.state?.portfolio?.scene === 'glass' || document.hidden || reduce.matches || matchMedia('print, (forced-colors: active)').matches ||
       performance.now() > deadline - 700 || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') return;
   try { if (sessionStorage.getItem('jongmu-music-card-intro-v1') === '1') return; } catch {}
   const controller = new AbortController();

@@ -4,11 +4,6 @@
     "source": "2026-09-30 보관 모델 비교 그래프",
     "scope": "9월 8일 동일 검증집합의 버스 구간 평균시간 MAE"
   },
-  "melly-home.png": {
-    "project": "Melly",
-    "source": "2026-09-29 보관 화면 검수 자료",
-    "scope": "개발 미리보기, 실제 이용 실적 아님"
-  },
   "melly-signup.png": {
     "project": "Melly",
     "source": "2026-09-29 보관 회원가입 화면",
@@ -92,6 +87,16 @@
     "project": "Melly",
     "source": "melly-demo.mp4의 4초 지점",
     "scope": "당첨 확인 화면 영상 포스터."
+  },
+  "melly-fan-desktop.webp": {
+    "project": "Melly",
+    "source": "팀 프런트엔드 팬 대시보드",
+    "scope": "로컬 예시 데이터 기반 데스크톱 화면."
+  },
+  "melly-fan-mobile.webp": {
+    "project": "Melly",
+    "source": "팀 프런트엔드 팬 대시보드",
+    "scope": "로컬 예시 데이터 기반 모바일 화면."
   },
   "tingle-demo.webp": {
     "project": "Tingle",
