@@ -207,7 +207,7 @@ function detail(p) {
     '<div class="detail-head"><h1 class="slab title"><span class="pen-line">' + escapeText(p.name) +
     '</span></h1><p class="lead">' + escapeText(p.tagline) + '</p>' +
     (drawings[p.id] ? '<img class="project-drawing" src="' + drawings[p.id] + '" alt="">' : '') + '</div>' +
-    '<div class="detail-overview"><div><h2>프로젝트 개요</h2><p>' + highlightPhrase(p.intro, p.introFocus) +
+    '<div class="detail-overview" data-project="' + escapeText(p.id) + '"><div><h2>프로젝트 개요</h2><p>' + highlightPhrase(p.intro, p.introFocus) +
     '</p>' +
     '<dl class="metadata">' + factList([["목표",media?.goal],["대상",media?.audience],["주요 기능",media?.features?.join(" · ")],
       ["기간",p.period],["팀 구성",p.team],["개인 역할",p.role,p.roleFocus]]) +

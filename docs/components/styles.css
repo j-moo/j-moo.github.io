@@ -359,4 +359,13 @@ main, #landing > section, .case { scroll-margin-top: calc(var(--header-height) +
 .exchange-check h4 { font-size: 1rem; margin: 0 0 .35rem; }
 .exchange-check .case-comparison { margin: 0; padding: 12px 0; }
 
-.detail-overview .project-photo img[src$="/ddubi-arrival.webp"] { max-height: min(640px, 80vh); }
+[data-project="ddubi"] > figure { text-align: center; }
+[data-project="ddubi"] .project-photo { width: fit-content; margin-inline: auto; border: 0; background: transparent; }
+[data-project="ddubi"] .project-photo img { display: block; width: auto; max-height: min(440px, 64vh); }
+
+@media (min-width: 851px) {
+  /* The text column sets the row height, including the space needed for the caption. */
+  [data-project="ddubi"] > figure { contain: size; align-self: stretch; display: flex; flex-direction: column; }
+  [data-project="ddubi"] .project-photo { flex: 1; min-height: 0; max-width: 100%; }
+  [data-project="ddubi"] .project-photo img { height: 100%; max-height: none; }
+}
