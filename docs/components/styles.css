@@ -342,12 +342,12 @@ main, #landing > section, .case { scroll-margin-top: calc(var(--header-height) +
 @media (forced-colors: active) { #project-detail mark { text-decoration: underline; } }
 
 @media (min-width: 851px) {
-  .tingle-overview { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(24px, 3vw, 44px); align-items: center; }
-  .tingle-overview .project-photo img { max-height: none; }
+  .detail-overview { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(24px, 3vw, 44px); align-items: center; }
+  .detail-overview .project-photo img { max-height: none; }
 }
 @media (min-width: 651px) and (max-width: 850px) {
-  .tingle-overview { grid-template-columns: minmax(0, 1fr); }
-  .tingle-overview .project-photo img { max-height: none; }
+  .detail-overview { grid-template-columns: minmax(0, 1fr); }
+  .detail-overview .project-photo img { max-height: none; }
 }
 
 .case-nav .menu-summary { list-style: none; display: flex; align-items: center; gap: 8px; }

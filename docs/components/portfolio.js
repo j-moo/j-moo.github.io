@@ -169,19 +169,17 @@ function caseEvidence(item) {
 function detail(p) {
   const media = profiles[p.id];
   const cover = media?.image ? media : p;
-  const outcomeAfterFeatures = p.id === "tingle";
   const outcome = media?.outcome ? '<div class="project-outcome"><h3>' +
     "핵심 성과" + '</h3><p>' +
-    highlightPhrase(media.outcome, outcomeAfterFeatures && media.outcome) + '</p></div>' : "";
+    highlightPhrase(media.outcome, media.outcomeFocus || media.outcome) + '</p></div>' : "";
   const resources = [...(p.links || []), ...(media?.videos || []).map(video => ({
     href: video.src, label: video.linkLabel || "시연 영상"
   }))];
   const resourceLinks = resources.map(link => '<a href="' + escapeText(link.href) +
     '" target="_blank" rel="noopener noreferrer">' + escapeText(link.label) +
     ' <span aria-hidden="true">↗</span></a>').join("");
-  const caseNumber = i => p.id === "tingle" ? '' : '<span class="case-number">' + String(i + 1).padStart(2, "0") + '</span> ';
   const links = p.cases.map((entry, i) => '<a href="' + projectsLink(p.id) + '/' + (i + 1) + '">' +
-    caseNumber(i) + escapeText(entry.title) + '</a>').join("");
+    escapeText(entry.title) + '</a>').join("");
   const cases = p.cases.map((entry, i) => {
     const comparison = '<dl class="case-comparison">' + factList([
       [entry.observation ? "시험 전" : "개선 전", entry.before],
@@ -196,12 +194,9 @@ function detail(p) {
       ["분석", entry.problem, entry.problemFocus], ["가설", entry.hypothesis]
     ]) + '<div><dt>실험</dt><dd>' + highlightPhrase(entry.action, entry.actionFocus) + '</dd></div></dl>';
     const evidence = caseEvidence(media?.caseEvidence?.[i + 1]);
-    const content = entry.comparisonTitle ? analysis + evidence + result :
-      (p.id === "tingle" ? analysis + result : result + analysis) + evidence;
-    return '<section class="case" id="case-' + (i + 1) + '" tabindex="-1"><h3>' + caseNumber(i) +
-      '<span>' + highlightPhrase(entry.title, p.id === "tingle" && entry.title) + '</span></h3>' +
-      content +
-      (p.id === "tingle" ? '' : '<p class="case-scope"><strong>검증 범위</strong> ' + escapeText(entry.scope) + '</p>') + '</section>';
+    const content = analysis + evidence + result;
+    return '<section class="case" id="case-' + (i + 1) + '" tabindex="-1"><h3><mark>' +
+      escapeText(entry.title) + '</mark></h3>' + content + '</section>';
   }).join("");
   const image = cover?.image ? '<figure><a class="project-photo" href="' + escapeText(cover.image) +
     '" target="_blank" rel="noopener" aria-label="프로젝트 이미지 원본 열기">' + photo(cover) +
@@ -212,8 +207,8 @@ function detail(p) {
     '<div class="detail-head"><h1 class="slab title"><span class="pen-line">' + escapeText(p.name) +
     '</span></h1><p class="lead">' + escapeText(p.tagline) + '</p>' +
     (drawings[p.id] ? '<img class="project-drawing" src="' + drawings[p.id] + '" alt="">' : '') + '</div>' +
-    '<div class="detail-overview' + (p.id === "tingle" ? ' tingle-overview' : '') + '"><div><h2>프로젝트 개요</h2><p>' + highlightPhrase(p.intro, p.introFocus) +
-    '</p>' + (outcomeAfterFeatures ? '' : outcome) +
+    '<div class="detail-overview"><div><h2>프로젝트 개요</h2><p>' + highlightPhrase(p.intro, p.introFocus) +
+    '</p>' +
     '<dl class="metadata">' + factList([["목표",media?.goal],["대상",media?.audience],["주요 기능",media?.features?.join(" · ")],
       ["기간",p.period],["팀 구성",p.team],["개인 역할",p.role,p.roleFocus]]) +
     (resourceLinks ? '<div><dt>관련 자료</dt><dd class="resource-links">' + resourceLinks + '</dd></div>' : '') +
@@ -223,9 +218,9 @@ function detail(p) {
     (choices ? '<dl class="tech-choices">' + choices + '</dl>' : '') + '</div></section>' +
     '<section class="technical-section feature-development"><h2>주요 기능 개발</h2><div><dl class="feature-list">' +
     factList(media?.development || [["구현 내용", p.contribution]]) + '</dl>' +
-    (outcomeAfterFeatures ? outcome : '') + '</div></section>' +
+    outcome + '</div></section>' +
     '<section class="case-area"><div class="case-nav"><h2>트러블슈팅</h2>' +
-    '<details><summary' + (p.id === "tingle" ? ' class="menu-summary"><span class="menu-bars" aria-hidden="true"></span>' : '>') + '사례 목차</summary><nav aria-label="사례 목차">' + links +
+    '<details><summary class="menu-summary"><span class="menu-bars" aria-hidden="true"></span>사례 목차</summary><nav aria-label="사례 목차">' + links +
     '</nav></details></div><div class="case-body">' + cases + '</div></section>' +
     '<section class="reflection"><h2>회고</h2><p>' + escapeText(p.reflection) + '</p></section>' + projectFooter(p);
 }
