@@ -57,10 +57,10 @@ window.PROJECTS = [
   },
   {
     links: [{label: "GitHub 저장소 · 공개 스냅샷", href: "https://github.com/j-moo/DDUBI"}],
-    id: "ddubi", name: "DDUBI", tagline: "대중교통 경로와 출발 시각 추천", role: "버스 구간 예측 모델 비교·선정 · 분산 백엔드",
+    id: "ddubi", name: "DDUBI", tagline: "대중교통 경로와 출발 시각 추천", role: "교통 데이터 처리 / 머신러닝 모델 검증",
     period: "2026.08–09", team: "6인 팀", tech: ["Python", "LightGBM", "FastAPI", "Apache Spark", "Redis", "pandas", "NumPy"],
     intro: "약속 시각까지 도착할 수 있도록 대중교통 후보 경로의 이동시간을 계산하고 출발 시각을 추천합니다.",
-    introFocus: "대중교통 후보 경로의 이동시간을 계산하고 출발 시각을 추천", roleFocus: "버스 구간 예측 모델 비교·선정 · 분산 백엔드",
+    introFocus: "대중교통 후보 경로의 이동시간을 계산하고 출발 시각을 추천", roleFocus: "교통 데이터 처리 / 머신러닝 모델 검증",
     contribution: "카카오 경로를 공공데이터의 노선·정류장과 연결하고, 버스 구간 예측 모델의 입력과 오차를 비교했습니다. FastAPI 캐시의 비용과 도로 돌발정보를 경로에 연결할 조건도 검토했습니다.",
     reflection: "같은 검증 자료 999,894행에서 인접 정류장 구간의 평균 절대 오차는 과거 중앙값 방식 27.61초, 선정 모델 26.04초였습니다. 실제 돌발정보를 적용하려면 링크 방향과 통제 기간을 더 확인해야 합니다.",
     image: "assets/projects/ddubi.webp", alt: "DDUBI 앱의 일정 등록 화면",
