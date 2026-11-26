@@ -84,7 +84,7 @@ window.BLOG_DATA = {
         {tech: "Redis · Lua", reason: "관측 시각 비교와 저장을 한 번에 처리해 늦게 도착한 과거 값이 최신 값을 덮는 상황을 막았습니다."}
       ],
       outcome: "같은 검증집합 999,894행에서 인접 정류장 구간 시간의 평균 절대 오차는 과거 중앙값 기준 27.61초, 선정 모델 26.04초였습니다.",
-      image: "assets/blog/ddubi-route-cover.webp", width: 1080, height: 1225, alt: "서울 도심 버스·지하철 환승 경로 지도",
+      image: "assets/blog/ddubi-arrival.webp", width: 764, height: 1800, alt: "DDUBI 앱의 도착 완료 화면",
       summary: "일정과 도착 시각을 입력하면 대중교통 경로별 소요시간과 출발 시각을 안내합니다.",
       gallery: [
         {src: "assets/blog/ddubi-route-detail.webp", width: 693, height: 1400, alt: "지도 경로와 시간·환승·이동 단계가 함께 보이는 경로 상세", caption: "팀 시연 캡처 · 상단 경로 지도와 구간별 이동 단계"},

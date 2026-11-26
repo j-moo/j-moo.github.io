@@ -359,3 +359,4 @@ main, #landing > section, .case { scroll-margin-top: calc(var(--header-height) +
 .exchange-check h4 { font-size: 1rem; margin: 0 0 .35rem; }
 .exchange-check .case-comparison { margin: 0; padding: 12px 0; }
 
+.detail-overview .project-photo img[src$="/ddubi-arrival.webp"] { max-height: min(640px, 80vh); }
