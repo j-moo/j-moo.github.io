@@ -1,0 +1,62 @@
+@media (prefers-reduced-motion: no-preference) {
+@keyframes ink-underline {
+  from { transform: rotate(-1.65deg) scaleX(0); }
+  to { transform: rotate(-1.65deg) scaleX(1); }
+}
+@keyframes timeline-line {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes timeline-dot {
+  from { opacity: 0; transform: rotate(-10deg) scale(.65); }
+  to { opacity: 1; transform: rotate(-10deg) scale(1); }
+}
+@keyframes project-arrival {
+  from { opacity: 0; translate: 0 14px; }
+  to { opacity: 1; translate: 0 0; }
+}
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .pen-line.ink-visible::after {
+    transform-origin: left;
+    animation: ink-underline .48s ease-out both;
+  }
+  .education-rows.ink-visible article:not(:last-child)::after {
+    transform-origin: top;
+    animation: timeline-line .56s ease-out both;
+  }
+  .education-rows.ink-visible article::before {
+    animation: timeline-dot .25s ease-out both;
+  }
+  .education-rows.ink-visible article:nth-child(2)::before { animation-delay: .24s; }
+  .project-row.ink-visible:not(:focus-within) {
+    animation: project-arrival .42s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  header nav a:not([aria-current]):is(:hover, :focus-visible)::after,
+  .contacts a:is(:hover, :focus-visible)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: var(--pen-width) solid var(--blue);
+    border-radius: 50%;
+    transform-origin: left;
+    animation: ink-underline .24s ease-out both;
+  }
+  .contacts a { position: relative; }
+  .contacts a:is(:hover, :focus-visible) { text-decoration-color: transparent; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .portrait-layer::before, .photo-print, .portrait-sketch { transition: transform .32s ease-out; }
+  .portrait-layer:hover::before { transform: translate(2px, 1px) rotate(3.3deg); }
+  .portrait-layer:hover .photo-print { transform: translateY(-2px) rotate(-1deg); }
+  .portrait-layer:hover .portrait-sketch { transform: translate(2px, -3px) rotate(7deg); }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  :is(.skill-group, .education-rows article, .detail-head, .detail-overview, .technical-section, .evidence, .case, .reflection).ink-visible {
+    animation: project-arrival .48s cubic-bezier(.22, 1, .36, 1) var(--ink-delay, 0ms) both;
+  }
+}

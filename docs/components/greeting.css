@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Portfolio Pen";
+  src: url("../assets/fonts/portfolio-pen.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+#home.cover {
+  /* Leave the opening of the next page in view without moving the viewport. */
+  min-height: calc(100svh - var(--header-height) - clamp(100px, 18svh, 152px));
+  padding: clamp(36px, 7svh, 80px) 0 78px;
+}
+#home #cover-title {
+  margin: 0;
+  max-width: 100%;
+  font: 400 clamp(43px, 6.3vw, 82px)/1.35 "Portfolio Pen", "Malgun Gothic", sans-serif;
+  color: var(--blue);
+  text-align: center;
+  letter-spacing: 0;
+}
+#cover-title span { white-space: nowrap; }
+#cover-title span:last-child { display: block; }
+.hero-byline { margin-top: 22px; color: var(--text); font-size: clamp(14px, 1.2vw, 17px); }
+@media (max-width: 619px) {
+  #home #cover-title { font-size: clamp(36px, 11vw, 56px); line-height: 1.48; }
+  #cover-title span { display: block; }
+}
+@property --ink-edge { syntax: "<percentage>"; inherits: false; initial-value: 108%; }
+@property --ink-slant { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes write-across { from { --ink-edge: -8%; } to { --ink-edge: 108%; } }
+  @keyframes sweep-edge { from { --ink-slant: -3%; } to { --ink-slant: 3%; } }
+  #cover-title.is-writing {
+    clip-path: polygon(0 0, calc(var(--ink-edge) + var(--ink-slant)) 0,
+      calc(var(--ink-edge) - var(--ink-slant)) 100%, 0 100%);
+    animation: write-across 1920ms linear both, sweep-edge 60ms linear 32 alternate both;
+  }
+}

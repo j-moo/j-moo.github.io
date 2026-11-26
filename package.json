@@ -5,6 +5,6 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "node serve.mjs",
-    "check": "node --check build.mjs && node --check intro-before-paint.js && node --check docs/js/app.js && node --check docs/js/glass.js && node --check docs/js/libraries.js && node --check docs/js/motion.js && node --check docs/js/player.js"
+    "check": "node --check docs/components/projects.js && node --check docs/components/blog-data.js && node --check docs/components/portfolio.js && node --check docs/components/greeting.js && node --check docs/components/gallery.js && node --check docs/components/ink-motion.js"
   }
 }
