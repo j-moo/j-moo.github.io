@@ -58,7 +58,7 @@ window.PROJECTS = [
   {
     links: [{label: "GitHub 저장소 · 공개 스냅샷", href: "https://github.com/j-moo/DDUBI"}],
     id: "ddubi", name: "DDUBI", tagline: "대중교통 경로와 출발 시각 추천", role: "버스 구간 예측 모델 비교·선정 · 분산 백엔드",
-    period: "2026.08–09", team: "6인 팀", tech: ["Python", "LightGBM", "CatBoost", "FastAPI", "Apache Spark", "Redis", "pandas", "NumPy"],
+    period: "2026.08–09", team: "6인 팀", tech: ["Python", "LightGBM", "FastAPI", "Apache Spark", "Redis", "pandas", "NumPy"],
     intro: "약속 시각까지 도착할 수 있도록 대중교통 후보 경로의 이동시간을 계산하고 출발 시각을 추천합니다.",
     introFocus: "대중교통 후보 경로의 이동시간을 계산하고 출발 시각을 추천", roleFocus: "버스 구간 예측 모델 비교·선정 · 분산 백엔드",
     contribution: "카카오 경로를 공공데이터의 노선·정류장과 연결하고, 버스 구간 예측 모델의 입력과 오차를 비교했습니다. FastAPI 캐시의 비용과 도로 돌발정보를 경로에 연결할 조건도 검토했습니다.",
