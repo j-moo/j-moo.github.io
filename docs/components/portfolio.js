@@ -26,7 +26,7 @@ function photo(project, decorative = false) {
 const listCovers = {
   tingle: {frame: "phones", screens: ["assets/blog/tingle-phone-offer.webp", "assets/blog/tingle-phone-conversation.webp"]},
   ddubi: {frame: "phones", screens: ["assets/blog/ddubi-home.webp", "assets/blog/ddubi-route-detail.webp"]},
-  melly: {frame: "monitor", image: "assets/blog/melly-queue.webp"},
+  melly: {frame: "monitor", image: "assets/blog/melly-fan-home-cover.webp"},
   flex: {frame: "monitor", image: "assets/blog/flex-original-feed.webp"}
 };
 
