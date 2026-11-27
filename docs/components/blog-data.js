@@ -98,6 +98,7 @@ window.BLOG_DATA = {
       ],
       caseEvidence: {
         2: {src: "assets/blog/ddubi-route-mapping.webp", width: 960, height: 600, alt: "노선 연결 건수 169/170에서 170/170, 탑승 단계 48/49에서 49/49", caption: "같은 네 경로의 마지막 보완 전후 비교 · 연결된 버스 후보 169→170건, 모든 후보를 식별한 탑승 구간 48→49개"},
+        3: {src: "assets/blog/ddubi-model.png", width: 1400, height: 795, alt: "평균 절대 오차 비교: 과거 중앙값 27.61초, CatBoost 깊이 6과 8은 각각 26.52초와 26.31초, LightGBM 26.04초, ExtraTrees 28.21초", caption: "같은 검증 자료 999,894건에서 측정한 버스 구간 운행시간 예측 오차. 값이 작을수록 실제 운행시간에 가깝습니다."},
         4: {src: "assets/blog/ddubi-cache-cost.webp", width: 960, height: 600, alt: "캐시 적용 전후 평균 응답시간과 최대 메모리 비교", caption: "같은 10개 구간의 예측값을 대조하고 웜 호출 시간과 최대 메모리 사용량을 함께 측정"},
         5: {src: "assets/blog/ddubi-traffic.webp", width: 1080, height: 998, alt: "일정의 이동 변수 중 날씨와 도로 통제를 함께 표시하는 화면", caption: "도로 통제 변수를 표시하는 화면. 운영 승인과 실제 사고 판정은 별도 검증 대상입니다."}
       }
