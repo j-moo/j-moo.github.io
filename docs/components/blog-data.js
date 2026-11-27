@@ -128,9 +128,9 @@ window.BLOG_DATA = {
         {src: "assets/blog/melly-manager-demo.mp4", poster: "assets/blog/melly-manager-demo-poster.webp", caption: "팀 발표 영상의 행사 관리·운영 화면 · 원본 73–95초 · 무음", linkLabel: "팀 발표의 행사 운영 화면 · 22초"}
       ],
       caseEvidence: {
-        1: {src: "assets/blog/melly-event-create.webp", width: 1440, height: 1025, alt: "팬미팅 이름·일시·담당 인플루언서를 받는 생성 폼", caption: "생성 폼 첫 단계와 응모 설정 단계의 위치. 요청 검증 결과는 린트·타입 검사·빌드 기록 기준입니다."},
-        2: {src: "assets/blog/melly-queue.webp", width: 1440, height: 1025, alt: "호출·대기·완료 인원과 현재 통화 세션을 표시하는 운영 화면", caption: "운영 화면에서 호출 상태와 현재 통화 세션을 확인하는 예시 화면"},
-        3: {src: "assets/blog/melly-room-assertions.webp", width: 1080, height: 300, alt: "모의 LiveKit 방과 상태 오류 문구가 함께 나타나는지 검사하는 두 단언문", caption: "8월 12일 보관한 회귀 테스트의 실제 단언문. LiveKit은 대체하고 폴링을 끈 조건입니다."}
+        1: {src: "assets/blog/melly-application-contract.webp", width: 1120, height: 520, alt: "응모 비활성 상태에서 정원 생략과 1명은 거절되고 정원 0과 날짜 null이 서버 조건을 충족한 비교표", caption: "개발 기록의 요청값 비교. 수정 후 린트·타입 검사·빌드를 통과했습니다."},
+        2: {src: "assets/blog/melly-host-current-call.webp", width: 1000, height: 302, alt: "운영 시연 화면에 대기 2명, 호출됨 1명, 현재 통화 세션 93번이 표시된 모습", caption: "팀 시연 영상 약 1분 30초 · 운영 화면에서 호출된 팬과 현재 통화 세션을 확인하는 장면"},
+        3: {src: "assets/blog/melly-room-recovery-test.webp", width: 1120, height: 520, alt: "통화 상태 조회만 실패시킨 뒤 모의 영상 방과 오류 안내가 함께 표시되는지 확인한 테스트 요약", caption: "VideoCallRoom.test.tsx의 시험 조건과 확인 항목. 실제 카메라와 마이크는 모의 구성으로 대체했습니다."}
       }
     },
     flex: {
