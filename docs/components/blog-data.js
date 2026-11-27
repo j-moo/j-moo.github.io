@@ -117,7 +117,7 @@ window.BLOG_DATA = {
         {tech: "sessionStorage", reason: "입장 전에 고른 카메라와 마이크의 선택 정보를 같은 탭의 통화 화면으로 전달했습니다."}
       ],
       outcome: "호스트가 하나의 콘솔에서 다음 팬을 호출하고 응답으로 받은 통화 ID를 사용해 해당 팬의 방에 입장하는 흐름을 연결했습니다.",
-      image: "assets/blog/melly-queue.webp", width: 1440, height: 1025, alt: "호출·대기·완료 인원과 현재 통화 세션을 표시하는 운영 화면",
+      image: "assets/blog/melly-call-cover.webp", width: 1464, height: 828, alt: "Melly 시연 중 호스트와 팬이 일대일 영상 통화로 인사하는 화면",
       summary: "팬은 당첨된 행사의 대기실에 입장하고, 호스트는 다음 팬을 호출해 영상 통화를 시작합니다.",
       gallery: [
         {src: "assets/blog/melly-event-create.webp", width: 1440, height: 1025, alt: "팬미팅 이름·일시·담당 인플루언서를 받는 생성 폼", caption: "0171ff7 화면 미리보기 · 팬미팅 생성 첫 단계"},
