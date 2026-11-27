@@ -1,10 +1,10 @@
 window.BLOG_DATA = {
   profile: {
     name: "김종무",
-    headline: "신입 개발자 · 웹 · 데이터 · 임베디드",
+    headline: "신입 개발자 · 백엔드 · 데이터 · 임베디드",
     paragraphs: [
-      "설계 조건과 실제 동작이 어긋나는 지점을 코드·데이터·실물 장비에서 끝까지 확인하는 개발자입니다.",
-      "웹 화면 연동(Flex_log·Melly), 버스 구간 데이터와 예측 모델 검증(DDUBI), BLE 키링 펌웨어·실물 진단(Tingle)을 거치며 직접 확인한 근거로 문제를 좁혀 왔습니다."
+      "기계공학을 전공하며 익힌 시스템 이해와 실험 검증 습관을 바탕으로, 코드·데이터·실물 장비에서 설계와 실제 동작이 어긋나는 지점을 끝까지 확인하는 개발자입니다.",
+      "웹 화면과 API 연동(Flex_log·Melly), 버스 구간 데이터와 예측 모델 검증(DDUBI), BLE 키링 펌웨어와 PCB 실물 진단(Tingle)까지 경계를 가리지 않고 직접 확인한 근거로 문제를 좁혀 왔습니다."
     ],
     image: "assets/blog/portrait.webp", width: 467, height: 600,
     alt: "김종무의 증명사진",
@@ -12,13 +12,12 @@ window.BLOG_DATA = {
     github: "https://github.com/j-moo"
   },
   skills: [
-    {name: "프로그래밍 언어", items: ["Python", "Java", "JavaScript", "TypeScript", "C"]},
-    {name: "웹 프레임워크", items: ["Spring Boot", "Django REST Framework", "Vue 3", "FastAPI"]},
-    {name: "UI 라이브러리", items: ["React"]},
-    {name: "데이터베이스", items: ["MySQL", "PostgreSQL", "Redis"]},
-    {name: "데이터 분석·수치 계산", items: ["pandas", "NumPy"]},
-    {name: "분산 처리", items: ["Apache Spark"]},
-    {name: "임베디드 시스템·IoT", items: ["Zephyr RTOS", "BLE"]}
+    {name: "Tingle · 키링 펌웨어와 기판 설계", items: ["C", "Zephyr RTOS", "BLE", "EasyEDA"]},
+    {name: "DDUBI · 버스 구간 예측과 모델 평가", items: ["Python", "pandas", "LightGBM"]},
+    {name: "DDUBI · 관측값 갱신과 예측 API 검증", items: ["Apache Spark", "Redis", "Lua", "FastAPI"]},
+    {name: "프런트엔드 · Melly(React) / Flex_log(Vue 3)", items: ["React", "Vue 3"]},
+    {name: "Melly · 호스트 운영 화면과 통화 입장", items: ["TypeScript", "LiveKit"]},
+    {name: "Flex_log · 소비 기록 API와 데이터 저장", items: ["Django REST Framework", "SQLite"]}
   ],
   skillIcons: {
     Python: "python.svg", Java: "java.svg", JavaScript: "javascript.svg", TypeScript: "typescript.svg", C: "c.svg",
@@ -52,7 +51,7 @@ window.BLOG_DATA = {
         {tech: "BLE 확장 광고", reason: "짧게 스치는 동안 별도 연결 절차를 줄이고 키링끼리 성향 프로필을 주고받도록 했습니다."},
         {tech: "Zephyr NVS", reason: "전원을 껐다 켠 뒤에도 설정과 아직 앱에 전달하지 않은 만남 기록을 복구할 수 있게 저장했습니다."}
       ],
-      outcome: "별도 실물 연동 시험에서 두 사용자가 앱의 만남 제안을 각각 수락하자 채팅방이 열렸고 메시지를 주고받을 수 있었습니다.",
+      outcome: "키링 간 BLE 프로필 교환과 NVS 복구를 구현하고, 만남 기록이 앱을 거쳐 서버로 전달되는 흐름을 점검했습니다. 별도 실물 연동 시험에서 두 사용자가 만남을 수락해 채팅방을 여는 데까지 확인했습니다.",
       image: "assets/blog/tingle-web-landing.webp", width: 1440, height: 810, alt: "Tingle 웹 랜딩의 로고와 스친 순간, 새로운 시작 문구 및 상단 메뉴",
       summary: "두 사람이 스쳐 지나갈 때 키링이 만남을 기록하고, 앱에서 수락 의사를 확인하는 BLE 서비스입니다.",
       gallery: [
@@ -75,6 +74,7 @@ window.BLOG_DATA = {
         ["노선·정류장 매핑", "머신러닝 모델로 카카오 경로의 버스 구간을 예측하려면, 그 구간이 공공데이터의 어느 노선과 정류장에 해당하는지 알아야 했습니다. 같은 번호의 버스도 구분할 수 있도록 승하차 순서와 운행 방향을 대조해 공식 노선과 정류장을 연결했습니다.", "승하차 순서와 운행 방향을 대조"],
         ["버스 구간 운행시간 예측", "정류장 사이의 운행 기록으로 LightGBM 모델을 학습했습니다. 같은 두 정류장 사이라도 시간대에 따라 버스가 이동하는 데 걸리는 시간을 다르게 예측합니다.", "LightGBM 모델을 학습"],
         ["경로별 이동시간 계산", "대중교통 후보 경로마다 걷는 시간, 버스와 지하철을 타는 시간, 환승에 걸리는 시간을 구해 출발지에서 목적지까지의 총소요시간을 계산했습니다. 이때 버스 구간에는 정류장 사이의 운행시간 예측값을 반영했습니다.", "출발지에서 목적지까지의 총소요시간을 계산"],
+        ["최신 관측값 정제와 동시성 제어", "Apache Spark로 배치 관측값 중 최신 시각 데이터를 선별하고, Redis Lua 스크립트로 관측 시각 비교와 저장을 원자적으로 처리해 지연 도착한 과거 값이 최신 값을 덮어쓰지 않도록 막았습니다.", "Redis Lua 스크립트로 관측 시각 비교와 저장을 원자적으로 처리"],
         ["반복 예측 요청 처리", "버스 구간을 예측할 때 쓰는 과거 운행 데이터를 처음 읽으면 서버 메모리에 보관했습니다. 다음 요청에서 같은 데이터가 필요하면 파일을 다시 열지 않고 메모리에서 읽습니다.", "과거 운행 데이터를 처음 읽으면 서버 메모리에 보관"]
       ],
       goal: "약속 시간에서 거꾸로 계산해 출발 시각을 결정할 수 있게 하기",
@@ -85,7 +85,7 @@ window.BLOG_DATA = {
         {tech: "Apache Spark", reason: "배치로 수집한 동일 구간 관측값에서 시각을 비교해 최신 값을 골랐습니다."},
         {tech: "Redis · Lua", reason: "관측 시각 비교와 저장을 한 번에 처리해 늦게 도착한 과거 값이 최신 값을 덮는 상황을 막았습니다."}
       ],
-      outcome: "카카오의 대중교통 경로를 공공데이터의 노선·정류장과 연결해 후보별 이동·대기·환승 시간을 계산했습니다. 사용자는 약속 시간에 맞는 추천 경로와 출발 시각을 확인할 수 있습니다.",
+      outcome: "카카오 대중교통 경로를 공공데이터의 노선·정류장과 연결하고 구간별 예측 모델의 오차를 검증했습니다. 이를 바탕으로 약속 시각에 맞춰 언제 출발해야 하는지 계산하는 데 필요한 구간별 소요시간을 구했습니다.",
       image: "assets/blog/ddubi-initial.webp", width: 831, height: 1800, alt: "DDUBI 앱 시연 시작 화면",
       summary: "일정과 도착 시각을 입력하면 대중교통 경로별 소요시간과 출발 시각을 안내합니다.",
       gallery: [
@@ -97,7 +97,7 @@ window.BLOG_DATA = {
         {src: "assets/blog/ddubi-team-route.mp4", poster: "assets/blog/ddubi-team-route-poster.webp", caption: "팀 발표 영상의 앱 시연 장면 · 원본 38–47초 · 무음", linkLabel: "팀 영상의 일정·경로 안내 · 9초"}
       ],
       caseEvidence: {
-        2: {src: "assets/blog/ddubi-route-mapping.webp", width: 960, height: 600, alt: "노선 연결 건수 169/170에서 170/170, 탑승 단계 48/49에서 49/49", caption: "같은 네 경로의 마지막 보완 전후 비교 · 연결된 버스 후보 169→170건, 모든 후보를 식별한 탑승 구간 48→49개"},
+        1: {src: "assets/blog/ddubi-route-mapping.webp", width: 960, height: 600, alt: "노선 연결 건수 169/170에서 170/170, 탑승 단계 48/49에서 49/49", caption: "같은 네 경로의 마지막 보완 전후 비교 · 연결된 버스 후보 169→170건, 모든 후보를 식별한 탑승 구간 48→49개"},
         3: {src: "assets/blog/ddubi-model.png", width: 1400, height: 795, alt: "평균 절대 오차 비교: 과거 중앙값 27.61초, CatBoost 깊이 6과 8은 각각 26.52초와 26.31초, LightGBM 26.04초, ExtraTrees 28.21초", caption: "같은 검증 자료 999,894건에서 측정한 버스 구간 운행시간 예측 오차. 값이 작을수록 실제 운행시간에 가깝습니다."},
         4: {src: "assets/blog/ddubi-cache-cost.webp", width: 960, height: 600, alt: "캐시 적용 전후 평균 응답시간과 최대 메모리 비교", caption: "같은 10개 구간의 예측값을 대조하고 웜 호출 시간과 최대 메모리 사용량을 함께 측정"},
         5: {src: "assets/blog/ddubi-traffic.webp", width: 1080, height: 998, alt: "일정의 이동 변수 중 날씨와 도로 통제를 함께 표시하는 화면", caption: "도로 통제 변수를 표시하는 화면. 운영 승인과 실제 사고 판정은 별도 검증 대상입니다."}
@@ -113,10 +113,10 @@ window.BLOG_DATA = {
       audience: "영상 팬미팅에 참여하는 팬과 행사를 진행하는 호스트",
       features: ["팬 대기실", "호스트의 다음 팬 호출", "일대일 영상 통화"],
       technicalChoices: [
-        {tech: "LiveKit", reason: "팬이 입장 전에 실제 통화에 쓸 카메라와 마이크를 확인하도록 장비 점검 화면을 연결했습니다."},
-        {tech: "sessionStorage", reason: "입장 전에 고른 카메라와 마이크의 선택 정보를 같은 탭의 통화 화면으로 전달했습니다."}
+        {tech: "LiveKit", reason: "통화방에 입장하기 전에도 카메라와 마이크를 점검할 수 있어야 했습니다. LiveKit의 로컬 트랙은 입장 토큰 없이도 장치를 열 수 있어 미리보기에 사용했습니다."},
+        {tech: "sessionStorage", reason: "장비 선택은 점검 화면에서 통화방으로 이동할 때 유지하고 탭을 닫으면 지워도 되는 설정이었습니다. 이 수명에 맞춰 장치 ID를 sessionStorage에 저장했습니다."}
       ],
-      outcome: "호스트가 하나의 콘솔에서 다음 팬을 호출하고 응답으로 받은 통화 ID를 사용해 해당 팬의 방에 입장하는 흐름을 연결했습니다.",
+      outcome: "저는 호스트의 호출 버튼과 서버가 반환한 통화 ID를 연결했습니다. 호스트는 하나의 콘솔에서 다음 팬을 호출하고 그 팬의 통화방에 입장할 수 있게 됐습니다.",
       image: "assets/blog/melly-call-cover.webp", width: 1464, height: 828, alt: "Melly 시연 중 호스트와 팬이 일대일 영상 통화로 인사하는 화면",
       summary: "팬은 당첨된 행사의 대기실에 입장하고, 호스트는 다음 팬을 호출해 영상 통화를 시작합니다.",
       gallery: [
@@ -135,16 +135,16 @@ window.BLOG_DATA = {
     },
     flex: {
       development: [
-        ["가입부터 첫 소비 기록까지", "팀원과 소비 기록 흐름과 ERD를 설계했습니다. AI의 도움을 받아 구현하면서 계정·프로필 생성부터 기본 카테고리로 첫 소비를 입력하는 과정까지 점검했습니다.", "팀원과 소비 기록 흐름과 ERD를 설계"],
-        ["사진 보관과 월별 분석", "소비 사진을 기록과 함께 보관하는 방식을 검토했습니다. 월별 조회에서는 기록이 없는 경우와 외부 분석이 실패한 경우에 사용자가 받는 결과를 구분했습니다.", "사용자가 받는 결과를 구분"]
+        ["가입부터 첫 소비 기록까지", "팀원과 소비 기록 흐름과 ERD를 설계했습니다. 계정·프로필 생성부터 기본 카테고리로 첫 소비를 입력하기까지 빠진 단계를 점검하고 보완했습니다.", "팀원과 소비 기록 흐름과 ERD를 설계"],
+        ["사진 보관과 월별 분석", "다른 PC로 소비 기록을 옮길 때 사진도 함께 따라가도록 저장 방식을 바꾸자고 제안했습니다. 새로 올린 사진이 소비 기록과 같은 DB에 저장되고 API를 통해 화면에 표시되는 흐름을 코드에서 확인했습니다. 월별 조회에서는 기록이 없는 경우와 외부 분석이 실패한 경우에 사용자가 받는 결과를 구분했습니다.", "사용자가 받는 결과를 구분"]
       ],
       outcomeFocus: "외부 분석 호출이 실패해도 총액과 카테고리 집계",
       goal: "소비 순간을 사진으로 기록하고 지난달 지출을 다시 살펴볼 수 있게 하기",
       audience: "소비 순간을 사진으로 남기고 친구와 일상을 공유하는 사용자",
       features: ["사진·금액·카테고리 기록", "친구 피드", "월별 소비 분석 조회"],
       technicalChoices: [
-        {tech: "Django 트랜잭션", reason: "가입 과정에서 계정과 프로필 저장을 함께 완료하거나 되돌리도록 처리했습니다."},
-        {tech: "Django REST Framework", reason: "소비 기록을 수정할 때 로그인 사용자와 기록 작성자를 대조해 권한을 확인했습니다."}
+        {tech: "Django 트랜잭션", reason: "프로필 저장이 실패하면 계정 생성도 함께 취소해야 해서 두 작업을 하나의 트랜잭션으로 묶었습니다."},
+        {tech: "Django REST Framework", reason: "사용자가 자기 소비 기록만 수정할 수 있도록 서버에서 작성 권한을 판단해야 했습니다. Django REST Framework의 API 요청에서 로그인 사용자를 확인하고 기록 작성자와 대조했습니다."}
       ],
       outcome: "이전 달의 소비 분석을 다시 조회할 수 있게 했습니다. 기록이 있는 달에는 외부 분석 호출이 실패해도 총액과 카테고리 집계를 볼 수 있습니다.",
       image: "assets/blog/flex-original-feed.webp", width: 1287, height: 916, alt: "소비 사진과 지출 금액을 함께 표시한 피드",

@@ -183,7 +183,8 @@ function detail(p) {
   const cases = p.cases.map((entry, i) => {
     const comparison = '<dl class="case-comparison">' + factList([
       [entry.observation ? "시험 전" : "개선 전", entry.before],
-      [entry.observation ? "실물 확인" : "개선 후", entry.after]
+      [entry.observation ? "실물 확인" : "개선 후", entry.after],
+      ["검증 범위", entry.scope]
     ]) + '</dl>';
     const result = entry.comparisonTitle
       ? '<div class="case-result exchange-check"><h4>' + escapeText(entry.comparisonTitle) + '</h4><p>' +
