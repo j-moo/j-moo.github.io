@@ -155,9 +155,7 @@ window.BLOG_DATA = {
       ],
       videos: [],
       caseEvidence: {
-        1: {src: "assets/blog/flex-record-schema.webp", width: 1440, height: 828, alt: "계정·프로필·소비 기록 사이의 관계를 표시한 설계도", caption: "계정·프로필·소비 기록의 데이터 관계. 테스트 통과 수는 당시 완료 보고 기준입니다."},
-        2: {src: "assets/blog/flex-media-model.webp", width: 1120, height: 345, alt: "소비 사진 바이트를 저장하는 BinaryField 모델 선언", caption: "공개 저장소 최종 커밋의 모델 정의 · 새로 올린 사진을 DB에 포함하는 필드"},
-        3: {src: "assets/blog/flex-analysis-empty.webp", width: 725, height: 191, alt: "소비 기록이 0건이면 데이터 부족 안내를 반환하는 코드", caption: "공개 저장소에 남은 fallback_analysis의 빈 달 분기. 외부 호출 실패 분기는 별도 구현입니다."}
+        1: {src: "assets/blog/flex-analysis-empty.webp", width: 725, height: 191, alt: "소비 기록이 0건이면 데이터 부족 안내를 반환하는 코드", caption: "공개 저장소에 남은 fallback_analysis의 빈 달 분기. 외부 호출 실패 분기는 별도 구현입니다."}
       }
     }
   }
