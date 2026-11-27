@@ -98,7 +98,6 @@ window.BLOG_DATA = {
       ],
       caseEvidence: {
         2: {src: "assets/blog/ddubi-route-mapping.webp", width: 960, height: 600, alt: "노선 연결 건수 169/170에서 170/170, 탑승 단계 48/49에서 49/49", caption: "같은 네 경로의 마지막 보완 전후 비교 · 연결된 버스 후보 169→170건, 모든 후보를 식별한 탑승 구간 48→49개"},
-        3: {src: "assets/blog/ddubi-route-detail.webp", width: 693, height: 1400, alt: "지도 경로와 시간·환승·이동 단계가 함께 보이는 경로 상세", caption: "경로 화면에서 확인하는 구간 구성. 비교한 두 경로의 합계는 별도 고정 입력 시험 결과입니다."},
         4: {src: "assets/blog/ddubi-cache-cost.webp", width: 960, height: 600, alt: "캐시 적용 전후 평균 응답시간과 최대 메모리 비교", caption: "같은 10개 구간의 예측값을 대조하고 웜 호출 시간과 최대 메모리 사용량을 함께 측정"},
         5: {src: "assets/blog/ddubi-traffic.webp", width: 1080, height: 998, alt: "일정의 이동 변수 중 날씨와 도로 통제를 함께 표시하는 화면", caption: "도로 통제 변수를 표시하는 화면. 운영 승인과 실제 사고 판정은 별도 검증 대상입니다."}
       }
